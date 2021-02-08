@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">nextLvL</string>
+    <string name="MB_button">Mobile Games</string>
+    <string name="CG_button">Card Games</string>
+    <string name="LVL_button">LvL Games</string>
+    <string name="DOR_button">Dare Or Drink</string>
+    <string name="NHIE_button">Never Have I Ever</string>
 </resources>
