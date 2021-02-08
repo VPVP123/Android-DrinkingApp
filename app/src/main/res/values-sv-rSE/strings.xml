@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">nextLvL</string>
-    <string name="MB_button">Mobil Spoel</string>
+    <string name="MB_button">Mobil Spel</string>
     <string name="CG_button">Kort Spel</string>
     <string name="LVL_button">LvL Spel</string>
     <string name="DOR_button">Dare Or Drink</string>
     <string name="NHIE_button">Jag Har Aldrig</string>
+    <string name="SelectGameText">Välj ett spel för att spela</string>
 </resources>

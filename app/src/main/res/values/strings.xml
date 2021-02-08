@@ -5,4 +5,5 @@
     <string name="LVL_button">LvL Games</string>
     <string name="DOR_button">Dare Or Drink</string>
     <string name="NHIE_button">Never Have I Ever</string>
+    <string name="SelectGameText">Choose a game to play</string>
 </resources>

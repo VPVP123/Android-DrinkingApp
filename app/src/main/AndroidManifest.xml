@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NextLvL">
+        <activity android:name=".lvlGamesActivity"></activity>
+        <activity android:name=".cardGamesActivity" />
+        <activity android:name=".mobileGamesActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
