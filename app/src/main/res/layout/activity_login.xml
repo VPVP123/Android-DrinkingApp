@@ -18,8 +18,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:textSize="40dp"
+            android:text="@string/login"
+            android:textSize="40sp"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textStyle="bold"/>
@@ -30,7 +30,7 @@
             android:layout_marginBottom="10dp"
             android:drawablePadding="10dp"
             android:ems="10"
-            android:hint="User Name"
+            android:hint="@string/username"
             android:inputType="textPersonName"
             android:padding="10dp"
             android:textColor="@color/white"
@@ -44,7 +44,7 @@
             android:layout_marginBottom="10dp"
             android:drawablePadding="10dp"
             android:ems="10"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/white"
@@ -56,8 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginBottom="30dp"
-            android:text="LOGIN"
-            android:textAllCaps="false"
+            android:text="@string/login"
+            android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="21sp" />
 

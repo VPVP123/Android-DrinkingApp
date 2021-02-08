@@ -6,4 +6,7 @@
     <string name="LVL_button">LvL Spel</string>
     <string name="DOR_button">Dare Or Drink</string>
     <string name="NHIE_button">Jag Har Aldrig</string>
+    <string name="username">Användarnamn</string>
+    <string name="login">Logga in</string>
+    <string name="password">Lösenord</string>
 </resources>
