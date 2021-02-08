@@ -6,4 +6,7 @@
     <string name="DOR_button">Dare Or Drink</string>
     <string name="NHIE_button">Never Have I Ever</string>
     <string name="SelectGameText">Choose a game to play</string>
+    <string name="username">Username</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
 </resources>

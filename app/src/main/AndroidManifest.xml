@@ -9,9 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NextLvL">
+<<<<<<< HEAD
         <activity android:name=".lvlGamesActivity"></activity>
         <activity android:name=".cardGamesActivity" />
         <activity android:name=".mobileGamesActivity" />
+=======
+        <activity android:name=".LoginActivity"></activity>
+>>>>>>> ba8db80087c8e79c4bfd3e26a7a8b1215c4e5f4d
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

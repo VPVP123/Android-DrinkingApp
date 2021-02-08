@@ -7,4 +7,7 @@
     <string name="DOR_button">Dare Or Drink</string>
     <string name="NHIE_button">Jag Har Aldrig</string>
     <string name="SelectGameText">Välj ett spel för att spela</string>
+    <string name="username">Användarnamn</string>
+    <string name="login">Logga in</string>
+    <string name="password">Lösenord</string>
 </resources>
