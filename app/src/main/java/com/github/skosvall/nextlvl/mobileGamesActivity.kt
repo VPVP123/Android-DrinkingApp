@@ -18,6 +18,9 @@ class mobileGamesActivity : AppCompatActivity() {
             startActivity(
                 intent
             )
+        val neverHaveIEverButton = findViewById<Button>(R.id.neverHaveIEverButton)
+        neverHaveIEverButton.setOnClickListener {
+            startActivity(Intent(this, PlayNeverHaveIEverActivity::class.java))
         }
     }
 }
