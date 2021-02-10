@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NextLvL">
         <activity android:name=".PlayNeverHaveIEverActivity"></activity>
+        <activity android:name=".SubmissionActivity"></activity>
         <activity android:name=".adminPanelActivity" />
         <activity android:name=".lvlGamesActivity" />
         <activity android:name=".cardGamesActivity" />
