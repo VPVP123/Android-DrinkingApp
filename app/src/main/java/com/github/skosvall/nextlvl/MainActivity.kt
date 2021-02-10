@@ -36,12 +36,12 @@ class MainActivity : AppCompatActivity() {
         window.decorView.findViewById<View>(android.R.id.content).setOnTouchListener { v, ev ->
             val action = ev.action
             when (action and MotionEvent.ACTION_MASK) {
-                MotionEvent.ACTION_POINTER_DOWN -> if (ev.pointerCount == 3) {
+                MotionEvent.ACTION_POINTER_DOWN -> if (ev.pointerCount == 2) {
                     // We have five fingers touching, so start the timer
                     fiveFingerDownTime = System.currentTimeMillis()
                 }
                 MotionEvent.ACTION_POINTER_UP -> {
-                    if (ev.pointerCount < 3) {
+                    if (ev.pointerCount < 2) {
                         // Fewer than five fingers, so reset the timer
                         fiveFingerDownTime = -1
                     }
