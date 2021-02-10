@@ -56,6 +56,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/nextLvL_logo" />
+        app:srcCompat="@drawable/nextlvl_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
