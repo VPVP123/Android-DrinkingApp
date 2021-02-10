@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NextLvL">
+        <activity android:name=".PrepareDareOrDrinkActivity"></activity>
+        <activity android:name=".PlayNeverHaveIEverActivity"></activity>
         <activity android:name=".SubmissionActivity"></activity>
         <activity android:name=".adminPanelActivity" />
         <activity android:name=".lvlGamesActivity" />
