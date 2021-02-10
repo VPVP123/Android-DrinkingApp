@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".mobileGamesActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/nextLvL_logo" />
+
     <Button
         android:id="@+id/button4"
         android:layout_width="270dp"
