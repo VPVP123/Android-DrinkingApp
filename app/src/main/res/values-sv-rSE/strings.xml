@@ -16,4 +16,7 @@
     <string name="_321">3-2-1</string>
     <string name="ringoffire">Ring Of Fire</string>
     <string name="fuckthedealer">Fuck The Dealer</string>
+    <string name="enter_name">Lägg till namn</string>
+    <string name="addplayer">+ Lägg till spelare</string>
+    <string name="start_game">Starta spel</string>
 </resources>
