@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_button"
             android:text="Manage games"
+            android:textAllCaps="false"
             android:textSize="20dp" />
 
         <Button
@@ -37,6 +38,7 @@
             android:id="@+id/button2"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:background="@drawable/rounded_button"
             android:text="new Submitions"
             android:textSize="20dp" />
@@ -46,6 +48,7 @@
             android:id="@+id/button3"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:background="@drawable/rounded_button"
             android:text="Logout"
             android:textSize="20dp" />

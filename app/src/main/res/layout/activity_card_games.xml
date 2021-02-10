@@ -4,4 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cardGamesActivity"/>
+    tools:context=".cardGamesActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:text="@string/fuckthedealer"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button"
+            android:layout_marginBottom="40dp"/>
+
+        <Button
+            android:id="@+id/button10"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:text="@string/ringoffire"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button"
+            android:layout_marginBottom="40dp"/>
+
+        <Button
+            android:id="@+id/button11"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:text="@string/_321"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button"
+            android:layout_marginBottom="40dp"/>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
