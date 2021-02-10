@@ -10,4 +10,7 @@
     <string name="username">Användarnamn</string>
     <string name="login">Logga in</string>
     <string name="password">Lösenord</string>
+    <string name="beerpong">Beerpong</string>
+    <string name="gasgas">GasGas</string>
+    <string name="horserace">Kapplöpning</string>
 </resources>

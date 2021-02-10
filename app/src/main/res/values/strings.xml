@@ -9,4 +9,7 @@
     <string name="username">Username</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="beerpong">Beerpong</string>
+    <string name="gasgas">GasGas</string>
+    <string name="horserace">Horse Race</string>
 </resources>
