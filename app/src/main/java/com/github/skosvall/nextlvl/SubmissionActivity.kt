@@ -16,7 +16,7 @@ class SubmissionActivity : AppCompatActivity() {
 
         var adapter = ArrayAdapter<Submission>(
             this,
-            android.R.layout.simple_list_item_1,
+            R.layout.submissionrow,
             android.R.id.text1,
             submissionRepository.getAllSubmissions()
         )
