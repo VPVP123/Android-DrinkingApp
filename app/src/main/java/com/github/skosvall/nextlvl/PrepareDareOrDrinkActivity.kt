@@ -7,5 +7,7 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_prepare_dare_or_drink)
+
+
     }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditSubmissionActivity">
+
+    <EditText
+        android:id="@+id/editSubmission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="13"
+        android:minLines="10"
+        android:background="@drawable/rounded_edittext"
+        android:textColor="@color/white"
+        android:hint="Enter statement/question"
+        android:gravity="top|start"
+        android:textColorHint="@color/white"
+        android:maxLines="13"
+        android:padding="20sp"
+        android:layout_margin="30dp"
+        android:inputType="textMultiLine"/>
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/editSubmission">
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginStart="90dp"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/buttonDismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dismiss"
+        android:layout_marginEnd="90dp"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
+
+
+</RelativeLayout>

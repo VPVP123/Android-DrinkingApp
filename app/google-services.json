@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "134156791245",
+    "project_id": "nextlvl2",
+    "storage_bucket": "nextlvl2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134156791245:android:7c9dae1f740038e51ee884",
+        "android_client_info": {
+          "package_name": "com.github.skosvall.nextlvl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134156791245-p05cv7us7ul86mdjkgc381buevf702lv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSJleyc50SoygzfdBhyaonjZnreoT5ZBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "134156791245-p05cv7us7ul86mdjkgc381buevf702lv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -38,6 +38,11 @@ class SubmissionActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             popUpError1.setNegativeButton( "Edit") { dialog, which ->
+                val intent = Intent(this, EditSubmissionActivity::class.java)
+                intent.putExtra("submissionId", submission.id)
+                startActivity(
+                    intent
+                )
                 dialog.dismiss()
             }
             popUpError1.show()
