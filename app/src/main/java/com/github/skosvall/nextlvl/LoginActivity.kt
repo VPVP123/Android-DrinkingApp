@@ -10,15 +10,12 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-
         val buttonLogin = this.findViewById<Button>(R.id.login)
-
 
         buttonLogin.setOnClickListener{
             startActivity(
                 Intent(this, adminPanelActivity::class.java)
             )
         }
-
     }
 }

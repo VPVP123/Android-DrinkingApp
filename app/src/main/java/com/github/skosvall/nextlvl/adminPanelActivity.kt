@@ -12,13 +12,10 @@ class adminPanelActivity : AppCompatActivity() {
 
         val buttonSubmission = this.findViewById<Button>(R.id.manageSubmissionsButton)
 
-
         buttonSubmission.setOnClickListener{
             startActivity(
                 Intent(this, SubmissionActivity::class.java)
             )
         }
-
-
     }
 }
