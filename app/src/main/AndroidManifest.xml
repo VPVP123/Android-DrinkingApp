@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NextLvL">
-        <activity android:name=".EditSubmissionActivity">
-        <activity android:name=".PlayDareOrDrinkActivity">
+        <activity android:name=".EditSubmissionActivity"/>
+        <activity android:name=".PlayDareOrDrinkActivity"/>
         <activity android:name=".PrepareDareOrDrinkActivity" />
         <activity android:name=".PlayNeverHaveIEverActivity" />
         <activity android:name=".SubmissionActivity" />
