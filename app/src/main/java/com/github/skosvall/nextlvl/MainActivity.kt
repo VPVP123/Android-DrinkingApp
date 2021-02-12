@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         val mobileGamesBtn = findViewById<Button>(R.id.button)
         val cardGamesBtn = findViewById<Button>(R.id.button2)
         val lvlGamesBtn = findViewById<Button>(R.id.button3)
@@ -26,9 +25,20 @@ class MainActivity : AppCompatActivity() {
                 intent
             )
         }
+        cardGamesBtn.setOnClickListener {
+            val intent = Intent(this, cardGamesActivity::class.java)
+            startActivity(
+                intent
+            )
+        }
+        lvlGamesBtn.setOnClickListener {
+            val intent = Intent(this, lvlGamesActivity::class.java)
+            startActivity(
+                intent
+            )
+        }
 
-        //Secrete admin login panel
-
+        //Secret admin login panel
         val FIVE_SECONDS = 5 * 1000 // 5s * 1000 ms/s
 
         var fiveFingerDownTime: Long = -1
@@ -57,32 +67,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
-
-        //End of secrete admin login panel
-
-
-
-
-
-
-
-        cardGamesBtn.setOnClickListener {
-            val intent = Intent(this, cardGamesActivity::class.java)
-            startActivity(
-                intent
-            )
-        }
-
-        lvlGamesBtn.setOnClickListener {
-            val intent = Intent(this, lvlGamesActivity::class.java)
-            startActivity(
-                intent
-            )
-        }
-
-
-
-
+        //End of secret admin login panel
     }
 }

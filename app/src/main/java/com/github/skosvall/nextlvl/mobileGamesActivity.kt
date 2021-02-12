@@ -11,17 +11,22 @@ class mobileGamesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_mobile_games)
 
         val DOR_Btn = findViewById<Button>(R.id.DOR_button)
-
+        val neverHaveIEverButton = findViewById<Button>(R.id.neverHaveIEverButton)
 
         DOR_Btn.setOnClickListener {
             val intent = Intent(this, PrepareDareOrDrinkActivity::class.java)
             startActivity(
                 intent
             )
+
             val neverHaveIEverButton = findViewById<Button>(R.id.neverHaveIEverButton)
             neverHaveIEverButton.setOnClickListener {
                 startActivity(Intent(this, PlayNeverHaveIEverActivity::class.java))
             }
+
+        }
+        neverHaveIEverButton.setOnClickListener {
+            startActivity(Intent(this, PlayNeverHaveIEverActivity::class.java))
         }
     }
 }
