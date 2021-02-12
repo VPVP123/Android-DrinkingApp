@@ -2,16 +2,15 @@ package com.github.skosvall.nextlvl
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 
-class PlayNeverHaveIEverActivity : AppCompatActivity() {
+class PlayDareOrDrinkActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_play_never_have_i_ever)
+        setContentView(R.layout.activity_play_dare_or_drink)
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.neverHaveIEverFrameLayout, PlayMobileGamesFragment())
+            .add(R.id.dareOrDrinkFrameLayout, PlayMobileGamesFragment())
             .commit()
     }
 }
