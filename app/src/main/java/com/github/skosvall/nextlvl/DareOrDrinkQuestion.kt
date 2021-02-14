@@ -20,8 +20,8 @@ class DareOrDrinkQuestion(var question: String){
 
     fun getCompleteQuestion(playerNames: List<String>): String{
         var questionToReturn = question
-        for(i in range(0, nrOfPlayers-1)){
-            questionToReturn.replace((i+1).toString(), playerNames[i])
+        for(i in range(0, nrOfPlayers)){
+            questionToReturn = questionToReturn.replace((i+1).toString(), playerNames[i])
         }
         return questionToReturn
     }

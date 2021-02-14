@@ -64,6 +64,7 @@ class PlayMobileGamesFragment : Fragment() {
                 statementsCopy = statements.toMutableList() //Copy list
                 changeNeverHaveIEverStatement()
             }else if(activity is PlayDareOrDrinkActivity){
+
                 questionsCopy = questions.toMutableList()
                 changeDareOrDrinkQuestion()
             }
@@ -107,7 +108,7 @@ class PlayMobileGamesFragment : Fragment() {
 
                 if(nrOfPlayersRequiredForQuestion <= playersCopy.count()){
                     if(nrOfPlayersRequiredForQuestion > 0){
-                        for (i in range(0, nrOfPlayersRequiredForQuestion-1)) {
+                        for (i in range(0, nrOfPlayersRequiredForQuestion)) {
                             val randomPlayer = playersCopy.shuffled().takeLast(1)[0]
                             currentQuestionPlayers.add(randomPlayer)
                             playersCopy.remove(randomPlayer)
@@ -137,10 +138,10 @@ class PlayMobileGamesFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(playerNamesArray: Array<String>) =
                 PlayMobileGamesFragment().apply {
                     arguments = Bundle().apply {
-
+                        putStringArray("PLAYER_NAMES", arrayOf<String>())
                     }
                 }
     }

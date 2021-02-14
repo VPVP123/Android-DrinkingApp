@@ -1,6 +1,7 @@
 package com.github.skosvall.nextlvl
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.transition.TransitionManager
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.forEach
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.chip.Chip
 import kotlin.random.Random
@@ -22,6 +24,7 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
 
         val buttonAdd = findViewById<Button>(R.id.addButton) as Button
         val chipGroup = findViewById<ChipGroup>(R.id.chipGroup) as ChipGroup
+        val startGameButton = findViewById<Button>(R.id.startGameButton) as Button
 
         buttonAdd.setOnClickListener{
             // Initialize a new chip instance
@@ -55,6 +58,16 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
 
             // Finally, add the chip to chip group
             chipGroup.addView(chip)
+        }
+
+        startGameButton.setOnClickListener {
+            val playerNames = mutableListOf<String>()
+            chipGroup.forEach {
+                playerNames.add((it as Chip).text.toString())
+            }
+            val intent = Intent(this, PlayDareOrDrinkActivity::class.java)
+            intent.putExtra(PlayDareOrDrinkActivity.PLAYER_NAMES, playerNames.toTypedArray())
+            startActivity(intent)
         }
     }
 
