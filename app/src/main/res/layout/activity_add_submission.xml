@@ -1,9 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddSubmissionActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/dareTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter a dare!"
+            android:textColor="@color/white"
+            android:textSize="22dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="-10dp"/>
+
+        <EditText
+            android:id="@+id/editSubmission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="13"
+            android:minLines="10"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="@color/white"
+            android:hint="Selected user has to..."
+            android:gravity="top|start"
+            android:textColorHint="@color/white"
+            android:maxLines="13"
+            android:padding="20sp"
+            android:layout_margin="30dp"
+            android:inputType="textMultiLine"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How many sips is this dare worth?!"
+            android:textColor="@color/white"
+            android:textSize="22dp"
+            android:layout_marginTop="-20dp" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/rounded_corners_black_backround">
+        <Spinner
+            android:id="@+id/sip_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="gravity"
+            android:gravity="center"
+            android:overlapAnchor="false"
+            />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/buttonSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:layout_marginStart="35dp"
+                />
+            <!--Separating buttons-->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <!--Separating buttons-->
+            <Button
+                android:id="@+id/buttonDismiss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dismiss"
+                android:layout_marginEnd="35dp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
