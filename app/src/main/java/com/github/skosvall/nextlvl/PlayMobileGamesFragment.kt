@@ -41,7 +41,7 @@ class PlayMobileGamesFragment : Fragment() {
 
         val db = FirebaseFirestore.getInstance()
 
-        val getQuestions = db.collection("mobileGamesdata").document("dareOrDrink")
+        val getQuestions = db.collection("mobileGamesData").document("dareOrDrink")
         val getStatements = db.collection("mobileGamesData").document("neverHaveIEver")
 
         //Get statements from
