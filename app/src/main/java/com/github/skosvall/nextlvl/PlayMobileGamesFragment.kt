@@ -1,13 +1,17 @@
 package com.github.skosvall.nextlvl
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.stream.IntStream.range
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +38,43 @@ class PlayMobileGamesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val db = FirebaseFirestore.getInstance()
+
+        val getQuestions = db.collection("mobileGamesdata").document("dareOrDrink")
+        val getStatements = db.collection("mobileGamesData").document("neverHaveIEver")
+
+        //Get statements from
+        getStatements.get()
+            .addOnSuccessListener { statement ->
+                if(statement != null){
+                    Log.d("exist", "DocumentSnapshot data: ${statement.data}")
+                }else{
+                    Log.d("noExist", "No document found")
+                }
+            }
+            .addOnFailureListener {exception ->
+                Log.d("errorDB", "get failed with ", exception)
+
+            }
+
+        getQuestions.get()
+            .addOnSuccessListener { question ->
+                if(question != null){
+                    Log.d("exist", "DocumentSnapshot data: ${question.data}")
+                }else{
+                    Log.d("noExist", "No document found")
+                }
+            }
+            .addOnFailureListener {exception ->
+                Log.d("errorDB", "get failed with ", exception)
+
+            }
+
+
+
+
+
         statements = listOf("Never have I ever kissed a stranger",
             "Never have I ever taken a shower selfie",
             "Never have I ever been to a nude beach",
