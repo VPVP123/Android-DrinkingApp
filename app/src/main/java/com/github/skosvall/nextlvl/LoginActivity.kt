@@ -1,5 +1,6 @@
 package com.github.skosvall.nextlvl
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,11 +42,23 @@ class LoginActivity : AppCompatActivity() {
                                 Intent(this, adminPanelActivity::class.java)
                             )
                         } else {
-                            Toast.makeText(baseContext, "Login failed", Toast.LENGTH_SHORT).show()
+                            val popUpError1 = AlertDialog.Builder(this)
+                            popUpError1.setTitle("Login failed")
+                            popUpError1.setMessage("The email and/or password you entered is incorrect")
+                            popUpError1.setPositiveButton( "Ok") { dialog, which ->
+                                dialog.dismiss()
+                            }
+                            popUpError1.show()
                         }
                     }
             }else{
-                Toast.makeText(baseContext, "One or more field is empty", Toast.LENGTH_SHORT).show()
+                val popUpError1 = AlertDialog.Builder(this)
+                popUpError1.setTitle("Enter all fields")
+                popUpError1.setMessage("The email and password fields cannot be empty")
+                popUpError1.setPositiveButton( "Ok") { dialog, which ->
+                    dialog.dismiss()
+                }
+                popUpError1.show()
             }
         }
     }

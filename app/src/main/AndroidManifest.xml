@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.skosvall.nextlvl">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,11 +12,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NextLvL">
-        <activity android:name=".EditSubmissionActivity"/>
-        <activity android:name=".PlayDareOrDrinkActivity"/>
+        <activity
+            android:name=".AddSubmissionActivity"
+            android:label="@string/title_activity_add_submission">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+
+        <activity android:name=".EditSubmissionActivity" />
+        <activity android:name=".PlayDareOrDrinkActivity" />
         <activity android:name=".PrepareDareOrDrinkActivity" />
         <activity android:name=".PlayNeverHaveIEverActivity" />
-        <activity android:name=".SubmissionActivity" />
+        <activity android:name=".SubmissionListActivity" />
         <activity android:name=".adminPanelActivity" />
         <activity android:name=".lvlGamesActivity" />
         <activity android:name=".cardGamesActivity" />

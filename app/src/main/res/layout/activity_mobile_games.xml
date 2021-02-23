@@ -61,7 +61,8 @@
             android:textAlignment="center"
             android:text="Don't like our Never have i ever/ Dares?\nSubmit your own"
             android:textColor="@color/white"
-            android:textSize="22dp"/>
+            android:lineSpacingExtra="15dp"
+            android:textSize="14dp"/>
     </LinearLayout>
 
 
