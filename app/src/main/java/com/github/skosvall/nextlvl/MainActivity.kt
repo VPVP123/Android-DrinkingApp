@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
         cardGamesBtn.setOnClickListener {
-            val intent = Intent(this, cardGamesActivity::class.java)
+            val intent = Intent(this, CardGamesActivity::class.java)
             startActivity(
                 intent
             )

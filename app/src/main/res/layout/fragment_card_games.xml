@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CardGamesFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="15dp"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/cardGameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/cardGameDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:id="@+id/cardGameSectionOneTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="What is needded:"
+            android:textSize="22dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:id="@+id/cardGameEquipment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"/>
+
+        <TextView
+            android:id="@+id/cardGameSectionTwoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Setup:"
+            android:textSize="22dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:id="@+id/cardGameSetup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="15dp"/>
+
+        <TextView
+            android:id="@+id/cardGameSectionThreeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How to play:"
+            android:textSize="22dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:id="@+id/cardGameHowToPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+</FrameLayout>
