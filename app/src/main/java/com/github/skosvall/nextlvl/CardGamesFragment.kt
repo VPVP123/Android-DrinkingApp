@@ -34,20 +34,21 @@ class CardGamesFragment : Fragment() {
             setup = it.getString(ARG_SETUP)
             howToPlay = it.getString(ARG_HOWTOPLAY)
         }
-
-        val titleTextView = view?.findViewById<TextView>(R.id.cardGameTitle)?.setText(title)
-        val equipmentTextView = view?.findViewById<TextView>(R.id.cardGameEquipment)?.setText(equipment)
-        val setupTextView = view?.findViewById<TextView>(R.id.cardGameSetup)?.setText(setup)
-        val howToPlayTextView = view?.findViewById<TextView>(R.id.cardGameHowToPlay)?.setText(howToPlay)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_card_games, container, false)
+        val view = inflater.inflate(R.layout.fragment_card_games, container, false) as View
+
+        view.findViewById<TextView>(R.id.cardGameTitle)?.text = title
+        view.findViewById<TextView>(R.id.cardGameEquipment)?.text = equipment
+        view.findViewById<TextView>(R.id.cardGameSetup)?.text = setup
+        view.findViewById<TextView>(R.id.cardGameHowToPlay)?.text = howToPlay
+
+        return view
     }
 
     companion object {
