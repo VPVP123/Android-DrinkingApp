@@ -3,45 +3,43 @@ package com.github.skosvall.nextlvl
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import com.google.firebase.firestore.FirebaseFirestore
 
-
-class PlayCardGamesActivity : AppCompatActivity() {
+class PlayLvLGamesActivity : AppCompatActivity() {
     companion object{
-        const val GAME_TO_START = "gameToStart"
-        const val RING_OF_FIRE = "ringOfFire"
-        const val FUCK_THE_DEALER = "fuckTheDealer"
-        const val THREE_TWO_ONE = "threeTwoOne"
+        const val GAME_TO_START = "gameToPlay"
+        const val BEERPONG = "beerpong"
+        const val GAS_GAS = "gasGas"
+        const val HORSE_RACE = "horseRace"
     }
 
     val db = FirebaseFirestore.getInstance()
 
-    val getCardGames321 = db.collection("cardGamesData").document("1-2-3").collection("english").document("texts")
-    val getCardGamesFuckTheDealer = db.collection("cardGamesData").document("fuckTheDealer").collection("english").document("texts")
-    val getCardGamesRingOfFire = db.collection("cardGamesData").document("ringOfFire").collection("english").document("texts")
-
+    val getLvLGamesBeerPong = db.collection("lvlGamesData").document("beerpong").collection("english").document("texts")
+    val getLvLGamesGasGas = db.collection("lvlGamesData").document("gasGas").collection("english").document("texts")
+    val getLvLGamesHourseRace = db.collection("lvlGamesData").document("horseRace").collection("english").document("texts")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_play_card_games)
+        setContentView(R.layout.activity_play_lvl_games)
+
+        val gameToPlay = intent.getStringExtra(GAME_TO_START)
 
         when (intent.getStringExtra(GAME_TO_START)){
-            RING_OF_FIRE -> startRingOfFire()
-            FUCK_THE_DEALER -> startFuckTheDealer()
-            THREE_TWO_ONE -> startThreeTwoOne()
+            BEERPONG -> startBeerpong()
+            GAS_GAS -> startGasGas()
+            HORSE_RACE -> startHorseRace()
         }
     }
-
-    fun startRingOfFire(){
+    private fun startBeerpong(){
         //Insert everything from firestore in fragment
-        getCardGames321.get()
+        getLvLGamesBeerPong.get()
                 .addOnSuccessListener { document ->
                     if(document != null){
                         Log.d("exist", "DocumentSnapshot data: ${document.data}")
 
                         supportFragmentManager.beginTransaction()
-                                .add(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance(document.getString("title") as String,
+                                .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(document.getString("title") as String,
                                         document.getString("shortDescription") as String,
                                         document.getString("sectionOneText") as String,
                                         document.getString("sectionTwoText") as String,
@@ -56,20 +54,20 @@ class PlayCardGamesActivity : AppCompatActivity() {
 
                 }
     }
-    fun startFuckTheDealer(){
+    private fun startGasGas(){
         //Insert everything from firestore in fragment
-        getCardGamesFuckTheDealer.get()
+        getLvLGamesGasGas.get()
                 .addOnSuccessListener { document ->
                     if(document != null){
                         Log.d("exist", "DocumentSnapshot data: ${document.data}")
 
                         supportFragmentManager.beginTransaction()
-                                .add(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance(document.getString("title") as String,
+                                .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(document.getString("title") as String,
                                         document.getString("shortDescription") as String,
                                         document.getString("sectionOneText") as String,
                                         document.getString("sectionTwoText") as String,
                                         document.getString("sectionThreeText") as String))
-                                .commit()
+                        .commit()
                     }else{
                         Log.d("noExist", "No document found")
                     }
@@ -79,20 +77,20 @@ class PlayCardGamesActivity : AppCompatActivity() {
 
                 }
     }
-    fun startThreeTwoOne(){
+    private fun startHorseRace(){
         //Insert everything from firestore in fragment
-        getCardGamesRingOfFire.get()
+        getLvLGamesHourseRace.get()
                 .addOnSuccessListener { document ->
                     if(document != null){
                         Log.d("exist", "DocumentSnapshot data: ${document.data}")
 
                         supportFragmentManager.beginTransaction()
-                                .add(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance(document.getString("title") as String,
+                                .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(document.getString("title") as String,
                                         document.getString("shortDescription") as String,
                                         document.getString("sectionOneText") as String,
                                         document.getString("sectionTwoText") as String,
                                         document.getString("sectionThreeText") as String))
-                                .commit()
+                                        .commit()
                     }else{
                         Log.d("noExist", "No document found")
                     }

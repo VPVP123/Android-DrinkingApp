@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".lvlGamesActivity">
+    tools:context=".LvLGamesActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,31 +13,43 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/beerpongButton"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:text="@string/beerpong"
             android:textAllCaps="false"
+            android:textSize="20dp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/gasGasButton"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:text="@string/gasgas"
             android:textAllCaps="false"
+            android:textSize="20dp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
         <Button
-            android:id="@+id/button8"
+            android:id="@+id/horseRaceButton"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:text="@string/horserace"
             android:textAllCaps="false"
+            android:textSize="20dp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/nextlvl_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

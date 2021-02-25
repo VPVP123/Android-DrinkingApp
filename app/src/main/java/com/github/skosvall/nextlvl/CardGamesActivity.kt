@@ -10,26 +10,19 @@ class CardGamesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_games)
 
-        val fuckTheDealerButton = findViewById<Button>(R.id.fuckTheDealerButton)
-        val ringOfFireButton = findViewById<Button>(R.id.ringOfFireButton)
-        val threeTwoOneButton = findViewById<Button>(R.id.threeTwoOneButton)
-
-        fuckTheDealerButton.setOnClickListener {
-            val intent = Intent(this, PlayCardGamesActivity::class.java)
-            intent.putExtra(PlayCardGamesActivity.GAME_TO_START, "FTD")
-            startActivity(intent)
+        findViewById<Button>(R.id.fuckTheDealerButton).setOnClickListener {
+            startGame(PlayCardGamesActivity.FUCK_THE_DEALER)
         }
-
-        ringOfFireButton.setOnClickListener {
-            val intent = Intent(this, PlayCardGamesActivity::class.java)
-            intent.putExtra(PlayCardGamesActivity.GAME_TO_START, "ROF")
-            startActivity(intent)
+        findViewById<Button>(R.id.ringOfFireButton).setOnClickListener {
+            startGame(PlayCardGamesActivity.RING_OF_FIRE)
         }
-
-        threeTwoOneButton.setOnClickListener {
-            val intent = Intent(this, PlayCardGamesActivity::class.java)
-            intent.putExtra(PlayCardGamesActivity.GAME_TO_START, "321")
-            startActivity(intent)
+        findViewById<Button>(R.id.threeTwoOneButton).setOnClickListener {
+            startGame(PlayCardGamesActivity.THREE_TWO_ONE)
         }
+    }
+    private fun startGame(gameToStart: String){
+        val intent = Intent(this, PlayCardGamesActivity::class.java)
+        intent.putExtra(PlayCardGamesActivity.GAME_TO_START, gameToStart)
+        startActivity(intent)
     }
 }
