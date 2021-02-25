@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NextLvL">
-        <activity android:name=".PlayCardGamesActivity"></activity>
+        <activity android:name=".PlayLvLGamesActivity"></activity>
+        <activity android:name=".PlayCardGamesActivity" />
         <activity
             android:name=".AddSubmissionActivity"
             android:label="@string/title_activity_add_submission">
@@ -34,7 +35,7 @@
         <activity android:name=".PlayNeverHaveIEverActivity" />
         <activity android:name=".SubmissionListActivity" />
         <activity android:name=".adminPanelActivity" />
-        <activity android:name=".lvlGamesActivity" />
+        <activity android:name=".LvLGamesActivity" />
         <activity android:name=".CardGamesActivity" />
         <activity android:name=".mobileGamesActivity" />
         <activity android:name=".LoginActivity" />

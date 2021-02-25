@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
         lvlGamesBtn.setOnClickListener {
-            val intent = Intent(this, lvlGamesActivity::class.java)
+            val intent = Intent(this, LvLGamesActivity::class.java)
             startActivity(
                 intent
             )
