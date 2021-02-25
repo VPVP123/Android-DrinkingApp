@@ -9,7 +9,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class PlayCardGamesActivity : AppCompatActivity() {
     companion object{
-        const val GAME_TO_START = "GAME_TO_START"
+        const val GAME_TO_START = "gameToStart"
+        const val RING_OF_FIRE = "ringOfFire"
+        const val FUCK_THE_DEALER = "fuckTheDealer"
+        const val THREE_TWO_ONE = "threeTwoOne"
     }
 
     val db = FirebaseFirestore.getInstance()
@@ -24,9 +27,9 @@ class PlayCardGamesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_play_card_games)
 
         when (intent.getStringExtra(GAME_TO_START)){
-            "ROF" -> startRingOfFire()
-            "FTD" -> startFuckTheDealer()
-            "321" -> startThreeTwoOne()
+            RING_OF_FIRE -> startRingOfFire()
+            FUCK_THE_DEALER -> startFuckTheDealer()
+            THREE_TWO_ONE -> startThreeTwoOne()
         }
     }
 
@@ -75,7 +78,6 @@ class PlayCardGamesActivity : AppCompatActivity() {
                     Log.d("errorDB", "get failed with ", exception)
 
                 }
-
     }
     fun startThreeTwoOne(){
         //Insert everything from firestore in fragment
