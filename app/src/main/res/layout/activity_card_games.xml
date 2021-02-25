@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:text="@string/fuckthedealer"
             android:textAllCaps="false"
+            android:textSize="20dp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:text="@string/ringoffire"
             android:textAllCaps="false"
+            android:textSize="20dp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
@@ -36,9 +38,19 @@
             android:layout_height="wrap_content"
             android:text="@string/_321"
             android:textAllCaps="false"
+            android:textSize="20dp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/nextlvl_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

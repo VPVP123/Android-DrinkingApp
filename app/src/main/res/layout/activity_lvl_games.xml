@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:text="@string/beerpong"
             android:textAllCaps="false"
+            android:textSize="20dp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:text="@string/gasgas"
             android:textAllCaps="false"
+            android:textSize="20dp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
@@ -36,8 +38,18 @@
             android:layout_height="wrap_content"
             android:text="@string/horserace"
             android:textAllCaps="false"
+            android:textSize="20dp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/nextlvl_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
