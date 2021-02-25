@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.google.firebase.firestore.FirebaseFirestore
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +27,7 @@ class CardGamesFragment : Fragment() {
     private var setup: String? = null
     private var howToPlay: String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,6 +36,12 @@ class CardGamesFragment : Fragment() {
             setup = it.getString(ARG_SETUP)
             howToPlay = it.getString(ARG_HOWTOPLAY)
         }
+
+        val titleTextView = view?.findViewById<TextView>(R.id.cardGameTitle)?.setText(title)
+        val equipmentTextView = view?.findViewById<TextView>(R.id.cardGameEquipment)?.setText(equipment)
+        val setupTextView = view?.findViewById<TextView>(R.id.cardGameSetup)?.setText(setup)
+        val howToPlayTextView = view?.findViewById<TextView>(R.id.cardGameHowToPlay)?.setText(howToPlay)
+
     }
 
     override fun onCreateView(

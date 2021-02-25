@@ -33,7 +33,7 @@
                 android:layout_marginTop="15dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
 
             <TextView
                 android:id="@+id/lvlGameSectionOneTitle"
