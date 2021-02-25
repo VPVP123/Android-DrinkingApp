@@ -4,15 +4,29 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.ProgressBar
+import androidx.core.view.isVisible
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.getField
 
 class SubmissionListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_submission)
+        val db = FirebaseFirestore.getInstance()
 
         val listView = this.findViewById<ListView>(R.id.submissionList)
+
+        val loadingSpinner = this.findViewById<ProgressBar>(R.id.progressBar)
+
+        loadingSpinner.visibility = View.VISIBLE;
+
+
+        val dareOrDrinkDb = db.collection("mobileGamesData").document("dareOrDrink")
 
         var adapter = ArrayAdapter<Submission>(
             this,
@@ -21,6 +35,27 @@ class SubmissionListActivity : AppCompatActivity() {
             submissionRepository.getAllSubmissions()
         )
         listView.adapter = adapter
+
+
+        dareOrDrinkDb.get()
+                .addOnSuccessListener { fields ->
+                    if(fields != null){
+                        val myArray = fields.get("questionSuggestions") as List<String>?
+                        if (myArray != null) {
+                            for(item in myArray){
+                                submissionRepository.addSubmission(item)
+                            }
+                            adapter.notifyDataSetChanged()
+                            loadingSpinner.visibility = View.INVISIBLE;
+                        }
+                    }else{
+                        Log.d("noExist", "No document found")
+                    }
+                }
+                .addOnFailureListener {exception ->
+                    Log.d("errorDB", "get failed with ", exception)
+
+                }
 
         listView.setOnItemClickListener {parent, view, position, id ->
 

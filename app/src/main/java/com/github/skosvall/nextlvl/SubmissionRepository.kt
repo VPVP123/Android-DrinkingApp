@@ -2,13 +2,7 @@ package com.github.skosvall.nextlvl
 
 
 val submissionRepository = SubmissionRepository().apply {
-    // Let's add two initial ToDos.
-    addSubmission(
-        "Give the cat a fish and the dog a cat."
-    )
-    addSubmission(
-        "Take a walk and listen to music."
-    )
+
 }
 
 
