@@ -24,6 +24,10 @@ class SubmissionRepository{
         return id
     }
 
+    fun clear(){
+        submissions.removeAll(submissions)
+    }
+
     fun getAllSubmissions() = submissions
 
     fun getSubmissionById(id: Int) =
