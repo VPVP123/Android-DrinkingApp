@@ -20,6 +20,11 @@
     <string name="addplayer">+ Lägg till spelare</string>
     <string name="start_game">Starta spel</string>
     <string name="next">Nästa</string>
+    <string name="currentLang">swedish</string>
+
+    <string name="what_is_needded">Vad som behövs</string>
+    <string name="setup">Setup</string>
+    <string name="how_to_play">Hur man spelar</string>
 
     <string-array name="sipArray">
         <item>1–3</item>

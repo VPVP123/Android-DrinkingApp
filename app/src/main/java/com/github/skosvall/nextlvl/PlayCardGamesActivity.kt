@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -17,14 +18,21 @@ class PlayCardGamesActivity : AppCompatActivity() {
 
     val db = FirebaseFirestore.getInstance()
 
-    val getCardGames321 = db.collection("cardGamesData").document("1-2-3").collection("english").document("texts")
-    val getCardGamesFuckTheDealer = db.collection("cardGamesData").document("fuckTheDealer").collection("english").document("texts")
-    val getCardGamesRingOfFire = db.collection("cardGamesData").document("ringOfFire").collection("english").document("texts")
+    lateinit var getCardGames123: DocumentReference
+    lateinit var getCardGamesFuckTheDealer: DocumentReference
+    lateinit var getCardGamesRingOfFire: DocumentReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_card_games)
+
+        //Set language
+        val currentLang = getString(R.string.currentLang)
+
+        getCardGames123 = db.collection("cardGamesData").document("1-2-3").collection(currentLang).document("texts")
+        getCardGamesFuckTheDealer = db.collection("cardGamesData").document("fuckTheDealer").collection(currentLang).document("texts")
+        getCardGamesRingOfFire = db.collection("cardGamesData").document("ringOfFire").collection(currentLang).document("texts")
 
         when (intent.getStringExtra(GAME_TO_START)){
             RING_OF_FIRE -> startRingOfFire()
@@ -35,7 +43,7 @@ class PlayCardGamesActivity : AppCompatActivity() {
 
     fun startRingOfFire(){
         //Insert everything from firestore in fragment
-        getCardGames321.get()
+        getCardGamesRingOfFire.get()
                 .addOnSuccessListener { document ->
                     if(document != null){
                         Log.d("exist", "DocumentSnapshot data: ${document.data}")
@@ -81,7 +89,7 @@ class PlayCardGamesActivity : AppCompatActivity() {
     }
     fun startThreeTwoOne(){
         //Insert everything from firestore in fragment
-        getCardGamesRingOfFire.get()
+        getCardGames123.get()
                 .addOnSuccessListener { document ->
                     if(document != null){
                         Log.d("exist", "DocumentSnapshot data: ${document.data}")
