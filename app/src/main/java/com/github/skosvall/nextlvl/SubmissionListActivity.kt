@@ -10,10 +10,16 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.getField
 
 class SubmissionListActivity : AppCompatActivity() {
+
+    lateinit var adapter: ArrayAdapter<Submission>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_submission)
@@ -25,17 +31,19 @@ class SubmissionListActivity : AppCompatActivity() {
 
         loadingSpinner.visibility = View.VISIBLE;
 
-
         val dareOrDrinkDb = db.collection("mobileGamesData").document("dareOrDrink")
 
-        var adapter = ArrayAdapter<Submission>(
-            this,
-            R.layout.submissionrow,
-            android.R.id.text1,
-            submissionRepository.getAllSubmissions()
+        adapter = ArrayAdapter<Submission>(
+                this,
+                R.layout.submissionrow,
+                android.R.id.text1,
+                submissionRepository.getAllSubmissions()
         )
+
         listView.adapter = adapter
 
+        submissionRepository.clear()
+        adapter.notifyDataSetChanged()
 
         dareOrDrinkDb.get()
                 .addOnSuccessListener { fields ->
@@ -65,9 +73,14 @@ class SubmissionListActivity : AppCompatActivity() {
             popUpError1.setTitle("Submission")
             popUpError1.setMessage("This is a test")
             popUpError1.setNeutralButton( "Submit") { dialog, which ->
+                db.collection("mobileGamesData").document("dareOrDrink").update("questionSuggestions", FieldValue.arrayRemove(submission.text) )
+                db.collection("mobileGamesData").document("dareOrDrink").update("questions", FieldValue.arrayUnion(submission.text) )
+                submissionRepository.deleteSubmissionById(submission.id)
+                adapter.notifyDataSetChanged()
                 dialog.dismiss()
             }
             popUpError1.setPositiveButton( "Remove") { dialog, which ->
+                db.collection("mobileGamesData").document("dareOrDrink").update("questionSuggestions", FieldValue.arrayRemove(submission.text) )
                 submissionRepository.deleteSubmissionById(submission.id)
                 adapter.notifyDataSetChanged()
                 dialog.dismiss()
@@ -82,5 +95,12 @@ class SubmissionListActivity : AppCompatActivity() {
             }
             popUpError1.show()
         }
+
     }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
+    }
+
 }
