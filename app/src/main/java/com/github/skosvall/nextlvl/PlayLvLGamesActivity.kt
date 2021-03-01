@@ -49,8 +49,11 @@ class PlayLvLGamesActivity : AppCompatActivity() {
                             supportFragmentManager.beginTransaction()
                                     .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(document.getString("title") as String,
                                             document.getString("shortDescription") as String,
+                                            document.getString("sectionOneTitle") as String,
                                             document.getString("sectionOneText") as String,
+                                            document.getString("sectionTwoTitle") as String,
                                             document.getString("sectionTwoText") as String,
+                                            document.getString("sectionThreeTitle") as String,
                                             document.getString("sectionThreeText") as String))
                                     .commit()
                         }else{
@@ -72,8 +75,11 @@ class PlayLvLGamesActivity : AppCompatActivity() {
                             supportFragmentManager.beginTransaction()
                                     .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(document.getString("title") as String,
                                             document.getString("shortDescription") as String,
+                                            document.getString("sectionOneTitle") as String,
                                             document.getString("sectionOneText") as String,
+                                            document.getString("sectionTwoTitle") as String,
                                             document.getString("sectionTwoText") as String,
+                                            document.getString("sectionThreeTitle") as String,
                                             document.getString("sectionThreeText") as String))
                                     .commit()
                         } else {
@@ -95,8 +101,11 @@ class PlayLvLGamesActivity : AppCompatActivity() {
                         supportFragmentManager.beginTransaction()
                                 .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(document.getString("title") as String,
                                         document.getString("shortDescription") as String,
+                                        document.getString("sectionOneTitle") as String,
                                         document.getString("sectionOneText") as String,
+                                        document.getString("sectionTwoTitle") as String,
                                         document.getString("sectionTwoText") as String,
+                                        document.getString("sectionThreeTitle") as String,
                                         document.getString("sectionThreeText") as String))
                                         .commit()
                     }else{
