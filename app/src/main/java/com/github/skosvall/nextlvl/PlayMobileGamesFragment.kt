@@ -25,7 +25,7 @@ private const val LIST_OF_QUESTIONS = "listOfQuestions"
  * create an instance of this fragment.
  */
 class PlayMobileGamesFragment : Fragment() {
-    lateinit var statements: List<String>
+    lateinit var statements: MutableList<String>
     lateinit var statementsCopy: MutableList<String>
 
     lateinit var questions: List<DareOrDrinkQuestion>
@@ -44,11 +44,19 @@ class PlayMobileGamesFragment : Fragment() {
         val getQuestions = db.collection("mobileGamesData").document("dareOrDrink")
         val getStatements = db.collection("mobileGamesData").document("neverHaveIEver")
 
+        statements = mutableListOf()
+
         //Get statements from
         getStatements.get()
             .addOnSuccessListener { statement ->
                 if(statement != null){
                     Log.d("exist", "DocumentSnapshot data: ${statement.data}")
+                    val myArray = statement.get("statements") as MutableList<String>
+                    if(myArray != null) {
+                        for(item in myArray){
+                            (statements.add(item) as String)
+                        }
+                    }
                 }else{
                     Log.d("noExist", "No document found")
                 }
@@ -71,10 +79,7 @@ class PlayMobileGamesFragment : Fragment() {
 
             }
 
-
-
-
-
+        /**
         statements = listOf("Never have I ever kissed a stranger",
             "Never have I ever taken a shower selfie",
             "Never have I ever been to a nude beach",
@@ -84,6 +89,7 @@ class PlayMobileGamesFragment : Fragment() {
             "Never have I ever lied about anything",
             "Never have I ever spied on a girl online",
             "Never have I ever been dumped")
+        **/
 
         questions = listOf(DareOrDrinkQuestion("1, tell everybody about you worst intimate experience, or drink four sips"),
                 DareOrDrinkQuestion("1, dance without music for one minute or drink three sips"),

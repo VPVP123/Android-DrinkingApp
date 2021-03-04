@@ -47,7 +47,6 @@ class PlayCardGamesActivity : AppCompatActivity() {
                 .addOnSuccessListener { document ->
                     if(document != null){
                         Log.d("exist", "DocumentSnapshot data: ${document.data}")
-
                         supportFragmentManager.beginTransaction()
                                 .add(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance(document.getString("title") as String,
                                         document.getString("shortDescription") as String,
@@ -104,7 +103,7 @@ class PlayCardGamesActivity : AppCompatActivity() {
                                 .add(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance(document.getString("title") as String,
                                         document.getString("shortDescription") as String,
                                         document.getString("sectionOneTitle") as String,
-                                        document.getString("sectionOneText") as String,
+                                        (document.getString("sectionOneText") as String).replace("\\n", "\n"),
                                         document.getString("sectionTwoTitle") as String,
                                         document.getString("sectionTwoText") as String,
                                         document.getString("sectionThreeTitle") as String,
