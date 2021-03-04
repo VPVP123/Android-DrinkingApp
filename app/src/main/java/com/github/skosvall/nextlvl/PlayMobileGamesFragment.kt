@@ -41,8 +41,10 @@ class PlayMobileGamesFragment : Fragment() {
 
         val db = FirebaseFirestore.getInstance()
 
-        val getQuestions = db.collection("mobileGamesData").document("dareOrDrink")
-        val getStatements = db.collection("mobileGamesData").document("neverHaveIEver")
+        val currentLang = getString(R.string.currentLang)
+
+        val getQuestions = db.collection("mobileGamesData").document("dareOrDrink").collection(currentLang).document("questions")
+        val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang).document("statements")
 
         statements = mutableListOf()
 
