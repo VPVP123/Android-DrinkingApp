@@ -42,61 +42,67 @@ class PlayMobileGamesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val db = FirebaseFirestore.getInstance()
-        
-        val getQuestions = db.collection("mobileGamesData").document("dareOrDrink")
-        val getStatements = db.collection("mobileGamesData").document("neverHaveIEver")
+        if(savedInstanceState == null) {
+            val db = FirebaseFirestore.getInstance()
 
-        statements = mutableListOf()
+            val getQuestions = db.collection("mobileGamesData").document("dareOrDrink")
+            val getStatements = db.collection("mobileGamesData").document("neverHaveIEver")
 
-        //Get statements from
-        getStatements.get()
-            .addOnSuccessListener { statement ->
-                if(statement != null){
-                    Log.d("exist", "DocumentSnapshot data: ${statement.data}")
-                    val myArray = statement.get("statements") as List<String>?
-                    if(myArray != null) {
-                        for(item in myArray){
-                            statements.add(item)
-                            loadingSpinner.visibility = View.INVISIBLE;
+            statements = mutableListOf()
+
+            //Get statements from
+            getStatements.get()
+                    .addOnSuccessListener { statement ->
+                        if (statement != null) {
+                            Log.d("exist", "DocumentSnapshot data: ${statement.data}")
+                            val myArray = statement.get("statements") as List<String>?
+                            if (myArray != null) {
+                                for (item in myArray) {
+                                    statements.add(item)
+                                    loadingSpinner.visibility = View.INVISIBLE;
+                                }
+                                statementsCopy = statements
+                                changeNeverHaveIEverStatement()
+                            }
+                        } else {
+                            Log.d("noExist", "No document found")
                         }
-                        statementsCopy = statements
-                        changeNeverHaveIEverStatement()
                     }
-                }else{
-                    Log.d("noExist", "No document found")
-                }
-            }
-            .addOnFailureListener {exception ->
-                Log.d("errorDB", "get failed with ", exception)
-            }
-
-        questions = mutableListOf()
-        getQuestions.get()
-            .addOnSuccessListener { question ->
-                if(question != null){
-                    Log.d("exist", "DocumentSnapshot data: ${question.data}")
-                    val myArray = question.get("questions") as List<String>?
-                    if(myArray != null) {
-                        for(item in myArray){
-                            var newQuestion = DareOrDrinkQuestion(item)
-                            (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
-                            loadingSpinner.visibility = View.INVISIBLE;
-                        }
-                        statementsCopy = statements
-                        changeNeverHaveIEverStatement()
+                    .addOnFailureListener { exception ->
+                        Log.d("errorDB", "get failed with ", exception)
                     }
 
-                    questionsCopy = questions.toMutableList()
-                    changeDareOrDrinkQuestion()
-                }else{
-                    Log.d("noExist", "No document found")
-                }
-            }
-            .addOnFailureListener {exception ->
-                Log.d("errorDB", "get failed with ", exception)
+            questions = mutableListOf()
+            getQuestions.get()
+                    .addOnSuccessListener { question ->
+                        if (question != null) {
+                            Log.d("exist", "DocumentSnapshot data: ${question.data}")
+                            val myArray = question.get("questions") as List<String>?
+                            if (myArray != null) {
+                                for (item in myArray) {
+                                    var newQuestion = DareOrDrinkQuestion(item)
+                                    (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
+                                    loadingSpinner.visibility = View.INVISIBLE;
+                                }
+                                statementsCopy = statements
+                                changeNeverHaveIEverStatement()
+                            }
 
-            }
+                            questionsCopy = questions.toMutableList()
+                            changeDareOrDrinkQuestion()
+                        } else {
+                            Log.d("noExist", "No document found")
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.d("errorDB", "get failed with ", exception)
+
+                    }
+        }else{
+            statements = savedInstanceState.getStringArray(STATEMENTS) as MutableList<String>
+            questions = savedInstanceState.getParcelableArray(QUESTIONS) as MutableList<DareOrDrinkQuestion>
+            players = savedInstanceState.getStringArray(PLAYER_NAMES) as MutableList<String>
+        }
 
         /**
         statements = listOf("Never have I ever kissed a stranger",
@@ -134,6 +140,13 @@ class PlayMobileGamesFragment : Fragment() {
             }
         }
         return view
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putStringArray(STATEMENTS, statements.toTypedArray())
+        outState.putParcelableArray(QUESTIONS, questions.toTypedArray())
+        outState.putStringArray(PLAYER_NAMES, players.toTypedArray())
     }
 
     private fun nextButtonClick(){
@@ -188,6 +201,9 @@ class PlayMobileGamesFragment : Fragment() {
     }
 
     companion object {
+        const val STATEMENTS = "STATEMENTS"
+        const val QUESTIONS = "QUESTIONS"
+        const val PLAYER_NAMES = "PLAYER_NAMES"
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
