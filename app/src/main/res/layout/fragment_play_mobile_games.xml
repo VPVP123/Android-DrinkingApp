@@ -29,15 +29,25 @@
             android:layout_centerInParent="true"
             android:gravity="center_horizontal">
 
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
             <TextView
                 android:id="@+id/statementTextview"
                 android:layout_width="280dp"
                 android:layout_height="180dp"
                 android:background="@drawable/rounded_corner_textview"
                 android:gravity="center"
-                android:text="This is a statement"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
+                <ProgressBar
+                    android:id="@+id/progressSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
 
             <Button
                 android:id="@+id/neverHaveIEverNextButton"
