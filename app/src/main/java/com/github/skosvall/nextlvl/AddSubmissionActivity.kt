@@ -16,7 +16,6 @@ class AddSubmissionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_submission)
 
-
         val db = FirebaseFirestore.getInstance()
 
         val spinner: Spinner = findViewById(R.id.sip_spinner)
@@ -33,19 +32,13 @@ class AddSubmissionActivity : AppCompatActivity() {
         }
 
 
+
         val submissionTextField = this.findViewById<EditText>(R.id.addSubmissionText)
         val buttonSubmit = this.findViewById<Button>(R.id.buttonSubmit)
-
 
         buttonSubmit.setOnClickListener{
             val submission = submissionTextField.editableText.toString()
             db.collection("mobileGamesData").document("dareOrDrink").update("questionSuggestions", FieldValue.arrayUnion(submission) )
         }
-
-
-
-
-
-
     }
 }
