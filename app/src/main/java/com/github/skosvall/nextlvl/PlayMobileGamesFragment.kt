@@ -43,7 +43,7 @@ class PlayMobileGamesFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         val db = FirebaseFirestore.getInstance()
-        
+
         val getQuestions = db.collection("mobileGamesData").document("dareOrDrink")
         val getStatements = db.collection("mobileGamesData").document("neverHaveIEver")
 
