@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.stream.IntStream.range
+import kotlin.properties.Delegates
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,6 +35,7 @@ class PlayMobileGamesFragment : Fragment() {
     lateinit var players: List<String>
     lateinit var playersCopy: MutableList<String>
 
+    lateinit var loadingSpinner: ProgressBar
     lateinit var textView: TextView
     lateinit var nextButton: Button
 
@@ -53,11 +56,14 @@ class PlayMobileGamesFragment : Fragment() {
             .addOnSuccessListener { statement ->
                 if(statement != null){
                     Log.d("exist", "DocumentSnapshot data: ${statement.data}")
-                    val myArray = statement.get("statements") as MutableList<String>
+                    val myArray = statement.get("statements") as List<String>?
                     if(myArray != null) {
                         for(item in myArray){
-                            (statements.add(item) as String)
+                            statements.add(item)
+                            loadingSpinner.visibility = View.INVISIBLE;
                         }
+                        statementsCopy = statements
+                        changeNeverHaveIEverStatement()
                     }
                 }else{
                     Log.d("noExist", "No document found")
@@ -65,13 +71,26 @@ class PlayMobileGamesFragment : Fragment() {
             }
             .addOnFailureListener {exception ->
                 Log.d("errorDB", "get failed with ", exception)
-
             }
 
+        questions = mutableListOf()
         getQuestions.get()
             .addOnSuccessListener { question ->
                 if(question != null){
                     Log.d("exist", "DocumentSnapshot data: ${question.data}")
+                    val myArray = question.get("questions") as List<String>?
+                    if(myArray != null) {
+                        for(item in myArray){
+                            var newQuestion = DareOrDrinkQuestion(item)
+                            (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
+                            loadingSpinner.visibility = View.INVISIBLE;
+                        }
+                        statementsCopy = statements
+                        changeNeverHaveIEverStatement()
+                    }
+
+                    questionsCopy = questions.toMutableList()
+                    changeDareOrDrinkQuestion()
                 }else{
                     Log.d("noExist", "No document found")
                 }
@@ -92,12 +111,12 @@ class PlayMobileGamesFragment : Fragment() {
             "Never have I ever spied on a girl online",
             "Never have I ever been dumped")
         **/
-
+        /**
         questions = listOf(DareOrDrinkQuestion("1, tell everybody about you worst intimate experience, or drink four sips"),
                 DareOrDrinkQuestion("1, dance without music for one minute or drink three sips"),
                 DareOrDrinkQuestion("1, let 2 DM whoever they want from your instagram account, or drink three sips"),
                 DareOrDrinkQuestion("1, show everyone the last thing you searched for, or drink three sips"))
-
+         **/
         players = listOf("Fich", "Hugo", "vp")
     }
 
@@ -107,17 +126,11 @@ class PlayMobileGamesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_play_mobile_games, container, false)
         textView = view.findViewById<TextView>(R.id.statementTextview)
         nextButton = view.findViewById<Button>(R.id.neverHaveIEverNextButton)
+        loadingSpinner = view.findViewById<ProgressBar>(R.id.progressSpinner)
+
+        loadingSpinner.visibility = View.VISIBLE;
 
         if(textView != null && nextButton != null){
-            if(activity is PlayNeverHaveIEverActivity){
-                statementsCopy = statements.toMutableList() //Copy list
-                changeNeverHaveIEverStatement()
-            }else if(activity is PlayDareOrDrinkActivity){
-
-                questionsCopy = questions.toMutableList()
-                changeDareOrDrinkQuestion()
-            }
-
             nextButton.setOnClickListener {
                 nextButtonClick()
             }

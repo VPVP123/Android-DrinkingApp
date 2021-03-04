@@ -3,7 +3,9 @@ package com.github.skosvall.nextlvl
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.transition.TransitionManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
@@ -17,60 +19,81 @@ import kotlin.random.Random
 
 
 class PrepareDareOrDrinkActivity : AppCompatActivity() {
+    lateinit var chipGroup: ChipGroup
+    lateinit var addPlayerEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_prepare_dare_or_drink)
 
         val buttonAdd = findViewById<Button>(R.id.addButton) as Button
-        val chipGroup = findViewById<ChipGroup>(R.id.chipGroup) as ChipGroup
+        chipGroup = findViewById<ChipGroup>(R.id.chipGroup) as ChipGroup
         val startGameButton = findViewById<Button>(R.id.startGameButton) as Button
+        addPlayerEditText = findViewById<EditText>(R.id.playerName) as EditText
+
+        if(savedInstanceState != null){
+            Log.d("Info: ", "Recreating activity")
+            savedInstanceState.getStringArray("ADDED_PLAYER_NAMES")?.forEach {
+                Log.d("Playername", it)
+                addChipToChipgroup(it)
+            }
+        }
 
         buttonAdd.setOnClickListener{
-            // Initialize a new chip instance
-            val playerNameText = findViewById<EditText>(R.id.playerName) as EditText
-
-            val chip = Chip(this)
-            chip.text = playerNameText.text.toString()
-
-            // Set the chip icon
-            //chip.chipIcon = ContextCompat.getDrawable(this,R.drawable.ic_action_android)
-            //chip.setChipIconTintResource(R.color.abc_search_url_text)
-
-            // Make the chip clickable
-            chip.isClickable = true
-            chip.isCheckable = false
-
-            // Show the chip icon in chip
-            chip.isCloseIconVisible = true
-
-            // Set the chip click listener
-            chip.setOnClickListener{
-                toast("Clicked: ${chip.text}")
-            }
-
-            // Set chip close icon click listener
-            chip.setOnCloseIconClickListener{
-                // Smoothly remove chip from chip group
-                TransitionManager.beginDelayedTransition(chipGroup)
-                chipGroup.removeView(chip)
-            }
-
-            // Finally, add the chip to chip group
-            chipGroup.addView(chip)
+            addChipToChipgroup(addPlayerEditText.text.toString())
         }
 
         startGameButton.setOnClickListener {
-            val playerNames = mutableListOf<String>()
-            chipGroup.forEach {
-                playerNames.add((it as Chip).text.toString())
-            }
             val intent = Intent(this, PlayDareOrDrinkActivity::class.java)
-            intent.putExtra(PlayDareOrDrinkActivity.PLAYER_NAMES, playerNames.toTypedArray())
+            intent.putExtra(PlayDareOrDrinkActivity.PLAYER_NAMES, getPlayerNames().toTypedArray())
             startActivity(intent)
         }
     }
 
+    private fun addChipToChipgroup(nameToAdd: String){
+        // Initialize a new chip instance
+        val chip = Chip(this)
+        chip.text = nameToAdd
+
+        // Set the chip icon
+        //chip.chipIcon = ContextCompat.getDrawable(this,R.drawable.ic_action_android)
+        //chip.setChipIconTintResource(R.color.abc_search_url_text)
+
+        // Make the chip clickable
+        chip.isClickable = true
+        chip.isCheckable = false
+
+        // Show the chip icon in chip
+        chip.isCloseIconVisible = true
+
+        // Set the chip click listener
+        chip.setOnClickListener{
+            toast("Clicked: ${chip.text}")
+        }
+
+        // Set chip close icon click listener
+        chip.setOnCloseIconClickListener{
+            // Smoothly remove chip from chip group
+            TransitionManager.beginDelayedTransition(chipGroup)
+            chipGroup.removeView(chip)
+        }
+
+        // Finally, add the chip to chip group
+        chipGroup.addView(chip)
+    }
+
+    private fun getPlayerNames() : MutableList<String>{
+        val playerNames = mutableListOf<String>()
+        chipGroup.forEach {
+            playerNames.add((it as Chip).text.toString())
+        }
+        return playerNames
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putStringArray("ADDED_PLAYER_NAMES", getPlayerNames().toTypedArray())
+    }
 }
 
 
