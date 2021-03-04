@@ -52,49 +52,59 @@ class PlayMobileGamesFragment : Fragment() {
             val getQuestions = db.collection("mobileGamesData").document("dareOrDrink").collection(currentLang).document("questions")
             val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang).document("statements")
 
-            statements = mutableListOf()
+
 
             //Get statements from
-            getStatements.get()
-                .addOnSuccessListener { statement ->
-                    if (statement != null) {
-                        Log.d("exist", "DocumentSnapshot data: ${statement.data}")
-                        val myArray = statement.get("statements") as List<String>?
-                        if (myArray != null) {
-                            for (item in myArray) {
-                                statements.add(item)
-                                loadingSpinner.visibility = View.INVISIBLE;
+            if(activity is PlayNeverHaveIEverActivity) {
+                statements = mutableListOf()
+                statementsCopy = mutableListOf()
+
+                getStatements.get()
+                        .addOnSuccessListener { statement ->
+                            if (statement != null) {
+                                Log.d("exist", "DocumentSnapshot data: ${statement.data}")
+                                val myArray = statement.get("statements") as List<String>?
+                                if (myArray != null) {
+                                    for (item in myArray) {
+                                        statements.add(item)
+                                        loadingSpinner.visibility = View.INVISIBLE;
+                                    }
+                                    statementsCopy = statements.toMutableList()
+                                    changeNeverHaveIEverStatement()
+                                    nextButtonClick()
+                                }
                             }
                         }
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("errorDB", "get failed with ", exception)
-                }
-
-            questions = mutableListOf()
-            getQuestions.get()
-                .addOnSuccessListener { question ->
-                    if (question != null) {
-                        Log.d("exist", "DocumentSnapshot data: ${question.data}")
-                        val myArray = question.get("questions") as List<String>?
-                        if (myArray != null) {
-                            for (item in myArray) {
-                                var newQuestion = DareOrDrinkQuestion(item)
-                                (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
-                                loadingSpinner.visibility = View.INVISIBLE;
-                            }
-                            questionsCopy = questions.toMutableList()
-                            changeDareOrDrinkQuestion()
+                        .addOnFailureListener { exception ->
+                            Log.d("errorDB", "get failed with ", exception)
                         }
-                    } else {
-                        Log.d("noExist", "No document found")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("errorDB", "get failed with ", exception)
+            }else if(activity is PlayDareOrDrinkActivity) {
+                questions = mutableListOf()
+                questionsCopy = mutableListOf()
 
-                }
+                getQuestions.get()
+                        .addOnSuccessListener { question ->
+                            if (question != null) {
+                                Log.d("exist", "DocumentSnapshot data: ${question.data}")
+                                val myArray = question.get("questions") as List<String>?
+                                if (myArray != null) {
+                                    for (item in myArray) {
+                                        var newQuestion = DareOrDrinkQuestion(item)
+                                        (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
+                                        loadingSpinner.visibility = View.INVISIBLE;
+                                    }
+                                    questionsCopy = questions.toMutableList()
+                                    changeDareOrDrinkQuestion()
+                                }
+                            } else {
+                                Log.d("noExist", "No document found")
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.d("errorDB", "get failed with ", exception)
+
+                        }
+            }
         }else{
             statements = savedInstanceState.getStringArray(STATEMENTS) as MutableList<String>
             questions = savedInstanceState.getParcelableArray(QUESTIONS) as MutableList<DareOrDrinkQuestion>
