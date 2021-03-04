@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         //Secret admin login panel
         val FIVE_SECONDS = 5 * 1000 // 5s * 1000 ms/s
+        val ONE_SECOND = 1 * 1000
 
         var fiveFingerDownTime: Long = -1
 
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                         fiveFingerDownTime = -1
                     }
                     val now = System.currentTimeMillis()
-                    if (now - fiveFingerDownTime > FIVE_SECONDS && fiveFingerDownTime != -1L) {
+                    if (now - fiveFingerDownTime >= ONE_SECOND && fiveFingerDownTime != -1L) {
                         // Five fingers have been down for 5 seconds!
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(
