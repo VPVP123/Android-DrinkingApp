@@ -16,14 +16,17 @@ class PlayDareOrDrinkActivity : AppCompatActivity() {
 
         if(savedInstanceState == null) {
             players = intent.getStringArrayExtra(PLAYER_NAMES) as Array<String>
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.dareOrDrinkFrameLayout, PlayMobileGamesFragment())
+                .commit()
         }else{
             players = savedInstanceState.getStringArray(PLAYER_NAMES) as Array<String>
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.dareOrDrinkFrameLayout, PlayMobileGamesFragment())
+                .commit()
         }
-
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.dareOrDrinkFrameLayout, PlayMobileGamesFragment())
-            .commit()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
