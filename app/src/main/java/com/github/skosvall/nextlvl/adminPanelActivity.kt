@@ -22,7 +22,7 @@ class adminPanelActivity : AppCompatActivity() {
 
         buttonSubmission.setOnClickListener{
             startActivity(
-                Intent(this, SubmissionListActivity::class.java)
+                Intent(this, chooseSubmissionActivity::class.java)
             )
         }
 

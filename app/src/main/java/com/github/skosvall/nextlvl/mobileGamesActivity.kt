@@ -34,21 +34,13 @@ class mobileGamesActivity : AppCompatActivity() {
         })
 
 
-
-
-
         DOR_Btn.setOnClickListener {
             val intent = Intent(this, PrepareDareOrDrinkActivity::class.java)
             startActivity(
                     intent
             )
-
-            val neverHaveIEverButton = findViewById<Button>(R.id.neverHaveIEverButton)
-            neverHaveIEverButton.setOnClickListener {
-                startActivity(Intent(this, PlayNeverHaveIEverActivity::class.java))
-            }
-
         }
+
         neverHaveIEverButton.setOnClickListener {
             startActivity(Intent(this, PlayNeverHaveIEverActivity::class.java))
         }

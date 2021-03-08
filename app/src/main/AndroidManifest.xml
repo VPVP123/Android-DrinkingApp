@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NextLvL">
-        <activity android:name=".PlayLvLGamesActivity"></activity>
+        <activity android:name=".chooseSubmissionActivity"></activity>
+        <activity android:name=".PlayLvLGamesActivity" />
         <activity android:name=".PlayCardGamesActivity" />
         <activity
             android:name=".AddSubmissionActivity"

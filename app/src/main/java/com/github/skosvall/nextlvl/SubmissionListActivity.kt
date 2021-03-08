@@ -28,66 +28,148 @@ class SubmissionListActivity : AppCompatActivity() {
         val listView = this.findViewById<ListView>(R.id.submissionList)
 
         val loadingSpinner = this.findViewById<ProgressBar>(R.id.progressBar)
+        val currentLang = getString(R.string.currentLang)
 
         loadingSpinner.visibility = View.VISIBLE;
 
-        val dareOrDrinkDb = db.collection("mobileGamesData").document("dareOrDrink")
+        val gameType = intent.getStringExtra("gameType")
 
-        adapter = ArrayAdapter<Submission>(
+        if (gameType == chooseSubmissionActivity.DOR) {
+            val dareOrDrinkDbEng =
+                db.collection("mobileGamesData").document("dareOrDrink").collection("english")
+                    .document("questions")
+            val dareOrDrinkDbSwe =
+                db.collection("mobileGamesData").document("dareOrDrink").collection("swedish")
+                    .document("questions")
+            adapter = ArrayAdapter<Submission>(
                 this,
                 R.layout.submissionrow,
                 android.R.id.text1,
                 submissionRepository.getAllSubmissions()
-        )
+            )
 
-        listView.adapter = adapter
+            listView.adapter = adapter
 
-        submissionRepository.clear()
-        adapter.notifyDataSetChanged()
+            submissionRepository.clear()
+            adapter.notifyDataSetChanged()
 
-        dareOrDrinkDb.get()
+            dareOrDrinkDbEng.get()
                 .addOnSuccessListener { fields ->
-                    if(fields != null){
+                    if (fields != null) {
                         val myArray = fields.get("questionSuggestions") as List<String>?
                         if (myArray != null) {
-                            for(item in myArray){
-                                submissionRepository.addSubmission(item)
+                            for (item in myArray) {
+                                submissionRepository.addSubmission(item, "english")
                             }
                             adapter.notifyDataSetChanged()
-                            loadingSpinner.visibility = View.INVISIBLE;
                         }
-                    }else{
+                    } else {
                         Log.d("noExist", "No document found")
                     }
+                    dareOrDrinkDbSwe.get()
+                        .addOnSuccessListener { fields ->
+                            if (fields != null) {
+                                val myArray = fields.get("questionSuggestions") as List<String>?
+                                if (myArray != null) {
+                                    for (item in myArray) {
+                                        submissionRepository.addSubmission(item, "swedish")
+                                    }
+                                    adapter.notifyDataSetChanged()
+                                    loadingSpinner.visibility = View.INVISIBLE
+                                }
+                            } else {
+                                Log.d("noExist", "No document found")
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.d("errorDB", "get failed with ", exception)
+                        }
                 }
-                .addOnFailureListener {exception ->
+                .addOnFailureListener { exception ->
                     Log.d("errorDB", "get failed with ", exception)
-
                 }
 
-        listView.setOnItemClickListener {parent, view, position, id ->
+        } else if (gameType == chooseSubmissionActivity.NHIE) {
+            val neverHaveIEverDbEng =
+                db.collection("mobileGamesData").document("neverHaveIEver").collection("english")
+                    .document("statements")
+            val neverHaveIEverDbSwe =
+                db.collection("mobileGamesData").document("neverHaveIEver").collection("swedish")
+                    .document("statements")
+
+            adapter = ArrayAdapter<Submission>(
+                this,
+                R.layout.submissionrow,
+                android.R.id.text1,
+                submissionRepository.getAllSubmissions()
+            )
+
+            listView.adapter = adapter
+
+            submissionRepository.clear()
+            adapter.notifyDataSetChanged()
+
+            neverHaveIEverDbEng.get()
+                .addOnSuccessListener { fields ->
+                    if (fields != null) {
+                        val myArray = fields.get("statementSuggestions") as List<String>?
+                        if (myArray != null) {
+                            for (item in myArray) {
+                                submissionRepository.addSubmission(item, "english")
+                            }
+                            adapter.notifyDataSetChanged()
+                        }
+                    } else {
+                        Log.d("noExist", "No document found")
+                    }
+                    neverHaveIEverDbSwe.get()
+                        .addOnSuccessListener { fields ->
+                            if (fields != null) {
+                                val myArray = fields.get("statementSuggestions") as List<String>?
+                                if (myArray != null) {
+                                    for (item in myArray) {
+                                        submissionRepository.addSubmission(item, "swedish")
+                                        loadingSpinner.visibility = View.INVISIBLE
+                                    }
+                                    adapter.notifyDataSetChanged()
+
+                                }
+                            } else {
+                                Log.d("noExist", "No document found")
+                            }
+                        }.addOnFailureListener { exception ->
+                            Log.d("errorDB", "get failed with ", exception)
+                        }
+                }.addOnFailureListener { exception ->
+                    Log.d("errorDB", "get failed with ", exception)
+                }
+        }
+
+        listView.setOnItemClickListener { parent, view, position, id ->
 
             val submission = listView.adapter.getItem(position) as Submission
 
             val popUpError1 = AlertDialog.Builder(this)
             popUpError1.setTitle("Submission")
             popUpError1.setMessage("This is a test")
-            popUpError1.setNeutralButton( "Submit") { dialog, which ->
-                db.collection("mobileGamesData").document("dareOrDrink").update("questionSuggestions", FieldValue.arrayRemove(submission.text) )
-                db.collection("mobileGamesData").document("dareOrDrink").update("questions", FieldValue.arrayUnion(submission.text) )
+            popUpError1.setPositiveButton("Remove") { dialog, which ->
+                if (gameType == chooseSubmissionActivity.DOR) {
+                    db.collection("mobileGamesData").document("dareOrDrink")
+                        .collection(submission.lang).document("questions")
+                        .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
+                } else if (gameType == chooseSubmissionActivity.NHIE) {
+                    db.collection("mobileGamesData").document("neverHaveIEver")
+                        .collection(submission.lang).document("statements")
+                        .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
+                }
                 submissionRepository.deleteSubmissionById(submission.id)
                 adapter.notifyDataSetChanged()
                 dialog.dismiss()
             }
-            popUpError1.setPositiveButton( "Remove") { dialog, which ->
-                db.collection("mobileGamesData").document("dareOrDrink").update("questionSuggestions", FieldValue.arrayRemove(submission.text) )
-                submissionRepository.deleteSubmissionById(submission.id)
-                adapter.notifyDataSetChanged()
-                dialog.dismiss()
-            }
-            popUpError1.setNegativeButton( "Edit") { dialog, which ->
+            popUpError1.setNegativeButton("Edit/Submit") { dialog, which ->
                 val intent = Intent(this, EditSubmissionActivity::class.java)
                 intent.putExtra("submissionId", submission.id)
+                intent.putExtra("gameType", gameType)
                 startActivity(
                     intent
                 )
@@ -95,9 +177,7 @@ class SubmissionListActivity : AppCompatActivity() {
             }
             popUpError1.show()
         }
-
     }
-
     override fun onResume() {
         super.onResume()
         adapter.notifyDataSetChanged()
