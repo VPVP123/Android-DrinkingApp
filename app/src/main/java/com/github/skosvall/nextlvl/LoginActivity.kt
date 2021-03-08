@@ -77,6 +77,7 @@ class LoginActivity : AppCompatActivity() {
         googleLogin.setOnClickListener{
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .build()
 
             // Build a GoogleSignInClient with the options specified by gso.
@@ -111,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
                             val currentUser = auth.currentUser
                             val currentUserEmail = auth.currentUser.email
 
-                            if(currentUser != null && currentUserEmail == "ADMIN EMAIL HERE")
+                            if(currentUser != null && currentUserEmail == "hugo.martinsson01@gmail.com")
                             startActivity(
                                 Intent(this, adminPanelActivity::class.java)
                             )else{
