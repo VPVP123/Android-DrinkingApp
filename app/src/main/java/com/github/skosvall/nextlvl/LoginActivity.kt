@@ -100,7 +100,6 @@ class LoginActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-        var userEmail: String?
 
         try{
             val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
@@ -109,9 +108,22 @@ class LoginActivity : AppCompatActivity() {
                 auth.signInWithCredential(GoogleAuthProvider.getCredential(token, null))
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
+                            val currentUser = auth.currentUser
+                            val currentUserEmail = auth.currentUser.email
+
+                            if(currentUser != null && currentUserEmail == "ADMIN EMAIL HERE")
                             startActivity(
                                 Intent(this, adminPanelActivity::class.java)
-                            )
+                            )else{
+                                val popUpError1 = AlertDialog.Builder(this)
+                                popUpError1.setTitle("Login failed")
+                                popUpError1.setMessage("The email and/or password you entered is incorrect")
+                                popUpError1.setPositiveButton("Ok") { dialog, which ->
+                                    dialog.dismiss()
+                                }
+                                popUpError1.show()
+                                FirebaseAuth.getInstance().signOut()
+                            }
                         } else {
                             val popUpError1 = AlertDialog.Builder(this)
                             popUpError1.setTitle("Login failed")
