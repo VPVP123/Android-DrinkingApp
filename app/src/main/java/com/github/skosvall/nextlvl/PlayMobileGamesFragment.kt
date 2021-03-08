@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
+import org.w3c.dom.Text
 import java.util.stream.IntStream.range
 import kotlin.properties.Delegates
 
@@ -46,77 +47,93 @@ class PlayMobileGamesFragment : Fragment() {
 
         val currentLang = getString(R.string.currentLang)
 
-        val getQuestions = db.collection("mobileGamesData").document("dareOrDrink").collection(currentLang).document("questions")
-        val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang).document("statements")
-
-        statements = mutableListOf()
-
         //Get statements from
-        getStatements.get()
-            .addOnSuccessListener { statement ->
-                if(statement != null){
-                    Log.d("exist", "DocumentSnapshot data: ${statement.data}")
-                    val myArray = statement.get("statements") as List<String>?
-                    if(myArray != null) {
-                        for(item in myArray){
-                            statements.add(item)
-                            loadingSpinner.visibility = View.INVISIBLE;
+        if(activity is PlayNeverHaveIEverActivity) {
+            val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang).document("statements")
+
+            statements = mutableListOf()
+            statementsCopy = mutableListOf()
+
+            getStatements.get()
+                .addOnSuccessListener { statement ->
+                    if (statement != null) {
+                        Log.d("exist", "DocumentSnapshot data: ${statement.data}")
+                        val myArray = statement.get("statements") as List<String>?
+                        if (myArray != null) {
+                            for (item in myArray) {
+                                statements.add(item)
+                                loadingSpinner.visibility = View.INVISIBLE;
+                            }
+                            statementsCopy = statements.toMutableList()
+                            statementsCopy.shuffle()
+                            if(savedInstanceState == null) {
+                                changeNeverHaveIEverStatement()
+                            }else{
+                                val previousLang = savedInstanceState.getString(PREVIOUS_LANGUAGE)
+                                val currentLang = getString(R.string.currentLang)
+                                if(previousLang == currentLang){
+                                    val text = savedInstanceState.getString(CURRENT_STATEMENT)
+                                    statementsCopy.add(text as String)
+                                }
+                                changeNeverHaveIEverStatement()
+                            }
                         }
-                        statementsCopy = statements
-                        changeNeverHaveIEverStatement()
                     }
-                }else{
-                    Log.d("noExist", "No document found")
                 }
-            }
-            .addOnFailureListener {exception ->
-                Log.d("errorDB", "get failed with ", exception)
-            }
+                .addOnFailureListener { exception ->
+                    Log.d("errorDB", "get failed with ", exception)
+                }
+        }else if(activity is PlayDareOrDrinkActivity) {
+            val getQuestions = db.collection("mobileGamesData").document("dareOrDrink").collection(currentLang).document("questions")
 
-        questions = mutableListOf()
-        getQuestions.get()
-            .addOnSuccessListener { question ->
-                if(question != null){
-                    Log.d("exist", "DocumentSnapshot data: ${question.data}")
-                    val myArray = question.get("questions") as List<String>?
-                    if(myArray != null) {
-                        for(item in myArray){
-                            var newQuestion = DareOrDrinkQuestion(item)
-                            (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
-                            loadingSpinner.visibility = View.INVISIBLE;
+            questions = mutableListOf()
+            questionsCopy = mutableListOf()
+
+            getQuestions.get()
+                .addOnSuccessListener { question ->
+                    if (question != null) {
+                        Log.d("exist", "DocumentSnapshot data: ${question.data}")
+                        val myArray = question.get("questions") as List<String>?
+                        if (myArray != null) {
+                            for (item in myArray) {
+                                var newQuestion = DareOrDrinkQuestion(item)
+                                (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
+                                loadingSpinner.visibility = View.INVISIBLE;
+                            }
+                            questionsCopy = questions.toMutableList()
+                            questionsCopy.shuffle()
+                            if(savedInstanceState == null) {
+                                changeDareOrDrinkQuestion()
+                            }else{
+                                val previousLang = savedInstanceState?.getString(PREVIOUS_LANGUAGE)
+                                val currentLang = getString(R.string.currentLang)
+                                if(previousLang == currentLang) {
+                                    val question = savedInstanceState?.getParcelable<DareOrDrinkQuestion>(CURRENT_QUESTION)
+                                    questionsCopy.add(question as DareOrDrinkQuestion)
+                                }
+                                changeDareOrDrinkQuestion()
+                            }
                         }
-                        statementsCopy = statements
-                        changeNeverHaveIEverStatement()
+                    } else {
+                        Log.d("noExist", "No document found")
                     }
-
-                    questionsCopy = questions.toMutableList()
-                    changeDareOrDrinkQuestion()
-                }else{
-                    Log.d("noExist", "No document found")
                 }
-            }
-            .addOnFailureListener {exception ->
-                Log.d("errorDB", "get failed with ", exception)
+                .addOnFailureListener { exception ->
+                    Log.d("errorDB", "get failed with ", exception)
+                }
+        }
+        if(savedInstanceState == null) {
 
-            }
+        }else{
+            if(activity is PlayNeverHaveIEverActivity){
 
-        /**
-        statements = listOf("Never have I ever kissed a stranger",
-            "Never have I ever taken a shower selfie",
-            "Never have I ever been to a nude beach",
-            "Never have I ever been to Spain",
-            "Never have I ever slept in the buff",
-            "Never have I ever worn speedos",
-            "Never have I ever lied about anything",
-            "Never have I ever spied on a girl online",
-            "Never have I ever been dumped")
-        **/
-        /**
-        questions = listOf(DareOrDrinkQuestion("1, tell everybody about you worst intimate experience, or drink four sips"),
-                DareOrDrinkQuestion("1, dance without music for one minute or drink three sips"),
-                DareOrDrinkQuestion("1, let 2 DM whoever they want from your instagram account, or drink three sips"),
-                DareOrDrinkQuestion("1, show everyone the last thing you searched for, or drink three sips"))
-         **/
+                //statements = savedInstanceState.getStringArray(STATEMENTS)!!.toMutableList()
+            }else if(activity is PlayDareOrDrinkActivity){
+                //questions = savedInstanceState.getParcelableArray(QUESTIONS) as MutableList<DareOrDrinkQuestion>
+            }
+            players = savedInstanceState.getStringArray(PLAYER_NAMES)!!.toMutableList()
+        }
+
         players = listOf("Fich", "Hugo", "vp")
     }
 
@@ -138,6 +155,17 @@ class PlayMobileGamesFragment : Fragment() {
         return view
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if(statements is MutableList<String>){
+            outState.putString(CURRENT_STATEMENT, textView.text as String)
+        }else if(questions is MutableList<DareOrDrinkQuestion>){
+            outState.putString(CURRENT_QUESTION, textView.text as String)
+        }
+        outState.putStringArray(PLAYER_NAMES, players.toTypedArray())
+        outState.putString(PREVIOUS_LANGUAGE, getString(R.string.currentLang))
+    }
+
     private fun nextButtonClick(){
         if(activity is PlayNeverHaveIEverActivity){
             changeNeverHaveIEverStatement()
@@ -147,11 +175,12 @@ class PlayMobileGamesFragment : Fragment() {
     }
 
     private fun changeNeverHaveIEverStatement(){
-        val currentStatement = statementsCopy.shuffled().takeLast(1)[0]
+        val currentStatement = statementsCopy.takeLast(1)[0]
         textView.text = currentStatement
         statementsCopy.remove(currentStatement)
         if(statementsCopy.count() == 0){
             statementsCopy = statements.toMutableList()
+            statementsCopy.shuffle()
         }
     }
 
@@ -162,7 +191,7 @@ class PlayMobileGamesFragment : Fragment() {
 
         while(true){
             if(questionsCopy.count() > 0){
-                currentQuestion = questionsCopy.shuffled().takeLast(1)[0]
+                currentQuestion = questionsCopy.takeLast(1)[0]
                 questionsCopy.remove(currentQuestion)
                 nrOfPlayersRequiredForQuestion = currentQuestion.getNrOfPlayersRequired()
                 playersCopy = players.toMutableList()
@@ -184,12 +213,19 @@ class PlayMobileGamesFragment : Fragment() {
                 }
             }else{
                 questionsCopy = questions.toMutableList()
+                questionsCopy.shuffle()
                 continue
             }
         }
     }
 
     companion object {
+        const val CURRENT_STATEMENT = "CURRENT_STATEMENT"
+        const val CURRENT_QUESTION = "CURRENT_QUESTION"
+        const val STATEMENTS = "STATEMENTS"
+        const val QUESTIONS = "QUESTIONS"
+        const val PLAYER_NAMES = "PLAYER_NAMES"
+        const val PREVIOUS_LANGUAGE = "PREVIOUS_LANG"
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.

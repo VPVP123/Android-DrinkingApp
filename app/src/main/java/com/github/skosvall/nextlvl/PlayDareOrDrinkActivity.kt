@@ -5,6 +5,7 @@ import android.os.Bundle
 
 
 class PlayDareOrDrinkActivity : AppCompatActivity() {
+    lateinit var players: Array<String>
     companion object{
         const val PLAYER_NAMES = "PLAYER_NAMES"
     }
@@ -13,11 +14,23 @@ class PlayDareOrDrinkActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_dare_or_drink)
 
-        val players = intent.getStringArrayExtra(PLAYER_NAMES)
+        if(savedInstanceState == null) {
+            players = intent.getStringArrayExtra(PLAYER_NAMES) as Array<String>
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.dareOrDrinkFrameLayout, PlayMobileGamesFragment())
+                .commit()
+        }else{
+            players = savedInstanceState.getStringArray(PLAYER_NAMES) as Array<String>
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.dareOrDrinkFrameLayout, PlayMobileGamesFragment())
+                .commit()
+        }
+    }
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.dareOrDrinkFrameLayout, PlayMobileGamesFragment())
-            .commit()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putStringArray(PLAYER_NAMES, players)
     }
 }
