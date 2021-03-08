@@ -13,13 +13,13 @@
         android:orientation="vertical"
         android:gravity="center">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/nextlvl_logo"
-        android:layout_centerHorizontal="true"/>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="350dp"
+            android:layout_height="86dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/nextlvl_logo" />
 
 
 

@@ -31,6 +31,10 @@
     <string name="what_is_needded">What is needded</string>
     <string name="setup">Setup</string>
     <string name="how_to_play">How to play</string>
+    <string name="this_is_the_admin_panel_nwhat_would_you_like_to_do_today">This is the admin panel!\nWhat would you like to do today?</string>
+    <string name="manage_games">Manage games</string>
+    <string name="new_submitions">New submissions</string>
+    <string name="logout">Logout</string>
 
 
     <string-array name="sipArray">

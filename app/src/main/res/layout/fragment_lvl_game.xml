@@ -40,7 +40,7 @@
                 android:layout_marginTop="15dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/lvlGameSectionOneTitle"
@@ -59,7 +59,7 @@
                 android:layout_marginTop="15dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/lvlGameSectionTwoTitle"
@@ -78,7 +78,7 @@
                 android:layout_marginTop="5dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/lvlGameSectionThreeTitle"
@@ -98,7 +98,7 @@
                 android:layout_marginBottom="20dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
         </LinearLayout>
     </ScrollView>
 
