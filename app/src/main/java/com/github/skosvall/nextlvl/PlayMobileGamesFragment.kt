@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
+import org.w3c.dom.Text
 import java.util.stream.IntStream.range
 import kotlin.properties.Delegates
 
@@ -26,6 +27,7 @@ private const val LIST_OF_QUESTIONS = "listOfQuestions"
  * Use the [PlayMobileGamesFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
 class PlayMobileGamesFragment : Fragment() {
     lateinit var statements: MutableList<String>
     lateinit var statementsCopy: MutableList<String>
@@ -42,14 +44,12 @@ class PlayMobileGamesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val db = FirebaseFirestore.getInstance()
 
-        if(savedInstanceState == null) {
+        val currentLang = getString(R.string.currentLang)
 
-            val db = FirebaseFirestore.getInstance()
-
-            val currentLang = getString(R.string.currentLang)
-
-            val getQuestions = db.collection("mobileGamesData").document("dareOrDrink").collection(currentLang).document("questions")
+        //Get statements from
+        if(activity is PlayNeverHaveIEverActivity) {
             val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang).document("statements")
 
 
@@ -73,61 +73,65 @@ class PlayMobileGamesFragment : Fragment() {
                                     changeNeverHaveIEverStatement()
                                     nextButtonClick()
                                 }
+                                changeNeverHaveIEverStatement()
                             }
                         }
-                        .addOnFailureListener { exception ->
-                            Log.d("errorDB", "get failed with ", exception)
-                        }
-            }else if(activity is PlayDareOrDrinkActivity) {
-                questions = mutableListOf()
-                questionsCopy = mutableListOf()
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("errorDB", "get failed with ", exception)
+                }
+        }else if(activity is PlayDareOrDrinkActivity) {
+            val getQuestions = db.collection("mobileGamesData").document("dareOrDrink").collection(currentLang).document("questions")
 
-                getQuestions.get()
-                        .addOnSuccessListener { question ->
-                            if (question != null) {
-                                Log.d("exist", "DocumentSnapshot data: ${question.data}")
-                                val myArray = question.get("questions") as List<String>?
-                                if (myArray != null) {
-                                    for (item in myArray) {
-                                        var newQuestion = DareOrDrinkQuestion(item)
-                                        (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
-                                        loadingSpinner.visibility = View.INVISIBLE;
-                                    }
-                                    questionsCopy = questions.toMutableList()
-                                    changeDareOrDrinkQuestion()
+            questions = mutableListOf()
+            questionsCopy = mutableListOf()
+
+            getQuestions.get()
+                .addOnSuccessListener { question ->
+                    if (question != null) {
+                        Log.d("exist", "DocumentSnapshot data: ${question.data}")
+                        val myArray = question.get("questions") as List<String>?
+                        if (myArray != null) {
+                            for (item in myArray) {
+                                var newQuestion = DareOrDrinkQuestion(item)
+                                (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
+                                loadingSpinner.visibility = View.INVISIBLE;
+                            }
+                            questionsCopy = questions.toMutableList()
+                            questionsCopy.shuffle()
+                            if(savedInstanceState == null) {
+                                changeDareOrDrinkQuestion()
+                            }else{
+                                val previousLang = savedInstanceState?.getString(PREVIOUS_LANGUAGE)
+                                val currentLang = getString(R.string.currentLang)
+                                if(previousLang == currentLang) {
+                                    val question = savedInstanceState?.getParcelable<DareOrDrinkQuestion>(CURRENT_QUESTION) as DareOrDrinkQuestion
+                                    questionsCopy.add(question as DareOrDrinkQuestion)
                                 }
-                            } else {
-                                Log.d("noExist", "No document found")
+                                changeDareOrDrinkQuestion()
                             }
                         }
-                        .addOnFailureListener { exception ->
-                            Log.d("errorDB", "get failed with ", exception)
+                    } else {
+                        Log.d("noExist", "No document found")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("errorDB", "get failed with ", exception)
+                }
+        }
+        if(savedInstanceState == null) {
 
-                        }
-            }
         }else{
-            statements = savedInstanceState.getStringArray(STATEMENTS) as MutableList<String>
-            questions = savedInstanceState.getParcelableArray(QUESTIONS) as MutableList<DareOrDrinkQuestion>
-            players = savedInstanceState.getStringArray(PLAYER_NAMES) as MutableList<String>
+            if(activity is PlayNeverHaveIEverActivity){
+
+                //statements = savedInstanceState.getStringArray(STATEMENTS)!!.toMutableList()
+            }else if(activity is PlayDareOrDrinkActivity){
+                //questions = savedInstanceState.getParcelableArray(QUESTIONS) as MutableList<DareOrDrinkQuestion>
+            }
+            players = savedInstanceState.getStringArray(PLAYER_NAMES)!!.toMutableList()
         }
 
-        /**
-        statements = listOf("Never have I ever kissed a stranger",
-            "Never have I ever taken a shower selfie",
-            "Never have I ever been to a nude beach",
-            "Never have I ever been to Spain",
-            "Never have I ever slept in the buff",
-            "Never have I ever worn speedos",
-            "Never have I ever lied about anything",
-            "Never have I ever spied on a girl online",
-            "Never have I ever been dumped")
-        **/
-        /**
-        questions = listOf(DareOrDrinkQuestion("1, tell everybody about you worst intimate experience, or drink four sips"),
-                DareOrDrinkQuestion("1, dance without music for one minute or drink three sips"),
-                DareOrDrinkQuestion("1, let 2 DM whoever they want from your instagram account, or drink three sips"),
-                DareOrDrinkQuestion("1, show everyone the last thing you searched for, or drink three sips"))
-         **/
         players = listOf("Fich", "Hugo", "vp")
     }
 
@@ -151,9 +155,15 @@ class PlayMobileGamesFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putStringArray(STATEMENTS, statements.toTypedArray())
-        outState.putParcelableArray(QUESTIONS, questions.toTypedArray())
+        if(activity is PlayNeverHaveIEverActivity){
+            if(statements.takeLast(1)[0] != textView.text) {
+                outState.putString(CURRENT_STATEMENT, textView.text as String)
+            }
+        }else if(activity is PlayDareOrDrinkActivity){
+            outState.putString(CURRENT_QUESTION, textView.text as String)
+        }
         outState.putStringArray(PLAYER_NAMES, players.toTypedArray())
+        outState.putString(PREVIOUS_LANGUAGE, getString(R.string.currentLang))
     }
 
     private fun nextButtonClick(){
@@ -165,22 +175,29 @@ class PlayMobileGamesFragment : Fragment() {
     }
 
     private fun changeNeverHaveIEverStatement(){
-        val currentStatement = statementsCopy.shuffled().takeLast(1)[0]
-        textView.text = currentStatement
-        statementsCopy.remove(currentStatement)
-        if(statementsCopy.count() == 0){
-            statementsCopy = statements.toMutableList()
+        val currentStatement = statementsCopy.takeLast(1)[0]
+        if(textView.text != currentStatement) {
+            textView.text = currentStatement
+            statementsCopy.remove(currentStatement)
+            if (statementsCopy.count() == 0) {
+                statementsCopy = statements.toMutableList()
+                statementsCopy.shuffle()
+            }
+        }else{
+            statementsCopy.remove(currentStatement)
+            nextButtonClick()
         }
     }
 
     private fun changeDareOrDrinkQuestion(){
         var currentQuestion: DareOrDrinkQuestion
+        var previousQuestion: DareOrDrinkQuestion
         var currentQuestionPlayers = mutableListOf<String>()
         var nrOfPlayersRequiredForQuestion: Int
 
         while(true){
             if(questionsCopy.count() > 0){
-                currentQuestion = questionsCopy.shuffled().takeLast(1)[0]
+                currentQuestion = questionsCopy.takeLast(1)[0]
                 questionsCopy.remove(currentQuestion)
                 nrOfPlayersRequiredForQuestion = currentQuestion.getNrOfPlayersRequired()
                 playersCopy = players.toMutableList()
@@ -202,15 +219,19 @@ class PlayMobileGamesFragment : Fragment() {
                 }
             }else{
                 questionsCopy = questions.toMutableList()
+                questionsCopy.shuffle()
                 continue
             }
         }
     }
 
     companion object {
+        const val CURRENT_STATEMENT = "CURRENT_STATEMENT"
+        const val CURRENT_QUESTION = "CURRENT_QUESTION"
         const val STATEMENTS = "STATEMENTS"
         const val QUESTIONS = "QUESTIONS"
         const val PLAYER_NAMES = "PLAYER_NAMES"
+        const val PREVIOUS_LANGUAGE = "PREVIOUS_LANG"
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.

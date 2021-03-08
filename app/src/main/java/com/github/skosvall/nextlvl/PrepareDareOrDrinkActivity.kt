@@ -26,27 +26,26 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_prepare_dare_or_drink)
 
-        val buttonAdd = findViewById<Button>(R.id.addButton) as Button
-        chipGroup = findViewById<ChipGroup>(R.id.chipGroup) as ChipGroup
-        val startGameButton = findViewById<Button>(R.id.startGameButton) as Button
-        addPlayerEditText = findViewById<EditText>(R.id.playerName) as EditText
+        if(savedInstanceState == null) {
+            val buttonAdd = findViewById<Button>(R.id.addButton) as Button
+            chipGroup = findViewById<ChipGroup>(R.id.chipGroup) as ChipGroup
+            val startGameButton = findViewById<Button>(R.id.startGameButton) as Button
+            addPlayerEditText = findViewById<EditText>(R.id.playerName) as EditText
 
-        if(savedInstanceState != null){
-            Log.d("Info: ", "Recreating activity")
+            buttonAdd.setOnClickListener {
+                addChipToChipgroup(addPlayerEditText.text.toString())
+            }
+
+            startGameButton.setOnClickListener {
+                val intent = Intent(this, PlayDareOrDrinkActivity::class.java)
+                intent.putExtra(PlayDareOrDrinkActivity.PLAYER_NAMES, getPlayerNames().toTypedArray())
+                startActivity(intent)
+            }
+        }else{
             savedInstanceState.getStringArray("ADDED_PLAYER_NAMES")?.forEach {
                 Log.d("Playername", it)
                 addChipToChipgroup(it)
             }
-        }
-
-        buttonAdd.setOnClickListener{
-            addChipToChipgroup(addPlayerEditText.text.toString())
-        }
-
-        startGameButton.setOnClickListener {
-            val intent = Intent(this, PlayDareOrDrinkActivity::class.java)
-            intent.putExtra(PlayDareOrDrinkActivity.PLAYER_NAMES, getPlayerNames().toTypedArray())
-            startActivity(intent)
         }
     }
 
