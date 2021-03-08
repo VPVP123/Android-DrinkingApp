@@ -27,6 +27,7 @@ private const val LIST_OF_QUESTIONS = "listOfQuestions"
  * Use the [PlayMobileGamesFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
 class PlayMobileGamesFragment : Fragment() {
     lateinit var statements: MutableList<String>
     lateinit var statementsCopy: MutableList<String>
@@ -108,7 +109,7 @@ class PlayMobileGamesFragment : Fragment() {
                                 val previousLang = savedInstanceState?.getString(PREVIOUS_LANGUAGE)
                                 val currentLang = getString(R.string.currentLang)
                                 if(previousLang == currentLang) {
-                                    val question = savedInstanceState?.getParcelable<DareOrDrinkQuestion>(CURRENT_QUESTION)
+                                    val question = savedInstanceState?.getParcelable<DareOrDrinkQuestion>(CURRENT_QUESTION) as DareOrDrinkQuestion
                                     questionsCopy.add(question as DareOrDrinkQuestion)
                                 }
                                 changeDareOrDrinkQuestion()
@@ -157,9 +158,11 @@ class PlayMobileGamesFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if(statements is MutableList<String>){
-            outState.putString(CURRENT_STATEMENT, textView.text as String)
-        }else if(questions is MutableList<DareOrDrinkQuestion>){
+        if(activity is PlayNeverHaveIEverActivity){
+            if(statements.takeLast(1)[0] != textView.text) {
+                outState.putString(CURRENT_STATEMENT, textView.text as String)
+            }
+        }else if(activity is PlayDareOrDrinkActivity){
             outState.putString(CURRENT_QUESTION, textView.text as String)
         }
         outState.putStringArray(PLAYER_NAMES, players.toTypedArray())
@@ -176,16 +179,22 @@ class PlayMobileGamesFragment : Fragment() {
 
     private fun changeNeverHaveIEverStatement(){
         val currentStatement = statementsCopy.takeLast(1)[0]
-        textView.text = currentStatement
-        statementsCopy.remove(currentStatement)
-        if(statementsCopy.count() == 0){
-            statementsCopy = statements.toMutableList()
-            statementsCopy.shuffle()
+        if(textView.text != currentStatement) {
+            textView.text = currentStatement
+            statementsCopy.remove(currentStatement)
+            if (statementsCopy.count() == 0) {
+                statementsCopy = statements.toMutableList()
+                statementsCopy.shuffle()
+            }
+        }else{
+            statementsCopy.remove(currentStatement)
+            nextButtonClick()
         }
     }
 
     private fun changeDareOrDrinkQuestion(){
         var currentQuestion: DareOrDrinkQuestion
+        var previousQuestion: DareOrDrinkQuestion
         var currentQuestionPlayers = mutableListOf<String>()
         var nrOfPlayersRequiredForQuestion: Int
 
