@@ -14,6 +14,8 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import java.lang.Exception
 
 const val RC_SIGN_IN = 1
@@ -21,19 +23,49 @@ const val RC_SIGN_IN = 1
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var listOfAdminAccounts: MutableList<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-
-
+        val db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
+        listOfAdminAccounts = mutableListOf()
 
+        val accounts = db.collection("adminAccounts").document("accounts")
         val buttonLogin = this.findViewById<Button>(R.id.login)
         val googleLogin = this.findViewById<SignInButton>(R.id.google_sign_in_button)
+
+        accounts.get()
+            .addOnSuccessListener { fields ->
+                if (fields != null) {
+                    val myArray = fields.get("accounts") as List<String>?
+                    if (myArray != null) {
+                        for (item in myArray) {
+                            listOfAdminAccounts.add(item)
+                        }
+                    }
+                } else {
+                    Log.d("noExist", "No document found")
+                }
+                googleLogin.setOnClickListener{
+                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .build()
+
+                    // Build a GoogleSignInClient with the options specified by gso.
+                    val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+                    val signInIntent = mGoogleSignInClient.signInIntent
+                    startActivityForResult(signInIntent, RC_SIGN_IN)
+                }
+            }.addOnFailureListener { exception ->
+                Log.d("errorDB", "get failed with ", exception)
+            }
 
         buttonLogin.setOnClickListener{
 
@@ -74,18 +106,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        googleLogin.setOnClickListener{
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .build()
-
-            // Build a GoogleSignInClient with the options specified by gso.
-            val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-            val signInIntent = mGoogleSignInClient.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
     }
     override fun onStart() {
         super.onStart()
@@ -112,7 +132,7 @@ class LoginActivity : AppCompatActivity() {
                             val currentUser = auth.currentUser
                             val currentUserEmail = auth.currentUser.email
 
-                            if(currentUser != null && currentUserEmail == "hugo.martinsson01@gmail.com")
+                            if(currentUser != null && listOfAdminAccounts.contains(currentUserEmail))
                             startActivity(
                                 Intent(this, adminPanelActivity::class.java)
                             )else{
