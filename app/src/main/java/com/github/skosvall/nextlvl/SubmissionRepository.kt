@@ -10,7 +10,7 @@ class SubmissionRepository{
 
     private val submissions = mutableListOf<Submission>()
 
-    fun addSubmission(text: String): Int{
+    fun addSubmission(text: String, lang: String): Int{
         val id = when {
             submissions.count() == 0 -> 1
             else -> submissions.last().id+1
@@ -18,7 +18,8 @@ class SubmissionRepository{
         submissions.add(
             Submission(
             id,
-            text
+            text,
+            lang
         )
         )
         return id
