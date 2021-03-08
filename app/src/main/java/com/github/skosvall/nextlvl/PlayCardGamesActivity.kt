@@ -18,16 +18,22 @@ class PlayCardGamesActivity : AppCompatActivity() {
         const val THREE_TWO_ONE = "threeTwoOne"
     }
 
+
+
     val db = FirebaseFirestore.getInstance()
 
     lateinit var getCardGames123: DocumentReference
     lateinit var getCardGamesFuckTheDealer: DocumentReference
     lateinit var getCardGamesRingOfFire: DocumentReference
 
+    lateinit var loadingSpinner: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_card_games)
+
+        loadingSpinner = this.findViewById<ProgressBar>(R.id.cardGamesSpinner)
+        loadingSpinner.visibility = View.VISIBLE
 
         //Set language
         val currentLang = getString(R.string.currentLang)
@@ -61,7 +67,7 @@ class PlayCardGamesActivity : AppCompatActivity() {
                                         (document.getString("sectionFourTitle") as String).replace("\\n", "\n"),
                                         (document.getString("sectionFourText") as String).replace("\\n", "\n")))
                                 .commit()
-
+                        loadingSpinner.visibility = View.INVISIBLE;
                     }else{
                         Log.d("noExist", "No document found")
                     }
@@ -88,6 +94,7 @@ class PlayCardGamesActivity : AppCompatActivity() {
                                         (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
                                         (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
                                 .commit()
+                        loadingSpinner.visibility = View.INVISIBLE;
                     }else{
                         Log.d("noExist", "No document found")
                     }
@@ -114,6 +121,7 @@ class PlayCardGamesActivity : AppCompatActivity() {
                                     (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
                                     (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
                             .commit()
+                    loadingSpinner.visibility = View.INVISIBLE;
                 }else{
                     Log.d("noExist", "No document found")
                 }

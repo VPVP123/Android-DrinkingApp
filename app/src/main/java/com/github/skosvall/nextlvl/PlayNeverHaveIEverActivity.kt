@@ -9,9 +9,11 @@ class PlayNeverHaveIEverActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_never_have_i_ever)
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.neverHaveIEverFrameLayout, PlayMobileGamesFragment())
-            .commit()
+        if(savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.neverHaveIEverFrameLayout, PlayMobileGamesFragment())
+                .commit()
+        }
     }
 }
