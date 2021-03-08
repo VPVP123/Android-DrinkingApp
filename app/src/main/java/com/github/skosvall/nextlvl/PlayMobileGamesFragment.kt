@@ -34,8 +34,11 @@ class PlayMobileGamesFragment : Fragment() {
 
     lateinit var questions: List<DareOrDrinkQuestion>
     lateinit var questionsCopy: MutableList<DareOrDrinkQuestion>
+    lateinit var currentQuestion: DareOrDrinkQuestion
     lateinit var players: List<String>
     lateinit var playersCopy: MutableList<String>
+    var activityJustRestarted: Boolean = false
+    lateinit var previouslyDisplayedString: String
 
     lateinit var loadingSpinner: ProgressBar
     lateinit var textView: TextView
@@ -48,7 +51,6 @@ class PlayMobileGamesFragment : Fragment() {
 
         val currentLang = getString(R.string.currentLang)
 
-        //Get statements from
         if(activity is PlayNeverHaveIEverActivity) {
             val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang).document("statements")
 
@@ -106,11 +108,12 @@ class PlayMobileGamesFragment : Fragment() {
                             if(savedInstanceState == null) {
                                 changeDareOrDrinkQuestion()
                             }else{
-                                val previousLang = savedInstanceState?.getString(PREVIOUS_LANGUAGE)
+                                val previousLang = savedInstanceState.getString(PREVIOUS_LANGUAGE)
                                 val currentLang = getString(R.string.currentLang)
                                 if(previousLang == currentLang) {
-                                    val question = savedInstanceState?.getParcelable<DareOrDrinkQuestion>(CURRENT_QUESTION) as DareOrDrinkQuestion
-                                    questionsCopy.add(question as DareOrDrinkQuestion)
+                                    val question = savedInstanceState.getString(CURRENT_QUESTION)
+                                    previouslyDisplayedString = question!!
+                                    activityJustRestarted = true
                                 }
                                 changeDareOrDrinkQuestion()
                             }
@@ -124,18 +127,15 @@ class PlayMobileGamesFragment : Fragment() {
                 }
         }
         if(savedInstanceState == null) {
-
-        }else{
-            if(activity is PlayNeverHaveIEverActivity){
-
-                //statements = savedInstanceState.getStringArray(STATEMENTS)!!.toMutableList()
-            }else if(activity is PlayDareOrDrinkActivity){
-                //questions = savedInstanceState.getParcelableArray(QUESTIONS) as MutableList<DareOrDrinkQuestion>
+            arguments.let {
+                val playersArray = it?.getStringArray(PLAYER_NAMES)
+                if((playersArray as Array<String>).count() > 0){
+                    players = playersArray.toList()
+                }
             }
+        }else if(activity is PlayDareOrDrinkActivity){
             players = savedInstanceState.getStringArray(PLAYER_NAMES)!!.toMutableList()
         }
-
-        players = listOf("Fich", "Hugo", "vp")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -159,13 +159,13 @@ class PlayMobileGamesFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if(activity is PlayNeverHaveIEverActivity){
-            if(statements.takeLast(1)[0] != textView.text) {
+            //if(statements.takeLast(1)[0] != textView.text) {
                 outState.putString(CURRENT_STATEMENT, textView.text as String)
-            }
+            //}
         }else if(activity is PlayDareOrDrinkActivity){
             outState.putString(CURRENT_QUESTION, textView.text as String)
+            outState.putStringArray(PLAYER_NAMES, players.toTypedArray())
         }
-        outState.putStringArray(PLAYER_NAMES, players.toTypedArray())
         outState.putString(PREVIOUS_LANGUAGE, getString(R.string.currentLang))
     }
 
@@ -193,38 +193,41 @@ class PlayMobileGamesFragment : Fragment() {
     }
 
     private fun changeDareOrDrinkQuestion(){
-        var currentQuestion: DareOrDrinkQuestion
-        var previousQuestion: DareOrDrinkQuestion
         var currentQuestionPlayers = mutableListOf<String>()
         var nrOfPlayersRequiredForQuestion: Int
 
-        while(true){
-            if(questionsCopy.count() > 0){
-                currentQuestion = questionsCopy.takeLast(1)[0]
-                questionsCopy.remove(currentQuestion)
-                nrOfPlayersRequiredForQuestion = currentQuestion.getNrOfPlayersRequired()
-                playersCopy = players.toMutableList()
+        if(!activityJustRestarted) {
+            while (true) {
+                if (questionsCopy.count() > 0) {
+                    currentQuestion = questionsCopy.takeLast(1)[0]
+                    questionsCopy.remove(currentQuestion)
+                    nrOfPlayersRequiredForQuestion = currentQuestion.getNrOfPlayersRequired()
+                    playersCopy = players.toMutableList()
 
 
-                if(nrOfPlayersRequiredForQuestion <= playersCopy.count()){
-                    if(nrOfPlayersRequiredForQuestion > 0){
-                        for (i in range(0, nrOfPlayersRequiredForQuestion)) {
-                            val randomPlayer = playersCopy.shuffled().takeLast(1)[0]
-                            currentQuestionPlayers.add(randomPlayer)
-                            playersCopy.remove(randomPlayer)
+                    if (nrOfPlayersRequiredForQuestion <= playersCopy.count()) {
+                        if (nrOfPlayersRequiredForQuestion > 0) {
+                            for (i in range(0, nrOfPlayersRequiredForQuestion)) {
+                                val randomPlayer = playersCopy.shuffled().takeLast(1)[0]
+                                currentQuestionPlayers.add(randomPlayer)
+                                playersCopy.remove(randomPlayer)
+                            }
+                            textView.text = currentQuestion.getCompleteQuestion(currentQuestionPlayers)
+                            break
+                        } else {
+                            textView.text = currentQuestion.question
+                            break
                         }
-                        textView.text = currentQuestion.getCompleteQuestion(currentQuestionPlayers)
-                        break
-                    }else{
-                        textView.text = currentQuestion.question
-                        break
                     }
+                } else {
+                    questionsCopy = questions.toMutableList()
+                    questionsCopy.shuffle()
+                    continue
                 }
-            }else{
-                questionsCopy = questions.toMutableList()
-                questionsCopy.shuffle()
-                continue
             }
+        }else{
+            textView.text = previouslyDisplayedString
+            activityJustRestarted = false
         }
     }
 
@@ -246,10 +249,10 @@ class PlayMobileGamesFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(playerNamesArray: Array<String>) =
-                PlayMobileGamesFragment().apply {
-                    arguments = Bundle().apply {
-                        putStringArray("PLAYER_NAMES", arrayOf<String>())
-                    }
+            PlayMobileGamesFragment().apply {
+                arguments = Bundle().apply {
+                    putStringArray(PLAYER_NAMES, playerNamesArray)
                 }
+            }
     }
 }
