@@ -76,8 +76,6 @@ class PlayMobileGamesFragment : Fragment() {
                                 changeNeverHaveIEverStatement()
                             }
                         }
-                    }
-                }
                 .addOnFailureListener { exception ->
                     Log.d("errorDB", "get failed with ", exception)
                 }
@@ -133,6 +131,7 @@ class PlayMobileGamesFragment : Fragment() {
         }
 
         players = listOf("Fich", "Hugo", "vp")
+    }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
