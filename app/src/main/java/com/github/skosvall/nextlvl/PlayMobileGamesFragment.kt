@@ -67,8 +67,8 @@ class PlayMobileGamesFragment : Fragment() {
                                 if (myArray != null) {
                                     for (item in myArray) {
                                         statements.add(item)
-                                        loadingSpinner.visibility = View.INVISIBLE;
                                     }
+                                    loadingSpinner.visibility = View.INVISIBLE
                                     statementsCopy = statements.toMutableList()
                                     changeNeverHaveIEverStatement()
                                     nextButtonClick()
@@ -139,7 +139,7 @@ class PlayMobileGamesFragment : Fragment() {
         nextButton = view.findViewById<Button>(R.id.neverHaveIEverNextButton)
         loadingSpinner = view.findViewById<ProgressBar>(R.id.progressSpinner)
 
-        loadingSpinner.visibility = View.VISIBLE;
+        loadingSpinner.visibility = View.VISIBLE
 
         if(textView != null && nextButton != null){
             nextButton.setOnClickListener {
