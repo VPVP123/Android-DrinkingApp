@@ -2,12 +2,21 @@ package com.github.skosvall.nextlvl
 
 import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import java.lang.Exception
+
+const val RC_SIGN_IN = 1
 
 class LoginActivity : AppCompatActivity() {
 
@@ -18,10 +27,13 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+
+
         auth = FirebaseAuth.getInstance()
 
 
         val buttonLogin = this.findViewById<Button>(R.id.login)
+        val googleLogin = this.findViewById<SignInButton>(R.id.google_sign_in_button)
 
         buttonLogin.setOnClickListener{
 
@@ -61,8 +73,20 @@ class LoginActivity : AppCompatActivity() {
                 popUpError1.show()
             }
         }
+
+        googleLogin.setOnClickListener{
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+
+            // Build a GoogleSignInClient with the options specified by gso.
+            val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+            val signInIntent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+        }
     }
-        override fun onStart() {
+    override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
@@ -72,6 +96,35 @@ class LoginActivity : AppCompatActivity() {
             )
         }
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+        var userEmail: String?
 
+        try{
+            val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
+            if (account != null){
+                val token = account.idToken
+                auth.signInWithCredential(GoogleAuthProvider.getCredential(token, null))
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            startActivity(
+                                Intent(this, adminPanelActivity::class.java)
+                            )
+                        } else {
+                            val popUpError1 = AlertDialog.Builder(this)
+                            popUpError1.setTitle("Login failed")
+                            popUpError1.setMessage("The email and/or password you entered is incorrect")
+                            popUpError1.setPositiveButton("Ok") { dialog, which ->
+                                dialog.dismiss()
+                            }
+                            popUpError1.show()
+                        }
+                    }
+            }
+        } catch (exception: Exception){
+            Log.d("LOGIN", exception.toString())
+        }
+    }
 }
