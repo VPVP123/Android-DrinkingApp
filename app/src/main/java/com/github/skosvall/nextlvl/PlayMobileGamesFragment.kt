@@ -54,35 +54,30 @@ class PlayMobileGamesFragment : Fragment() {
         if(activity is PlayNeverHaveIEverActivity) {
             val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang).document("statements")
 
-            statements = mutableListOf()
-            statementsCopy = mutableListOf()
 
-            getStatements.get()
-                .addOnSuccessListener { statement ->
-                    if (statement != null) {
-                        Log.d("exist", "DocumentSnapshot data: ${statement.data}")
-                        val myArray = statement.get("statements") as List<String>?
-                        if (myArray != null) {
-                            for (item in myArray) {
-                                statements.add(item)
-                                loadingSpinner.visibility = View.INVISIBLE;
-                            }
-                            statementsCopy = statements.toMutableList()
-                            statementsCopy.shuffle()
-                            if(savedInstanceState == null) {
-                                changeNeverHaveIEverStatement()
-                            }else{
-                                val previousLang = savedInstanceState.getString(PREVIOUS_LANGUAGE)
-                                val currentLang = getString(R.string.currentLang)
-                                if(previousLang == currentLang){
-                                    val text = savedInstanceState.getString(CURRENT_STATEMENT)
-                                    statementsCopy.add(text as String)
+
+            //Get statements from
+            if(activity is PlayNeverHaveIEverActivity) {
+                statements = mutableListOf()
+                statementsCopy = mutableListOf()
+
+                getStatements.get()
+                        .addOnSuccessListener { statement ->
+                            if (statement != null) {
+                                Log.d("exist", "DocumentSnapshot data: ${statement.data}")
+                                val myArray = statement.get("statements") as List<String>?
+                                if (myArray != null) {
+                                    for (item in myArray) {
+                                        statements.add(item)
+                                    }
+                                    loadingSpinner.visibility = View.INVISIBLE
+                                    statementsCopy = statements.toMutableList()
+                                    changeNeverHaveIEverStatement()
+                                    nextButtonClick()
                                 }
                                 changeNeverHaveIEverStatement()
                             }
                         }
-                    }
-                }
                 .addOnFailureListener { exception ->
                     Log.d("errorDB", "get failed with ", exception)
                 }
@@ -137,6 +132,7 @@ class PlayMobileGamesFragment : Fragment() {
             players = savedInstanceState.getStringArray(PLAYER_NAMES)!!.toMutableList()
         }
     }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -146,7 +142,7 @@ class PlayMobileGamesFragment : Fragment() {
         nextButton = view.findViewById<Button>(R.id.neverHaveIEverNextButton)
         loadingSpinner = view.findViewById<ProgressBar>(R.id.progressSpinner)
 
-        loadingSpinner.visibility = View.VISIBLE;
+        loadingSpinner.visibility = View.VISIBLE
 
         if(textView != null && nextButton != null){
             nextButton.setOnClickListener {
