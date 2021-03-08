@@ -50,14 +50,16 @@ class PlayCardGamesActivity : AppCompatActivity() {
                     if(document != null){
                         Log.d("exist", "DocumentSnapshot data: ${document.data}")
                         supportFragmentManager.beginTransaction()
-                                .add(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
+                                .add(R.id.playCardGameFrameLayout, ringOfFireGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
                                         (document.getString("shortDescription") as String).replace("\\n", "\n"),
                                         (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
                                         (document.getString("sectionOneText") as String).replace("\\n", "\n"),
                                         (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
                                         (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
                                         (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                        (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                                        (document.getString("sectionThreeText") as String).replace("\\n", "\n"),
+                                        (document.getString("sectionFourTitle") as String).replace("\\n", "\n"),
+                                        (document.getString("sectionFourText") as String).replace("\\n", "\n")))
                                 .commit()
 
                     }else{

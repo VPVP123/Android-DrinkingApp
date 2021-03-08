@@ -40,7 +40,7 @@
                 android:layout_marginTop="15dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="15dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/cardGameSectionOneTitle"
@@ -59,7 +59,7 @@
                 android:layout_marginTop="15dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/cardGameSectionTwoTitle"
@@ -78,7 +78,7 @@
                 android:layout_marginTop="5dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/cardGameSectionThreeTitle"
@@ -97,10 +97,19 @@
                 android:layout_marginTop="5dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/cardGameDescription2"
+                android:id="@+id/cardGameSectionFourTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="22dp" />
+
+            <TextView
+                android:id="@+id/cardGameSectionFourText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -108,7 +117,7 @@
                 android:layout_marginBottom="20dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
         </LinearLayout>
     </ScrollView>
