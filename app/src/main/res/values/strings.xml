@@ -37,11 +37,9 @@
     <string name="logout">Logout</string>
 
 
-    <string-array name="sipArray">
-        <item>1–3</item>
-        <item>3–5</item>
-        <item>5–7</item>
-        <item>7–9</item>
+    <string-array name="gameArray">
+        <item>Dare or drink</item>
+        <item>Never have i ever</item>
     </string-array>
 
 
