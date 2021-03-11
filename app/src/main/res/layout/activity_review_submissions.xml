@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dare or drink suggestions:"
+            android:text="@string/dare_or_drink_suggestions"
             android:background="@color/backGroundTint"
             android:textColor="@color/white"
             android:textSize="22dp"
@@ -58,7 +58,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Never have i ever submissions:"
+            android:text="@string/never_have_i_ever_suggestions"
             android:background="@color/backGroundTint"
             android:textColor="@color/white"
             android:textSize="22dp"

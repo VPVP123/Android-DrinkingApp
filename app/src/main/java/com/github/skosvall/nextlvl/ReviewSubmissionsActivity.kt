@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -19,6 +20,8 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
     companion object FirebaseManager {
         val DOR = "Dare or Drink"
         val NHIE = "Never have i ever"
+        const val DOD_SUBMISSIONS = "DOD_SUBMISSIONS"
+        const val NHIE_SUBMISSIONS = "NHIE_SUBMISSIONS"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,113 +36,117 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
         val dorLoadingSpinner = this.findViewById<ProgressBar>(R.id.dorSpinner)
         val nhieLoadingSpinner = this.findViewById<ProgressBar>(R.id.nhieSpinner)
 
-        dorLoadingSpinner.visibility = View.VISIBLE;
-        nhieLoadingSpinner.visibility = View.VISIBLE;
-
-
-        dorSubmissionRepository.clear()
-        nhieSubmissionRepository.clear()
-
         val dareOrDrinkDbEng =
-            db.collection("mobileGamesData").document("dareOrDrink").collection("english")
-                .document("questions")
+                db.collection("mobileGamesData").document("dareOrDrink").collection("english")
+                        .document("questions")
         val dareOrDrinkDbSwe =
-            db.collection("mobileGamesData").document("dareOrDrink").collection("swedish")
-                .document("questions")
+                db.collection("mobileGamesData").document("dareOrDrink").collection("swedish")
+                        .document("questions")
         dorAdapter = ArrayAdapter<Submission>(
-            this,
-            R.layout.submissionrow,
-            android.R.id.text1,
-            dorSubmissionRepository.getAllSubmissions()
+                this,
+                R.layout.submissionrow,
+                android.R.id.text1,
+                dorSubmissionRepository.getAllSubmissions()
         )
 
         dorListView.adapter = dorAdapter
 
         val neverHaveIEverDbEng =
-            db.collection("mobileGamesData").document("neverHaveIEver").collection("english")
-                .document("statements")
+                db.collection("mobileGamesData").document("neverHaveIEver").collection("english")
+                        .document("statements")
         val neverHaveIEverDbSwe =
-            db.collection("mobileGamesData").document("neverHaveIEver").collection("swedish")
-                .document("statements")
+                db.collection("mobileGamesData").document("neverHaveIEver").collection("swedish")
+                        .document("statements")
 
         nhieAdapter = ArrayAdapter<Submission>(
-            this,
-            R.layout.submissionrow,
-            android.R.id.text1,
-            nhieSubmissionRepository.getAllSubmissions()
+                this,
+                R.layout.submissionrow,
+                android.R.id.text1,
+                nhieSubmissionRepository.getAllSubmissions()
         )
 
         nhieListView.adapter = nhieAdapter
 
+        if(savedInstanceState == null) {
+            dorLoadingSpinner.visibility = View.VISIBLE;
+            nhieLoadingSpinner.visibility = View.VISIBLE;
 
-        dareOrDrinkDbEng.get()
-            .addOnSuccessListener { fields ->
-                if (fields != null) {
-                    val myArray = fields.get("questionSuggestions") as List<String>?
-                    if (myArray != null) {
-                        for (item in myArray) {
-                            dorSubmissionRepository.addSubmission(item, "english")
-                        }
-                    }
-                } else {
-                    Log.d("noExist", "No document found")
-                }
-                dareOrDrinkDbSwe.get()
+            dorSubmissionRepository.clear()
+            nhieSubmissionRepository.clear()
+
+            dareOrDrinkDbEng.get()
                     .addOnSuccessListener { fields ->
                         if (fields != null) {
                             val myArray = fields.get("questionSuggestions") as List<String>?
                             if (myArray != null) {
                                 for (item in myArray) {
-                                    submissionRepository.addSubmission(item, "swedish")
+                                    dorSubmissionRepository.addSubmission(item, "english")
                                 }
-                                dorAdapter.notifyDataSetChanged()
-                                dorLoadingSpinner.visibility = View.INVISIBLE
                             }
                         } else {
                             Log.d("noExist", "No document found")
                         }
+                        dareOrDrinkDbSwe.get()
+                                .addOnSuccessListener { fields ->
+                                    if (fields != null) {
+                                        val myArray = fields.get("questionSuggestions") as List<String>?
+                                        if (myArray != null) {
+                                            for (item in myArray) {
+                                                submissionRepository.addSubmission(item, "swedish")
+                                            }
+                                            dorAdapter.notifyDataSetChanged()
+                                            dorLoadingSpinner.visibility = View.INVISIBLE
+                                        }
+                                    } else {
+                                        Log.d("noExist", "No document found")
+                                    }
+                                }
+                                .addOnFailureListener { exception ->
+                                    Log.d("errorDB", "get failed with ", exception)
+                                }
                     }
                     .addOnFailureListener { exception ->
                         Log.d("errorDB", "get failed with ", exception)
                     }
-            }
-            .addOnFailureListener { exception ->
-                Log.d("errorDB", "get failed with ", exception)
-            }
 
-        neverHaveIEverDbEng.get()
-            .addOnSuccessListener { fields ->
-                if (fields != null) {
-                    val myArray = fields.get("statementSuggestions") as List<String>?
-                    if (myArray != null) {
-                        for (item in myArray) {
-                            nhieSubmissionRepository.addSubmission(item, "english")
-                        }
-                        nhieAdapter.notifyDataSetChanged()
-                    }
-                } else {
-                    Log.d("noExist", "No document found")
-                }
-                neverHaveIEverDbSwe.get()
+            neverHaveIEverDbEng.get()
                     .addOnSuccessListener { fields ->
                         if (fields != null) {
                             val myArray = fields.get("statementSuggestions") as List<String>?
                             if (myArray != null) {
                                 for (item in myArray) {
-                                    nhieSubmissionRepository.addSubmission(item, "swedish")
-                                    nhieLoadingSpinner.visibility = View.INVISIBLE
+                                    nhieSubmissionRepository.addSubmission(item, "english")
                                 }
                                 nhieAdapter.notifyDataSetChanged()
                             }
                         } else {
                             Log.d("noExist", "No document found")
                         }
+                        neverHaveIEverDbSwe.get()
+                                .addOnSuccessListener { fields ->
+                                    if (fields != null) {
+                                        val myArray = fields.get("statementSuggestions") as List<String>?
+                                        if (myArray != null) {
+                                            for (item in myArray) {
+                                                nhieSubmissionRepository.addSubmission(item, "swedish")
+                                                nhieLoadingSpinner.visibility = View.INVISIBLE
+                                            }
+                                            nhieAdapter.notifyDataSetChanged()
+                                        }
+                                    } else {
+                                        Log.d("noExist", "No document found")
+                                    }
+                                }.addOnFailureListener { exception ->
+                                    Log.d("errorDB", "get failed with ", exception)
+                                }
                     }.addOnFailureListener { exception ->
                         Log.d("errorDB", "get failed with ", exception)
                     }
-            }.addOnFailureListener { exception ->
-                Log.d("errorDB", "get failed with ", exception)
-            }
+        } else {
+            dorLoadingSpinner.visibility = View.INVISIBLE;
+            nhieLoadingSpinner.visibility = View.INVISIBLE;
+        }
+
 
         dorListView.setOnItemClickListener { parent, view, position, id ->
 
@@ -150,8 +157,8 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
             popUpError1.setMessage("This is a test")
             popUpError1.setPositiveButton("Remove") { dialog, which ->
                 db.collection("mobileGamesData").document("dareOrDrink")
-                    .collection(submission.lang).document("questions")
-                    .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
+                        .collection(submission.lang).document("questions")
+                        .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
                 dorSubmissionRepository.deleteSubmissionById(submission.id)
                 dorAdapter.notifyDataSetChanged()
                 dialog.dismiss()
@@ -161,7 +168,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                 intent.putExtra("submissionId", submission.id)
                 intent.putExtra("gameType", ReviewSubmissionsActivity.DOR)
                 startActivity(
-                    intent
+                        intent
                 )
                 dialog.dismiss()
             }
@@ -177,7 +184,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
             popUpError1.setTitle("Submission")
             popUpError1.setMessage("This is a test")
             popUpError1.setPositiveButton("Remove") { dialog, which ->
-                    db.collection("mobileGamesData").document("neverHaveIEver")
+                db.collection("mobileGamesData").document("neverHaveIEver")
                         .collection(submission.lang).document("statements")
                         .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
                 nhieSubmissionRepository.deleteSubmissionById(submission.id)
@@ -189,16 +196,19 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                 intent.putExtra("submissionId", submission.id)
                 intent.putExtra("gameType", ReviewSubmissionsActivity.NHIE)
                 startActivity(
-                    intent
+                        intent
                 )
                 dialog.dismiss()
             }
             popUpError1.show()
         }
-
-
-
     }
+
+    /*override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(DOD_SUBMISSIONS, dorSubmissionRepository)
+        outState.putParcelable(NHIE_SUBMISSIONS, nhieSubmissionRepository)
+    }*/
 
     override fun onResume() {
         super.onResume()
