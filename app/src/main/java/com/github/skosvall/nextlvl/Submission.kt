@@ -1,6 +1,8 @@
 package com.github.skosvall.nextlvl
 
-data class Submission(
+import android.os.Parcelable
+
+class Submission(
     val id: Int,
     var text:String,
     var lang:String

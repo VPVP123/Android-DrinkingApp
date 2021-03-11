@@ -26,22 +26,12 @@
 
         <Button
             android:layout_marginBottom="40dp"
-            android:id="@+id/button"
-            android:layout_width="270dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_button"
-            android:text="@string/manage_games"
-            android:textAllCaps="false"
-            android:textSize="20dp" />
-
-        <Button
-            android:layout_marginBottom="40dp"
             android:id="@+id/manageSubmissionsButton"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:textAllCaps="false"
             android:background="@drawable/rounded_button"
-            android:text="@string/new_submitions"
+            android:text="@string/new_submissions"
             android:textSize="20dp" />
 
         <Button
