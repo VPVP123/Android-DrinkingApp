@@ -11,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NextLvL">
-        <activity android:name=".ReviewSubmissionsActivity"></activity>
-        <activity android:name=".chooseSubmissionActivity" />
+        <activity android:name=".ReviewSubmissionsActivity"/>
         <activity android:name=".PlayLvLGamesActivity" />
         <activity android:name=".PlayCardGamesActivity" />
         <activity
@@ -35,7 +34,6 @@
         <activity android:name=".PlayDareOrDrinkActivity" />
         <activity android:name=".PrepareDareOrDrinkActivity" />
         <activity android:name=".PlayNeverHaveIEverActivity" />
-        <activity android:name=".SubmissionListActivity" />
         <activity android:name=".adminPanelActivity" />
         <activity android:name=".LvLGamesActivity" />
         <activity android:name=".CardGamesActivity" />
@@ -48,6 +46,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".MainActivity$Receiver"/>
     </application>
 
 </manifest>
