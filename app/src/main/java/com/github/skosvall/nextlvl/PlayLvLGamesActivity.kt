@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
@@ -13,14 +14,15 @@ import java.util.*
 
 class PlayLvLGamesActivity : AppCompatActivity() {
     companion object{
+        const val CURRENT_GAME = "CURRENT_GAME"
+        const val PREVIOUS_LANG = "PREVIOUS_LANG"
         const val GAME_TO_START = "gameToPlay"
         const val BEERPONG = "beerpong"
         const val GAS_GAS = "gasGas"
         const val HORSE_RACE = "horseRace"
     }
 
-    val db = FirebaseFirestore.getInstance()
-
+    lateinit var currentGame: String
     lateinit var getLvLGamesBeerPong: DocumentReference
     lateinit var getLvLGamesGasGas: DocumentReference
     lateinit var getLvLGamesHorseRace: DocumentReference
@@ -31,101 +33,161 @@ class PlayLvLGamesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_lvl_games)
 
+        val db = FirebaseFirestore.getInstance()
         loadingSpinner = this.findViewById<ProgressBar>(R.id.lvlGamesSpinner)
-        loadingSpinner.visibility = View.VISIBLE
-
         val currentLang = getString(R.string.currentLang)
+
         getLvLGamesBeerPong = db.collection("lvlGamesData").document("beerpong").collection(currentLang).document("texts")
         getLvLGamesGasGas = db.collection("lvlGamesData").document("gasGas").collection(currentLang).document("texts")
         getLvLGamesHorseRace = db.collection("lvlGamesData").document("horseRace").collection(currentLang).document("texts")
 
-        val gameToPlay = intent.getStringExtra(GAME_TO_START)
+        if(savedInstanceState == null) {
+            loadingSpinner.visibility = View.VISIBLE
 
-        when (intent.getStringExtra(GAME_TO_START)){
-            BEERPONG -> startBeerpong()
-            GAS_GAS -> startGasGas()
-            HORSE_RACE -> startHorseRace()
+            currentGame = intent.getStringExtra(GAME_TO_START) as String
+
+            startGame(savedInstanceState)
+        }else{
+            val previousLang = savedInstanceState.getString(PREVIOUS_LANG)
+
+            currentGame = savedInstanceState.getString(PlayCardGamesActivity.CURRENT_GAME) as String
+
+            if(previousLang != currentLang){
+                startGame(savedInstanceState)
+            }else{
+                loadingSpinner.visibility = View.INVISIBLE
+            }
         }
-
     }
-    private fun startBeerpong(){
-        //Insert everything from firestore in fragment
-            getLvLGamesBeerPong.get()
-                    .addOnSuccessListener { document ->
-                        if(document != null){
-                            Log.d("exist", "DocumentSnapshot data: ${document.data}")
 
-                            supportFragmentManager.beginTransaction()
-                                    .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                            (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
-                                    .commit()
-                            loadingSpinner.visibility = View.INVISIBLE
-                        }else{
-                            Log.d("noExist", "No document found")
-                        }
-                    }
-                    .addOnFailureListener {exception ->
-                        Log.d("errorDB", "get failed with ", exception)
-
-                    }
+    private fun startGame(savedInstanceState: Bundle?){
+        when (currentGame) {
+            BEERPONG -> startBeerpong(savedInstanceState)
+            GAS_GAS -> startGasGas(savedInstanceState)
+            HORSE_RACE -> startHorseRace(savedInstanceState)
+        }
     }
-    private fun startGasGas(){
-        //Insert everything from firestore in fragment
-            getLvLGamesGasGas.get()
-                    .addOnSuccessListener { document ->
-                        if(document != null) {
-                            Log.d("exist", "DocumentSnapshot data: ${document.data}")
 
-                            supportFragmentManager.beginTransaction()
-                                    .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                            (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                            (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
-                                    .commit()
-                            loadingSpinner.visibility = View.INVISIBLE
-                        } else {
-                            Log.d("noExist", "No document found")
-                        }
-                    }
-                    .addOnFailureListener { exception ->
-                        Log.d("errorDB", "get failed with ", exception)
-                    }
-    }
-    private fun startHorseRace(){
+    private fun startBeerpong(savedInstanceState: Bundle?){
         //Insert everything from firestore in fragment
-        getLvLGamesHorseRace.get()
-                .addOnSuccessListener { document ->
-                    if(document != null){
-                        Log.d("exist", "DocumentSnapshot data: ${document.data}")
-
+        getLvLGamesBeerPong.get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+                    Log.d("exist", "DocumentSnapshot data: ${document.data}")
+                    if(savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
+                            .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                            .commit()
+                    } else {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                            .commit()
+                    }
+                    loadingSpinner.visibility = View.INVISIBLE
+                }else{
+                    Log.d("noExist", "No document found")
+                }
+            }
+            .addOnFailureListener {exception ->
+                Log.d("errorDB", "get failed with ", exception)
+
+            }
+    }
+    private fun startGasGas(savedInstanceState: Bundle?){
+        //Insert everything from firestore in fragment
+        getLvLGamesGasGas.get()
+                .addOnSuccessListener { document ->
+                    if(document != null) {
+                        Log.d("exist", "DocumentSnapshot data: ${document.data}")
+                        if(savedInstanceState == null) {
+                            supportFragmentManager.beginTransaction()
                                 .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                        (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                        (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                        (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                        (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                        (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                        (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                        (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
-                                        .commit()
+                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                                .commit()
+                        } else {
+                            supportFragmentManager.beginTransaction()
+                                .replace(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
+                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                                .commit()
+                        }
                         loadingSpinner.visibility = View.INVISIBLE
-                    }else{
+                    } else {
                         Log.d("noExist", "No document found")
                     }
                 }
-                .addOnFailureListener {exception ->
+                .addOnFailureListener { exception ->
                     Log.d("errorDB", "get failed with ", exception)
-
                 }
+    }
+    private fun startHorseRace(savedInstanceState: Bundle?){
+        //Insert everything from firestore in fragment
+        getLvLGamesHorseRace.get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+                    Log.d("exist", "DocumentSnapshot data: ${document.data}")
+                    if(savedInstanceState == null) {
+                        supportFragmentManager.beginTransaction()
+                            .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
+                                (document.getString("shortDescription") as String).replace("\\n", "\n"),
+                                (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
+                                (document.getString("sectionOneText") as String).replace("\\n", "\n"),
+                                (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
+                                (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
+                                (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
+                                (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                            .commit()
+                    } else {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
+                                (document.getString("shortDescription") as String).replace("\\n", "\n"),
+                                (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
+                                (document.getString("sectionOneText") as String).replace("\\n", "\n"),
+                                (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
+                                (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
+                                (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
+                                (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                            .commit()
+                    }
+                    loadingSpinner.visibility = View.INVISIBLE
+                }else{
+                    Log.d("noExist", "No document found")
+                }
+            }
+            .addOnFailureListener {exception ->
+                Log.d("errorDB", "get failed with ", exception)
+
+            }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(CURRENT_GAME, currentGame)
+        outState.putString(PREVIOUS_LANG, getString(R.string.currentLang))
     }
 }
