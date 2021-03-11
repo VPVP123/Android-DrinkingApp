@@ -46,95 +46,6 @@ class PlayMobileGamesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val db = FirebaseFirestore.getInstance()
-
-        val currentLang = getString(R.string.currentLang)
-
-        if (activity is PlayNeverHaveIEverActivity) {
-            val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang).document("statements")
-
-            statements = mutableListOf()
-            statementsCopy = mutableListOf()
-
-            getStatements.get()
-                .addOnSuccessListener { statement ->
-                    if (statement != null) {
-                        Log.d("exist", "DocumentSnapshot data: ${statement.data}")
-                        val myArray = statement.get("statements") as List<String>?
-                        if (myArray != null) {
-                            for (item in myArray) {
-                                statements.add(item)
-                            }
-                            loadingSpinner.visibility = View.INVISIBLE
-                            statementsCopy = statements.toMutableList()
-                            statementsCopy.shuffle()
-                            if (savedInstanceState != null) {
-                                val previousLang = savedInstanceState.getString(PREVIOUS_LANGUAGE)
-                                val currentLang = getString(R.string.currentLang)
-                                if (previousLang == currentLang) {
-                                    val text = savedInstanceState.getString(CURRENT_STATEMENT)
-                                    statementsCopy.add(text as String)
-                                }
-                            }
-                            changeNeverHaveIEverStatement()
-                        }
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("errorDB", "get failed with ", exception)
-                }
-        } else if (activity is PlayDareOrDrinkActivity) {
-            val getQuestions = db.collection("mobileGamesData").document("dareOrDrink").collection(currentLang).document("questions")
-
-            questions = mutableListOf()
-            questionsCopy = mutableListOf()
-
-            getQuestions.get()
-                .addOnSuccessListener { question ->
-                    if (question != null) {
-                        Log.d("exist", "DocumentSnapshot data: ${question.data}")
-                        val myArray = question.get("questions") as List<String>?
-                        if (myArray != null) {
-                            for (item in myArray) {
-                                var newQuestion = DareOrDrinkQuestion(item)
-                                (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
-                                loadingSpinner.visibility = View.INVISIBLE;
-                            }
-                            questionsCopy = questions.toMutableList()
-                            questionsCopy.shuffle()
-                            if (savedInstanceState != null) {
-                                val previousLang = savedInstanceState.getString(PREVIOUS_LANGUAGE)
-                                val currentLang = getString(R.string.currentLang)
-                                if (previousLang == currentLang) {
-                                    val question = savedInstanceState.getString(CURRENT_QUESTION)
-                                    previouslyDisplayedString = question!!
-                                    activityJustRestarted = true
-                                }
-                            }
-                            changeDareOrDrinkQuestion()
-                        }
-                    } else {
-                        Log.d("noExist", "No document found")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("errorDB", "get failed with ", exception)
-                }
-        }
-
-        if (activity is PlayDareOrDrinkActivity) {
-            if (savedInstanceState == null) {
-                arguments.let {
-                    val playersArray = it?.getStringArray(PLAYER_NAMES)
-                    if ((playersArray as Array<String>).count() > 0) {
-                        players = playersArray.toList()
-                    }
-                }
-            } else {
-                players = savedInstanceState.getStringArray(PLAYER_NAMES)!!.toMutableList()
-            }
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -152,17 +63,134 @@ class PlayMobileGamesFragment : Fragment() {
                 nextButtonClick()
             }
         }
+        initializeGame(savedInstanceState)
         return view
+    }
+
+    fun initializeGame(savedInstanceState: Bundle?){
+        val db = FirebaseFirestore.getInstance()
+        val currentLang = getString(R.string.currentLang)
+
+
+        if (activity is PlayNeverHaveIEverActivity) {
+            statements = mutableListOf()
+            statementsCopy = mutableListOf()
+
+            if (savedInstanceState == null) {
+                loadStatementsFromDb(db, currentLang)
+            } else {
+                val previousLang = savedInstanceState.getString(PREVIOUS_LANGUAGE)
+                if (previousLang != currentLang) {
+                    loadStatementsFromDb(db, currentLang)
+                } else if(previousLang == currentLang) {
+                    statements = savedInstanceState.getStringArray(STATEMENTS)!!.toMutableList()
+                    statementsCopy = savedInstanceState.getStringArray(STATEMENTS_COPY)!!.toMutableList()
+
+                    val previousStatement = savedInstanceState.getString(CURRENT_STATEMENT)
+                    statementsCopy.add(previousStatement as String)
+                    loadingSpinner.visibility = View.INVISIBLE
+                    changeNeverHaveIEverStatement()
+                }
+            }
+        } else if (activity is PlayDareOrDrinkActivity) {
+            questions = mutableListOf()
+            questionsCopy = mutableListOf()
+            players = mutableListOf()
+
+            if(savedInstanceState == null){
+                loadQuestionsFromDb(db, currentLang)
+
+                arguments.let {
+                    val playersArray = it?.getStringArray(PLAYER_NAMES)
+                    if ((playersArray as Array<String>).count() > 0) {
+                        players = playersArray.toList()
+                    }
+                }
+            }else{
+                val previousLang = savedInstanceState.getString(PREVIOUS_LANGUAGE)
+
+                if (previousLang != currentLang) {
+                    loadQuestionsFromDb(db, currentLang)
+                } else {
+                    questions = savedInstanceState.getParcelableArray(QUESTIONS)!!.filterIsInstance<DareOrDrinkQuestion>()
+                    questionsCopy = savedInstanceState.getParcelableArray(QUESTIONS_COPY)!!.filterIsInstance<DareOrDrinkQuestion>().toMutableList()
+                    players = savedInstanceState.getStringArray(PLAYER_NAMES)!!.toMutableList()
+
+                    val question = savedInstanceState.getString(CURRENT_QUESTION)
+                    previouslyDisplayedString = question!!
+                    activityJustRestarted = true
+
+                    loadingSpinner.visibility = View.INVISIBLE
+
+                    changeDareOrDrinkQuestion()
+                }
+            }
+        }
+    }
+
+    fun loadStatementsFromDb(db: FirebaseFirestore, currentLang: String){
+        val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang).document("statements")
+
+        getStatements.get()
+            .addOnSuccessListener { statement ->
+                if (statement != null) {
+                    Log.d("exist", "DocumentSnapshot data: ${statement.data}")
+                    val myArray = statement.get("statements") as List<String>?
+                    if (myArray != null) {
+                        for (item in myArray) {
+                            statements.add(item)
+                        }
+                        loadingSpinner.visibility = View.INVISIBLE
+                        statementsCopy = statements.toMutableList()
+                        statementsCopy.shuffle()
+
+                        changeNeverHaveIEverStatement()
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("errorDB", "get failed with ", exception)
+            }
+    }
+
+    fun loadQuestionsFromDb(db: FirebaseFirestore, currentLang: String){
+        val getQuestions = db.collection("mobileGamesData").document("dareOrDrink").collection(currentLang).document("questions")
+
+        getQuestions.get()
+            .addOnSuccessListener { question ->
+                if (question != null) {
+                    Log.d("exist", "DocumentSnapshot data: ${question.data}")
+                    val myArray = question.get("questions") as List<String>?
+                    if (myArray != null) {
+                        for (item in myArray) {
+                            var newQuestion = DareOrDrinkQuestion(item)
+                            (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
+                            loadingSpinner.visibility = View.INVISIBLE;
+                        }
+                        questionsCopy = questions.toMutableList()
+                        questionsCopy.shuffle()
+
+                        changeDareOrDrinkQuestion()
+                    }
+                } else {
+                    Log.d("noExist", "No document found")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("errorDB", "get failed with ", exception)
+            }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if (activity is PlayNeverHaveIEverActivity) {
-            //if(statements.takeLast(1)[0] != textView.text) {
+            outState.putStringArray(STATEMENTS, statements.toTypedArray())
+            outState.putStringArray(STATEMENTS_COPY, statementsCopy.toTypedArray())
             outState.putString(CURRENT_STATEMENT, textView.text as String)
-            //}
         } else if (activity is PlayDareOrDrinkActivity) {
             outState.putString(CURRENT_QUESTION, textView.text as String)
+            outState.putParcelableArray(QUESTIONS, questions.toTypedArray())
+            outState.putParcelableArray(QUESTIONS_COPY, questionsCopy.toTypedArray())
             outState.putStringArray(PLAYER_NAMES, players.toTypedArray())
         }
         outState.putString(PREVIOUS_LANGUAGE, getString(R.string.currentLang))
@@ -233,7 +261,9 @@ class PlayMobileGamesFragment : Fragment() {
         const val CURRENT_STATEMENT = "CURRENT_STATEMENT"
         const val CURRENT_QUESTION = "CURRENT_QUESTION"
         const val STATEMENTS = "STATEMENTS"
+        const val STATEMENTS_COPY = "STATEMENTS_COPY"
         const val QUESTIONS = "QUESTIONS"
+        const val QUESTIONS_COPY = "QUESTIONS_COPY"
         const val PLAYER_NAMES = "PLAYER_NAMES"
         const val PREVIOUS_LANGUAGE = "PREVIOUS_LANG"
 
