@@ -10,24 +10,12 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_TITLE = "title"
-private const val ARG_DESCRIPTION = "description"
-private const val ARG_EQUIPMENT_TITLE = "equipmentTitle"
-private const val ARG_EQUIPMENT = "equipment"
-private const val ARG_SETUP_TITLE = "setupTitle"
-private const val ARG_SETUP = "setup"
-private const val ARG_HOWTOPLAY_TITLE = "howToPlayTitle"
-private const val ARG_HOWTOPLAY = "howToPlay"
-
 /**
  * A simple [Fragment] subclass.
  * Use the [CardGamesFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class CardGamesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var title: String? = null
     private var description: String? = null
     private var equipmentTitle: String? = null
@@ -40,6 +28,7 @@ class CardGamesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
             title = it.getString(ARG_TITLE)
             description = it.getString(ARG_DESCRIPTION)
@@ -50,16 +39,6 @@ class CardGamesFragment : Fragment() {
             howToPlayTitle = it.getString(ARG_HOWTOPLAY_TITLE)
             howToPlay = it.getString(ARG_HOWTOPLAY)
         }
-
-        val titleTextView = view?.findViewById<TextView>(R.id.cardGameTitle)?.setText(title)
-        val descriptionTextView = view?.findViewById<TextView>(R.id.cardGameDescription)?.setText(title)
-        val titleEquipmentTextView = view?.findViewById<TextView>(R.id.cardGameSectionOneTitle)?.setText(equipmentTitle)
-        val equipmentTextView = view?.findViewById<TextView>(R.id.cardGameEquipment)?.setText(equipment)
-        val titleSetupTextView = view?.findViewById<TextView>(R.id.cardGameSectionTwoTitle)?.setText(setupTitle)
-        val setupTextView = view?.findViewById<TextView>(R.id.cardGameSetup)?.setText(setup)
-        val titleHowToPlayTextView = view?.findViewById<TextView>(R.id.cardGameSectionThreeTitle)?.setText(howToPlayTitle)
-        val howToPlayTextView = view?.findViewById<TextView>(R.id.cardGameHowToPlay)?.setText(howToPlay)
-
     }
 
     override fun onCreateView(
@@ -82,6 +61,14 @@ class CardGamesFragment : Fragment() {
     }
 
     companion object {
+        private const val ARG_TITLE = "title"
+        private const val ARG_DESCRIPTION = "description"
+        private const val ARG_EQUIPMENT_TITLE = "equipmentTitle"
+        private const val ARG_EQUIPMENT = "equipment"
+        private const val ARG_SETUP_TITLE = "setupTitle"
+        private const val ARG_SETUP = "setup"
+        private const val ARG_HOWTOPLAY_TITLE = "howToPlayTitle"
+        private const val ARG_HOWTOPLAY = "howToPlay"
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
