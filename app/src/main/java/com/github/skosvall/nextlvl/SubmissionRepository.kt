@@ -1,6 +1,14 @@
 package com.github.skosvall.nextlvl
 
 
+val dorSubmissionRepository = SubmissionRepository().apply {
+
+}
+
+val nhieSubmissionRepository = SubmissionRepository().apply {
+
+}
+
 val submissionRepository = SubmissionRepository().apply {
 
 }
@@ -50,5 +58,7 @@ class SubmissionRepository{
         }
 
     }
+
+
 
 }

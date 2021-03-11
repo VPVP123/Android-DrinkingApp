@@ -26,7 +26,7 @@ class adminPanelActivity : AppCompatActivity() {
 
         buttonSubmission.setOnClickListener{
             startActivity(
-                Intent(this, chooseSubmissionActivity::class.java)
+                Intent(this, ReviewSubmissionsActivity::class.java)
             )
         }
 
