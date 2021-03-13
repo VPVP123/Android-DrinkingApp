@@ -38,6 +38,10 @@
     <string name="new_submissions">New Submissions</string>
     <string name="logout">Logout</string>
 
+    <string name="reminderTitle">Set a party reminder</string>
+    <string name="reminderLinkText">Make sure you don´t miss playing some NextLvL by setting a party game reminder here!</string>
+    <string name="reminderDescription">Here you can select a time today when you want to be reminded to play some NextLvL. Enable the timer and we will send you a notification at the selected time!</string>
+
     <string name="dare_or_drink_suggestions">Dare Or Drink-suggestions:</string>
     <string name="never_have_i_ever_suggestions">Never Have I Ever-suggestions:</string>
     <string name="i_want_to_submit_a">I want to submit a </string>
@@ -47,8 +51,6 @@
     <string name="enter_translation">Enter translation</string>
     <string name="swedish">Swedish</string>
     <string name="english">English</string>
-
-
 
 
     <string-array name="gameArray">

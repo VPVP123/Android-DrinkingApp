@@ -67,11 +67,15 @@ class MainActivity : AppCompatActivity() {
         val alarmBtn = findViewById<Button>(R.id.button4)
 
         alarmBtn.setOnClickListener{
-            val seconds = 5*1000
+            /*val seconds = 5*1000
             val intent = Intent(context, Receiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + seconds, pendingIntent)
-            Log.d("MainActivity", "sent")
+            Log.d("MainActivity", "sent")*/
+            val intent = Intent(this, SetReminderActivity::class.java)
+            startActivity(
+                intent
+            )
         }
 
         mobileGamesBtn.setOnClickListener {

@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NextLvL">
-        <activity android:name=".ReviewSubmissionsActivity"/>
+        <activity android:name=".SetReminderActivity"></activity>
+        <activity android:name=".ReviewSubmissionsActivity" />
         <activity android:name=".PlayLvLGamesActivity" />
         <activity android:name=".PlayCardGamesActivity" />
         <activity
@@ -46,7 +47,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".MainActivity$Receiver"/>
+
+        <receiver android:name=".MainActivity$Receiver" />
     </application>
 
 </manifest>
