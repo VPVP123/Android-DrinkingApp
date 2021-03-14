@@ -12,7 +12,7 @@
     <string name="beerpong">Beerpong</string>
     <string name="gasgas">GasGas</string>
     <string name="horserace">Horse Race</string>
-    <string name="_321">3-2-1</string>
+    <string name="_321">3–2–1</string>
     <string name="ringoffire">Ring Of Fire</string>
     <string name="fuckthedealer">Fuck The Dealer</string>
     <string name="enter_name">Enter name</string>
@@ -52,6 +52,8 @@
     <string name="swedish">Swedish</string>
     <string name="english">English</string>
 
+    <string name="nextlvl">nextLvL</string>
+    <string name="reminder_notification_text">"We miss you! Don't forget to play some nextLvL to make sure you have the best party possible!"</string>
 
     <string-array name="gameArray">
         <item>Dare or drink</item>

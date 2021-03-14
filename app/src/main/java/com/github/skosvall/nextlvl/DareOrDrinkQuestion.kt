@@ -5,7 +5,7 @@ import android.os.Parcelable
 import java.util.stream.IntStream.range
 
 class DareOrDrinkQuestion(var question: String?) : Parcelable{
-    var nrOfPlayers: Int = 0
+    private var nrOfPlayers: Int = 0
 
     constructor(parcel: Parcel) : this(parcel.readString()) {
         nrOfPlayers = parcel.readInt()

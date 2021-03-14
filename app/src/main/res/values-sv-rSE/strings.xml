@@ -47,6 +47,9 @@
     <string name="swedish">Svenska</string>
     <string name="english">Engelska</string>
 
+    <string name="nextlvl">nextLvL</string>
+    <string name="reminder_notification_text">"Vi saknar dig! Glöm inte att spela nextLvL så att er fest blir så bra som bara möjligt!"</string>
+
     <string-array name="gameArray">
         <item>Dare or drink</item>
         <item>Never have i ever</item>

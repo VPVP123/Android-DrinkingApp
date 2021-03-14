@@ -11,7 +11,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class PlayCardGamesActivity : AppCompatActivity() {
+class PlayCardGameActivity : AppCompatActivity() {
     companion object{
         const val CURRENT_GAME = "CURRENT_GAME"
         const val PREVIOUS_LANG = "PREVIOUS_LANG"
@@ -21,24 +21,21 @@ class PlayCardGamesActivity : AppCompatActivity() {
         const val THREE_TWO_ONE = "threeTwoOne"
     }
 
-    lateinit var currentGame: String
-    lateinit var getCardGames123: DocumentReference
-    lateinit var getCardGamesFuckTheDealer: DocumentReference
-    lateinit var getCardGamesRingOfFire: DocumentReference
-
-    lateinit var loadingSpinner: ProgressBar
+    private lateinit var currentGame: String
+    private lateinit var getCardGames123: DocumentReference
+    private lateinit var getCardGamesFuckTheDealer: DocumentReference
+    private lateinit var getCardGamesRingOfFire: DocumentReference
+    private lateinit var loadingSpinner: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_card_games)
 
         loadingSpinner = this.findViewById<ProgressBar>(R.id.cardGamesSpinner)
+        loadingSpinner.visibility = View.VISIBLE
 
         val db = FirebaseFirestore.getInstance()
 
-        loadingSpinner.visibility = View.VISIBLE
-
-        //Set language
         val currentLang = getString(R.string.currentLang)
 
         getCardGames123 = db.collection("cardGamesData").document("1-2-3").collection(currentLang).document("texts")
@@ -56,7 +53,6 @@ class PlayCardGamesActivity : AppCompatActivity() {
             }else{
                 loadingSpinner.visibility = View.INVISIBLE
             }
-
         }
     }
 

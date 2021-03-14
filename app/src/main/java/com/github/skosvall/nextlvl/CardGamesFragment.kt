@@ -5,16 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.view.isVisible
-import com.google.firebase.firestore.FirebaseFirestore
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CardGamesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CardGamesFragment : Fragment() {
     private var title: String? = null
     private var description: String? = null
@@ -24,7 +16,6 @@ class CardGamesFragment : Fragment() {
     private var setup: String? = null
     private var howToPlayTitle: String? = null
     private var howToPlay: String? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

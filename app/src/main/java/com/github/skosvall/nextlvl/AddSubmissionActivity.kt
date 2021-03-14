@@ -2,10 +2,8 @@ package com.github.skosvall.nextlvl
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
-import com.google.api.LogDescriptor
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -39,7 +37,7 @@ class AddSubmissionActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                if(options.get(position) == "Dare or drink"){
+                if(options[position] == "Dare or drink"){
                     exampleTextField.text = "Example: 'DOR is selected'"
                     submissionTextField.hint = "Enter a dare"
                     selectedGame = ReviewSubmissionsActivity.DOR

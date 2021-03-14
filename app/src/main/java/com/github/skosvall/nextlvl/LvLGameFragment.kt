@@ -9,13 +9,6 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 
-
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LvLGameFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LvLGameFragment : Fragment() {
     private var title: String? = null
     private var description: String? = null
