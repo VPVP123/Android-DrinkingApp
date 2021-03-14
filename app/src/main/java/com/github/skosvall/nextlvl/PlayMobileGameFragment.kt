@@ -18,15 +18,7 @@ import kotlin.properties.Delegates
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val LIST_OF_PLAYERS = "listOfPlayers"
-private const val LIST_OF_STATEMENTS = "listOfStatements"
-private const val LIST_OF_QUESTIONS = "listOfQuestions"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PlayMobileGamesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 
 class PlayMobileGamesFragment : Fragment() {
     lateinit var statements: MutableList<String>

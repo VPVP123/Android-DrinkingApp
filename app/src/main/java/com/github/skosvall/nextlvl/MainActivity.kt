@@ -2,28 +2,21 @@ package com.github.skosvall.nextlvl
 
 import android.annotation.SuppressLint
 import android.app.*
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
 
-
-    lateinit var context: Context
-    lateinit var alarmManager: AlarmManager
-
+    private lateinit var context: Context
+    private lateinit var alarmManager: AlarmManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,11 +53,6 @@ class MainActivity : AppCompatActivity() {
         val alarmBtn = findViewById<Button>(R.id.button4)
 
         alarmBtn.setOnClickListener{
-            /*val seconds = 5*1000
-            val intent = Intent(context, Receiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-            alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + seconds, pendingIntent)
-            Log.d("MainActivity", "sent")*/
             val intent = Intent(this, SetReminderActivity::class.java)
             startActivity(
                 intent

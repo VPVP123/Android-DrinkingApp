@@ -24,6 +24,7 @@ class SetReminderActivity : AppCompatActivity() {
     }
 
     lateinit var timePicker: TimePicker
+    val standardRequestCode = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,56 +45,48 @@ class SetReminderActivity : AppCompatActivity() {
             timePicker.minute = savedInstanceState.getInt(SELECTED_MINUTES)
         }
 
+        fun createNotification(selectedHour: Int, selectedMinute: Int){
+            val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+            val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
+            val millisUntilReminder = (((selectedHour - currentHour) * 3600000) + ((selectedMinute - currentMinute) * 60000)).toLong()
+
+            val intent = Intent(this, ReminderNotificationReciever::class.java)
+
+            intent.putExtra("reason", "notification")
+            intent.putExtra("timestamp", (System.currentTimeMillis() + millisUntilReminder))
+
+            val pendingIntent = PendingIntent.getBroadcast(
+                    this,
+                    standardRequestCode,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            alarmManager.set(
+                    AlarmManager.RTC_WAKEUP,
+                    (System.currentTimeMillis() + millisUntilReminder),
+                    pendingIntent
+            )
+        }
+
         val toggleButton = findViewById<ToggleButton>(R.id.reminderToggleButton)
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-                val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
-                val millisUntilReminder = (((timePicker.hour - currentHour) * 3600000) + ((timePicker.minute - currentMinute) * 60000)).toLong()
-
+                createNotification(timePicker.hour, timePicker.minute)
+            } else {
                 val intent = Intent(this, ReminderNotificationReciever::class.java)
-
-                intent.putExtra("reason", "notification")
-                intent.putExtra("timestamp", (System.currentTimeMillis() + millisUntilReminder))
-
                 val pendingIntent = PendingIntent.getBroadcast(
-                    this,
-                    0,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                        this,
+                        standardRequestCode,
+                        intent,
+                        0
                 )
-                alarmManager.setExact(
-                    AlarmManager.RTC_WAKEUP,
-                        (System.currentTimeMillis() + millisUntilReminder),
-                    pendingIntent
-                )
-                Log.d("SetReminderActivity", "sent")
+                alarmManager.cancel(pendingIntent)
             }
         }
 
         timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
             if (toggleButton.isChecked) {
-                val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-                val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
-                val millisUntilReminder = (((hourOfDay - currentHour) * 3600000) + ((minute - currentMinute) * 60000)).toLong()
-
-                val intent = Intent(this, ReminderNotificationReciever::class.java)
-
-                intent.putExtra("reason", "notification")
-                intent.putExtra("timestamp", (System.currentTimeMillis() + millisUntilReminder))
-
-                val pendingIntent = PendingIntent.getBroadcast(
-                    this,
-                    0,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                )
-                alarmManager.setExact(
-                    AlarmManager.RTC_WAKEUP,
-                        (System.currentTimeMillis() + millisUntilReminder),
-                    pendingIntent
-                )
-                Log.d("SetReminderActivity", "sent")
+                createNotification(hourOfDay, minute)
             }
         }
     }

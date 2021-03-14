@@ -11,18 +11,18 @@ class LvLGamesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_lvl_games)
 
         findViewById<Button>(R.id.beerpongButton).setOnClickListener {
-            startGame(PlayLvLGamesActivity.BEERPONG)
+            startGame(PlayLvLGameActivity.BEERPONG)
         }
         findViewById<Button>(R.id.gasGasButton).setOnClickListener {
-            startGame(PlayLvLGamesActivity.GAS_GAS)
+            startGame(PlayLvLGameActivity.GAS_GAS)
         }
         findViewById<Button>(R.id.horseRaceButton).setOnClickListener {
-            startGame(PlayLvLGamesActivity.HORSE_RACE)
+            startGame(PlayLvLGameActivity.HORSE_RACE)
         }
     }
     private fun startGame(gameToStart: String){
-        val intent = Intent(this, PlayLvLGamesActivity::class.java)
-        intent.putExtra(PlayLvLGamesActivity.GAME_TO_START, gameToStart)
+        val intent = Intent(this, PlayLvLGameActivity::class.java)
+        intent.putExtra(PlayLvLGameActivity.GAME_TO_START, gameToStart)
         startActivity(intent)
     }
 }

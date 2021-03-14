@@ -6,10 +6,14 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.res.TypedArrayUtils.getString
+import androidx.core.content.res.TypedArrayUtils.getText
+import com.github.skosvall.nextlvl.R.*
 
 class ReminderNotificationReciever : BroadcastReceiver() {
     private val channelId = "com.github.skosvall.nextlvl"
@@ -42,13 +46,13 @@ class ReminderNotificationReciever : BroadcastReceiver() {
 
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
-        val bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher_round)
+        val bitmap = BitmapFactory.decodeResource(context.resources, mipmap.ic_launcher_round)
 
         val builder = NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setSmallIcon(mipmap.ic_launcher_round)
                 .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap))
-                .setContentTitle("Yo test")
-                .setContentText("Time for a party")
+                .setContentTitle(Resources.getSystem().getString(R.string.nextlvl))
+                .setContentText(Resources.getSystem().getString(R.string.reminder_notification_text))
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         with(NotificationManagerCompat.from(context)){

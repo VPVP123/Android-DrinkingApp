@@ -11,18 +11,18 @@ class CardGamesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_card_games)
 
         findViewById<Button>(R.id.fuckTheDealerButton).setOnClickListener {
-            startGame(PlayCardGamesActivity.FUCK_THE_DEALER)
+            startGame(PlayCardGameActivity.FUCK_THE_DEALER)
         }
         findViewById<Button>(R.id.ringOfFireButton).setOnClickListener {
-            startGame(PlayCardGamesActivity.RING_OF_FIRE)
+            startGame(PlayCardGameActivity.RING_OF_FIRE)
         }
         findViewById<Button>(R.id.threeTwoOneButton).setOnClickListener {
-            startGame(PlayCardGamesActivity.THREE_TWO_ONE)
+            startGame(PlayCardGameActivity.THREE_TWO_ONE)
         }
     }
     private fun startGame(gameToStart: String){
-        val intent = Intent(this, PlayCardGamesActivity::class.java)
-        intent.putExtra(PlayCardGamesActivity.GAME_TO_START, gameToStart)
+        val intent = Intent(this, PlayCardGameActivity::class.java)
+        intent.putExtra(PlayCardGameActivity.GAME_TO_START, gameToStart)
         startActivity(intent)
     }
 }

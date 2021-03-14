@@ -1,18 +1,14 @@
 package com.github.skosvall.nextlvl
 
-import android.app.AlertDialog
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.*
 
-class PlayLvLGamesActivity : AppCompatActivity() {
+class PlayLvLGameActivity : AppCompatActivity() {
     companion object{
         const val CURRENT_GAME = "CURRENT_GAME"
         const val PREVIOUS_LANG = "PREVIOUS_LANG"
@@ -22,19 +18,20 @@ class PlayLvLGamesActivity : AppCompatActivity() {
         const val HORSE_RACE = "horseRace"
     }
 
-    lateinit var currentGame: String
-    lateinit var getLvLGamesBeerPong: DocumentReference
-    lateinit var getLvLGamesGasGas: DocumentReference
-    lateinit var getLvLGamesHorseRace: DocumentReference
-
-    lateinit var loadingSpinner: ProgressBar
+    private lateinit var currentGame: String
+    private lateinit var getLvLGamesBeerPong: DocumentReference
+    private lateinit var getLvLGamesGasGas: DocumentReference
+    private lateinit var getLvLGamesHorseRace: DocumentReference
+    private lateinit var loadingSpinner: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_lvl_games)
 
-        val db = FirebaseFirestore.getInstance()
         loadingSpinner = this.findViewById<ProgressBar>(R.id.lvlGamesSpinner)
+
+        val db = FirebaseFirestore.getInstance()
+
         val currentLang = getString(R.string.currentLang)
 
         getLvLGamesBeerPong = db.collection("lvlGamesData").document("beerpong").collection(currentLang).document("texts")
@@ -50,7 +47,7 @@ class PlayLvLGamesActivity : AppCompatActivity() {
         }else{
             val previousLang = savedInstanceState.getString(PREVIOUS_LANG)
 
-            currentGame = savedInstanceState.getString(PlayCardGamesActivity.CURRENT_GAME) as String
+            currentGame = savedInstanceState.getString(PlayCardGameActivity.CURRENT_GAME) as String
 
             if(previousLang != currentLang){
                 startGame(savedInstanceState)
