@@ -17,11 +17,8 @@
             android:id="@+id/imageView"
             android:layout_width="350dp"
             android:layout_height="86dp"
-            android:layout_centerHorizontal="true"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/nextlvl_logo" />
-
-
 
         <TextView
             android:id="@+id/textView2"
@@ -29,7 +26,7 @@
             android:layout_height="wrap_content"
             android:text="@string/SelectGameText"
             android:textColor="@color/white"
-            android:textSize="22dp"
+            android:textSize="22sp"
             android:layout_marginBottom="80dp"/>
 
         <Button
@@ -38,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="@string/NHIE_button"
             android:background="@drawable/rounded_button"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textAllCaps="false"
             android:layout_marginBottom="40dp"/>
 
@@ -48,21 +45,19 @@
             android:layout_height="wrap_content"
             android:text="@string/DOR_button"
             android:background="@drawable/rounded_button"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textAllCaps="false"
             android:layout_marginBottom="20dp"/>
-
-            />
 
         <TextView
             android:id="@+id/submitText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text=""
+            android:text="@string/dont_like_nhie_dares"
             android:textColor="@color/white"
             android:lineSpacingExtra="15dp"
-            android:textSize="14dp"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
 
