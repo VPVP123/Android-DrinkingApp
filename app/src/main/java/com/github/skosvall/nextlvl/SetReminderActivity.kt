@@ -13,7 +13,8 @@ import android.widget.ToggleButton
 import androidx.core.view.get
 import java.sql.Time
 import java.util.*
-
+import kotlin.math.min
+import kotlin.time.hours
 
 
 class SetReminderActivity : AppCompatActivity() {
@@ -38,7 +39,6 @@ class SetReminderActivity : AppCompatActivity() {
             timePicker.hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
             timePicker.minute = Calendar.getInstance().get(Calendar.MINUTE)
 
-
         } else{
             timePicker.hour = savedInstanceState.getInt(SELECTED_HOURS)
             timePicker.minute = savedInstanceState.getInt(SELECTED_MINUTES)
@@ -47,18 +47,24 @@ class SetReminderActivity : AppCompatActivity() {
         val toggleButton = findViewById<ToggleButton>(R.id.reminderToggleButton)
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                val notificationTimeInMillis =
-                    ((timePicker.hour * 3600000) + (timePicker.minute * 60000)).toLong()
-                val intent = Intent(this, MainActivity.Receiver::class.java)
+                val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+                val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
+                val millisUntilReminder = (((timePicker.hour - currentHour) * 3600000) + ((timePicker.minute - currentMinute) * 60000)).toLong()
+
+                val intent = Intent(this, ReminderNotificationReciever::class.java)
+
+                intent.putExtra("reason", "notification")
+                intent.putExtra("timestamp", (System.currentTimeMillis() + millisUntilReminder))
+
                 val pendingIntent = PendingIntent.getBroadcast(
                     this,
                     0,
                     intent,
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
-                alarmManager.set(
+                alarmManager.setExact(
                     AlarmManager.RTC_WAKEUP,
-                    notificationTimeInMillis,
+                        (System.currentTimeMillis() + millisUntilReminder),
                     pendingIntent
                 )
                 Log.d("SetReminderActivity", "sent")
@@ -67,18 +73,24 @@ class SetReminderActivity : AppCompatActivity() {
 
         timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
             if (toggleButton.isChecked) {
-                val notificationTimeInMillis =
-                    ((hourOfDay * 3600000) + (minute * 60000)).toLong()
-                val intent = Intent(this, MainActivity.Receiver::class.java)
+                val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+                val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
+                val millisUntilReminder = (((hourOfDay - currentHour) * 3600000) + ((minute - currentMinute) * 60000)).toLong()
+
+                val intent = Intent(this, ReminderNotificationReciever::class.java)
+
+                intent.putExtra("reason", "notification")
+                intent.putExtra("timestamp", (System.currentTimeMillis() + millisUntilReminder))
+
                 val pendingIntent = PendingIntent.getBroadcast(
                     this,
                     0,
                     intent,
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
-                alarmManager.set(
+                alarmManager.setExact(
                     AlarmManager.RTC_WAKEUP,
-                    notificationTimeInMillis,
+                        (System.currentTimeMillis() + millisUntilReminder),
                     pendingIntent
                 )
                 Log.d("SetReminderActivity", "sent")
