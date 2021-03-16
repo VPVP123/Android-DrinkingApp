@@ -170,14 +170,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getCountryName(lat: Double,long: Double):String{
-        var cityName:String = ""
         var countryName = ""
         var geoCoder = Geocoder(this, Locale.getDefault())
         var Adress = geoCoder.getFromLocation(lat,long,3)
-
-        cityName = Adress.get(0).locality
+        
         countryName = Adress.get(0).countryName
-        Log.d("Debug:","Your City: " + cityName + " ; your Country " + countryName)
+        Log.d("Debug:","Your Country " + countryName)
         return countryName
     }
 
