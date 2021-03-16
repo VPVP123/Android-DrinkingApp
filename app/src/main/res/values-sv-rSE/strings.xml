@@ -21,7 +21,7 @@
     <string name="start_game">Starta spel</string>
     <string name="next">Nästa</string>
     <string name="currentLang">swedish</string>
-    <string name="dont_like_nhie_dares">"Gillar du inte våra 'Jag har aldrig' / Dares?"</string>
+    <string name="dont_like_nhie_dares">"Gillar du inte våra 'Jag har aldrig' / Dares?\n Ge förslag på nya"</string>
     <string name="submit_your_own">Ge förslag på nya</string>
 
     <string name="what_is_needded">Vad som behövs</string>
@@ -39,7 +39,7 @@
 
     <string name="dare_or_drink_suggestions">Dare Or Drink-förslag:</string>
     <string name="never_have_i_ever_suggestions">Jag har aldrig-förslag:</string>
-    <string name="i_want_to_submit_a">Jag vill föreslå en </string>
+    <string name="i_want_to_submit_a">"Jag vill föreslå en "</string>
     <string name="submit">Skicka</string>
     <string name="dismiss">Tillbaka</string>
 
@@ -57,12 +57,12 @@
     <string name="submission_please_select_a_game">Vänligen välj ett spel</string>
     <string name="submission_placeholder_dare_or_drink">Skriv en dare</string>
     <string name="submission_placeholder_never_have_i_ever">Skriv ett Jag har aldrig-påstående</string>
-    <string name="dare_or_drink_example">Spelare1, låt Spelare2 använda ditt Facebook-konto i 1 minut eller drick 3 klunkar</string>
-    <string name="never_have_i_ever_example">Jag har aldrig kört över hastighetsgränsen</string>
+    <string name="dare_or_drink_example">Ex: "Spelare1, låt Spelare2 använda ditt Facebook-konto i 1 minut eller drick 3 klunkar"</string>
+    <string name="never_have_i_ever_example">Ex: "Jag har aldrig kört över hastighetsgränsen"</string>
 
     <string-array name="gameArray">
         <item>Dare or drink</item>
-        <item>Never have i ever</item>
+        <item>Jag har aldrig</item>
     </string-array>
 
 

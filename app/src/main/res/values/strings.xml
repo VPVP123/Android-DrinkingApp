@@ -20,7 +20,7 @@
     <string name="start_game">Start game</string>
     <string name="next">Next</string>
     <string name="currentLang">english</string>
-    <string name="dont_like_nhie_dares">"Don't like our Never have i ever/ Dares?\nSubmit your own"</string>
+    <string name="dont_like_nhie_dares">"Don't like our Never have i ever/ Dares?\n Submit your own"</string>
     <string name="submit_your_own">Submit your own</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -44,7 +44,7 @@
 
     <string name="dare_or_drink_suggestions">Dare Or Drink-suggestions:</string>
     <string name="never_have_i_ever_suggestions">Never Have I Ever-suggestions:</string>
-    <string name="i_want_to_submit_a">I want to submit a </string>
+    <string name="i_want_to_submit_a">"I want to submit a "</string>
     <string name="submit">Submit</string>
     <string name="dismiss">Dismiss</string>
 
@@ -62,8 +62,8 @@
     <string name="submission_please_select_a_game">Please select a game</string>
     <string name="submission_placeholder_dare_or_drink">Enter a dare</string>
     <string name="submission_placeholder_never_have_i_ever">Enter a Never have i ever-statement</string>
-    <string name="dare_or_drink_example">Player1, let Player2 use your facebook account for 1 minute, or drink 3 sips</string>
-    <string name="never_have_i_ever_example">Never have i ever driven over the speed limit</string>
+    <string name="dare_or_drink_example">Ex: "Player1, let Player2 use your facebook account for 1 minute, or drink 3 sips"</string>
+    <string name="never_have_i_ever_example">Ex: "Never have i ever driven over the speed limit"</string>
     
     <!-- ErrorMessage Strings -->
     <string name="error">Error</string>
