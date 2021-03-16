@@ -1,15 +1,28 @@
 package com.github.skosvall.nextlvl
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.*
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +30,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var context: Context
     private lateinit var alarmManager: AlarmManager
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    var country = ""
+    val PERMISSION_ID = 1010
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +40,19 @@ class MainActivity : AppCompatActivity() {
         context = this
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val db = FirebaseFirestore.getInstance()
+
+        val userLocation = db.collection("userData").document("Location")
+        val currentLocation = "India"
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        checkgetPermission()
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener{location: Location? ->
+            if (location != null) {
+                country = getCountryName(location.latitude, location.longitude)
+                userLocation.update(country, FieldValue.increment(1))
+            }
+        }
+
 
         /** MOVING DATABASE DATA
         val dareOrDrinkDb = db.collection("mobileGamesData").document("vågaEllerDrick")
@@ -55,26 +84,26 @@ class MainActivity : AppCompatActivity() {
         alarmBtn.setOnClickListener{
             val intent = Intent(this, SetReminderActivity::class.java)
             startActivity(
-                intent
+                    intent
             )
         }
 
         mobileGamesBtn.setOnClickListener {
             val intent = Intent(this, MobileGamesActivity::class.java)
             startActivity(
-                intent
+                    intent
             )
         }
         cardGamesBtn.setOnClickListener {
             val intent = Intent(this, CardGamesActivity::class.java)
             startActivity(
-                intent
+                    intent
             )
         }
         lvlGamesBtn.setOnClickListener {
             val intent = Intent(this, LvLGamesActivity::class.java)
             startActivity(
-                intent
+                    intent
             )
         }
 
@@ -101,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                         // Five fingers have been down for 5 seconds!
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(
-                            intent
+                                intent
                         )
                     }
                 }
@@ -112,7 +141,45 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    fun checkgetPermission(){
 
+        if(
+                ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        ){
+            return
+        }else{
+            ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,android.Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSION_ID
+            )
+        }
+    }
+
+
+    override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+    ) {
+        if(requestCode == PERMISSION_ID){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Log.d("Debug:","You have the Permission")
+            }
+        }
+    }
+
+    private fun getCountryName(lat: Double,long: Double):String{
+        var cityName:String = ""
+        var countryName = ""
+        var geoCoder = Geocoder(this, Locale.getDefault())
+        var Adress = geoCoder.getFromLocation(lat,long,3)
+
+        cityName = Adress.get(0).locality
+        countryName = Adress.get(0).countryName
+        Log.d("Debug:","Your City: " + cityName + " ; your Country " + countryName)
+        return countryName
+    }
 
 
 
