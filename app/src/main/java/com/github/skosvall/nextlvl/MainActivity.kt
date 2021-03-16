@@ -4,12 +4,17 @@ import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -108,12 +113,40 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        //End of secret admin login panel
+
+        if(
+                ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        ){
+            return
+        }else{
+            ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,android.Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSION_ID
+            )
+        }
     }
 
 
+    override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+    ) {
+        if(requestCode == PERMISSION_ID){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Log.d("Debug:","You have the Permission")
+            }
+        }
+    }
 
+    private fun getCountryName(lat: Double,long: Double):String{
+        var countryName = ""
+        var geoCoder = Geocoder(this, Locale.getDefault())
+        var Adress = geoCoder.getFromLocation(lat,long,3)
 
-
-
+        countryName = Adress.get(0).countryName
+        Log.d("Debug:","Your Country " + countryName)
+        return countryName
+    }
 }

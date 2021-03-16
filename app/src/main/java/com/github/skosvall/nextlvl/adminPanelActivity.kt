@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import kotlin.math.sign
 
 
 class AdminPanelActivity : AppCompatActivity() {
@@ -16,10 +17,10 @@ class AdminPanelActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        val buttonSubmission = this.findViewById<Button>(R.id.manageSubmissionsButton)
+        val buttonSubmissions = this.findViewById<Button>(R.id.manageSubmissionsButton)
         val buttonLogout = this.findViewById<Button>(R.id.buttonLogout)
 
-        buttonSubmission.setOnClickListener{
+        buttonSubmissions.setOnClickListener{
             startActivity(
                 Intent(this, ReviewSubmissionsActivity::class.java)
             )
@@ -28,6 +29,11 @@ class AdminPanelActivity : AppCompatActivity() {
         buttonLogout.setOnClickListener{
             signOut()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        signOut()
     }
 
     private fun signOut(){
@@ -44,6 +50,4 @@ class AdminPanelActivity : AppCompatActivity() {
             signOut()
         }
     }
-
-
 }

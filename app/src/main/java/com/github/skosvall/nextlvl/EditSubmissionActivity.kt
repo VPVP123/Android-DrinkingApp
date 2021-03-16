@@ -6,23 +6,38 @@ import android.widget.Button
 import android.widget.EditText
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlin.properties.Delegates
 
 class EditSubmissionActivity : AppCompatActivity() {
+    companion object{
+        const val GAME_TYPE = "gameType"
+        const val SUBMISSION_ID = "submissionId"
+    }
+
+    private lateinit var gameType: String
+    private var submissionId by Delegates.notNull<Int>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_submission)
 
         val db = FirebaseFirestore.getInstance()
-        val gameType = intent.getStringExtra("gameType")
+
+        if(savedInstanceState == null){
+            gameType = intent.getStringExtra(GAME_TYPE).toString()
+            submissionId = intent.getIntExtra(SUBMISSION_ID, -1)
+        } else {
+            gameType = savedInstanceState.getString(GAME_TYPE).toString()
+            submissionId = savedInstanceState.getInt(SUBMISSION_ID)
+        }
+
         var submission: Submission?
 
-        val submissionId = intent.getIntExtra("submissionId", -1)
         if(gameType == ReviewSubmissionsActivity.DOR){
             submission = dorSubmissionRepository.getSubmissionById(submissionId)
         }else{
             submission = nhieSubmissionRepository.getSubmissionById(submissionId)
         }
-
 
         val editSubmissionTextViewEng = findViewById<EditText>(R.id.editSubmissionEng)as EditText
         val editSubmissionTextViewSwe = findViewById<EditText>(R.id.editSubmissionSwe)as EditText
@@ -37,7 +52,6 @@ class EditSubmissionActivity : AppCompatActivity() {
 
         val buttonSubmit = this.findViewById<Button>(R.id.buttonSubmit)
         val buttonDismiss = this.findViewById<Button>(R.id.buttonDismiss)
-
 
         buttonSubmit.setOnClickListener{
             if(gameType == ReviewSubmissionsActivity.DOR){
@@ -68,7 +82,6 @@ class EditSubmissionActivity : AppCompatActivity() {
                 val newTextEng = newEditSubmissionTextViewEng.editableText.toString()
                 val newTextSwe = newEditSubmissionTextViewSwe.editableText.toString()
 
-
                 if (submission != null) {
                     db.collection("mobileGamesData").document("neverHaveIEver")
                         .collection("english").document("statements")
@@ -92,6 +105,11 @@ class EditSubmissionActivity : AppCompatActivity() {
         buttonDismiss.setOnClickListener {
             this.finish()
         }
+    }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(GAME_TYPE, gameType)
+        outState.putInt(SUBMISSION_ID, submissionId)
     }
 }

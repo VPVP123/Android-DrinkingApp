@@ -20,6 +20,7 @@ class CardGamesActivity : AppCompatActivity() {
             startGame(PlayCardGameActivity.THREE_TWO_ONE)
         }
     }
+
     private fun startGame(gameToStart: String){
         val intent = Intent(this, PlayCardGameActivity::class.java)
         intent.putExtra(PlayCardGameActivity.GAME_TO_START, gameToStart)

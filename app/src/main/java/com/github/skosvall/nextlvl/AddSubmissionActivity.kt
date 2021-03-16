@@ -24,10 +24,9 @@ class AddSubmissionActivity : AppCompatActivity() {
 
         gameSpinner.adapter = ArrayAdapter<String>(this, R.layout.spinner_item, options)
 
-
         gameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                exampleTextField.text = "Please select a game"
+                exampleTextField.text = getString(R.string.submission_please_select_a_game)
                 selectedGame = null.toString()
             }
 
@@ -38,12 +37,12 @@ class AddSubmissionActivity : AppCompatActivity() {
                 id: Long
             ) {
                 if(options[position] == "Dare or drink"){
-                    exampleTextField.text = "Example: 'DOR is selected'"
-                    submissionTextField.hint = "Enter a dare"
+                    exampleTextField.text = getString(R.string.dare_or_drink_example)
+                    submissionTextField.hint = getString(R.string.submission_placeholder_dare_or_drink)
                     selectedGame = ReviewSubmissionsActivity.DOR
                 }else{
-                    exampleTextField.text = "Example: 'NHIE is selected'"
-                    submissionTextField.hint = "Enter a never have i ever"
+                    exampleTextField.text = getString(R.string.never_have_i_ever_example)
+                    submissionTextField.hint = getString(R.string.submission_placeholder_never_have_i_ever)
                     selectedGame = ReviewSubmissionsActivity.NHIE
                 }
             }

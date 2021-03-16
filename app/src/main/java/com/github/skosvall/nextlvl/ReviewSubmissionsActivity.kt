@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -18,8 +17,8 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
     lateinit var nhieAdapter: ArrayAdapter<Submission>
     
     companion object FirebaseManager {
-        val DOR = "Dare or Drink"
-        val NHIE = "Never have i ever"
+        const val DOR = "Dare or Drink"
+        const val NHIE = "Never have i ever"
         const val DOD_SUBMISSIONS = "DOD_SUBMISSIONS"
         const val NHIE_SUBMISSIONS = "NHIE_SUBMISSIONS"
     }
@@ -30,8 +29,8 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
 
-        val dorListView = this.findViewById<ListView>(R.id.dorList)
-        val nhieListView = this.findViewById<ListView>(R.id.nhieList)
+        val dareOrDrinkListView = this.findViewById<ListView>(R.id.dorList)
+        val neverHaveIEverListView = this.findViewById<ListView>(R.id.nhieList)
 
         val dorLoadingSpinner = this.findViewById<ProgressBar>(R.id.dorSpinner)
         val nhieLoadingSpinner = this.findViewById<ProgressBar>(R.id.nhieSpinner)
@@ -49,7 +48,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                 dorSubmissionRepository.getAllSubmissions()
         )
 
-        dorListView.adapter = dorAdapter
+        dareOrDrinkListView.adapter = dorAdapter
 
         val neverHaveIEverDbEng =
                 db.collection("mobileGamesData").document("neverHaveIEver").collection("english")
@@ -65,7 +64,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                 nhieSubmissionRepository.getAllSubmissions()
         )
 
-        nhieListView.adapter = nhieAdapter
+        neverHaveIEverListView.adapter = nhieAdapter
 
         if(savedInstanceState == null) {
             dorLoadingSpinner.visibility = View.VISIBLE;
@@ -84,7 +83,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                                 }
                             }
                         } else {
-                            Log.d("noExist", "No document found")
+                            displayDbError()
                         }
                         dareOrDrinkDbSwe.get()
                                 .addOnSuccessListener { fields ->
@@ -98,15 +97,15 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                                             dorLoadingSpinner.visibility = View.INVISIBLE
                                         }
                                     } else {
-                                        Log.d("noExist", "No document found")
+                                        displayDbError()
                                     }
                                 }
                                 .addOnFailureListener { exception ->
-                                    Log.d("errorDB", "get failed with ", exception)
+                                    displayDbError()
                                 }
                     }
                     .addOnFailureListener { exception ->
-                        Log.d("errorDB", "get failed with ", exception)
+                        displayDbError()
                     }
 
             neverHaveIEverDbEng.get()
@@ -120,7 +119,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                                 nhieAdapter.notifyDataSetChanged()
                             }
                         } else {
-                            Log.d("noExist", "No document found")
+                            displayDbError()
                         }
                         neverHaveIEverDbSwe.get()
                                 .addOnSuccessListener { fields ->
@@ -134,13 +133,13 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                                             nhieAdapter.notifyDataSetChanged()
                                         }
                                     } else {
-                                        Log.d("noExist", "No document found")
+                                        displayDbError()
                                     }
                                 }.addOnFailureListener { exception ->
-                                    Log.d("errorDB", "get failed with ", exception)
+                                    displayDbError()
                                 }
                     }.addOnFailureListener { exception ->
-                        Log.d("errorDB", "get failed with ", exception)
+                        displayDbError()
                     }
         } else {
             dorLoadingSpinner.visibility = View.INVISIBLE;
@@ -148,14 +147,14 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
         }
 
 
-        dorListView.setOnItemClickListener { parent, view, position, id ->
+        dareOrDrinkListView.setOnItemClickListener { _, _, position, _ ->
 
-            val submission = dorListView.adapter.getItem(position) as Submission
+            val submission = dareOrDrinkListView.adapter.getItem(position) as Submission
 
-            val popUpError1 = AlertDialog.Builder(this)
-            popUpError1.setTitle("Submission")
-            popUpError1.setMessage("This is a test")
-            popUpError1.setPositiveButton("Remove") { dialog, which ->
+            val dareOrDrinkPopUp = AlertDialog.Builder(this)
+            dareOrDrinkPopUp.setTitle(getString(R.string.submission))
+            dareOrDrinkPopUp.setMessage(getString(R.string.submission_edit_popup_message))
+            dareOrDrinkPopUp.setPositiveButton(getString(R.string.remove)) { dialog, _ ->
                 db.collection("mobileGamesData").document("dareOrDrink")
                         .collection(submission.lang).document("questions")
                         .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
@@ -163,27 +162,27 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                 dorAdapter.notifyDataSetChanged()
                 dialog.dismiss()
             }
-            popUpError1.setNegativeButton("Edit/Submit") { dialog, which ->
+            dareOrDrinkPopUp.setNegativeButton(getString(R.string.edit_submit)) { dialog, _ ->
                 val intent = Intent(this, EditSubmissionActivity::class.java)
-                intent.putExtra("submissionId", submission.id)
-                intent.putExtra("gameType", ReviewSubmissionsActivity.DOR)
+                intent.putExtra(EditSubmissionActivity.SUBMISSION_ID, submission.id)
+                intent.putExtra(EditSubmissionActivity.GAME_TYPE, ReviewSubmissionsActivity.DOR)
                 startActivity(
                         intent
                 )
                 dialog.dismiss()
             }
-            popUpError1.show()
+            dareOrDrinkPopUp.show()
         }
 
 
-        nhieListView.setOnItemClickListener { parent, view, position, id ->
+        neverHaveIEverListView.setOnItemClickListener { _, _, position, _ ->
 
-            val submission = nhieListView.adapter.getItem(position) as Submission
+            val submission = neverHaveIEverListView.adapter.getItem(position) as Submission
 
-            val popUpError1 = AlertDialog.Builder(this)
-            popUpError1.setTitle("Submission")
-            popUpError1.setMessage("This is a test")
-            popUpError1.setPositiveButton("Remove") { dialog, which ->
+            val neverHaveIEverPopUp = AlertDialog.Builder(this)
+            neverHaveIEverPopUp.setTitle(getString(R.string.submission))
+            neverHaveIEverPopUp.setMessage(getString(R.string.submission_edit_popup_message))
+            neverHaveIEverPopUp.setPositiveButton(getString(R.string.remove)) { dialog, _ ->
                 db.collection("mobileGamesData").document("neverHaveIEver")
                         .collection(submission.lang).document("statements")
                         .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
@@ -191,16 +190,28 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                 nhieAdapter.notifyDataSetChanged()
                 dialog.dismiss()
             }
-            popUpError1.setNegativeButton("Edit/Submit") { dialog, which ->
+            neverHaveIEverPopUp.setNegativeButton(getString(R.string.edit_submit)) { dialog, _ ->
                 val intent = Intent(this, EditSubmissionActivity::class.java)
-                intent.putExtra("submissionId", submission.id)
-                intent.putExtra("gameType", ReviewSubmissionsActivity.NHIE)
+                intent.putExtra(EditSubmissionActivity.SUBMISSION_ID, submission.id)
+                intent.putExtra(EditSubmissionActivity.GAME_TYPE, ReviewSubmissionsActivity.NHIE)
                 startActivity(
                         intent
                 )
                 dialog.dismiss()
             }
-            popUpError1.show()
+            neverHaveIEverPopUp.show()
+        }
+
+
+    }
+
+    fun displayDbError(){
+        val errorPopUp = AlertDialog.Builder(this)
+        errorPopUp.setTitle(getString(R.string.error))
+        errorPopUp.setMessage(getString(R.string.db_error_message))
+        errorPopUp.setPositiveButton(getString(R.string.back)) { dialog, _ ->
+            this.finish()
+            dialog.dismiss()
         }
     }
 

@@ -33,6 +33,8 @@ class DareOrDrinkQuestion(var question: String?) : Parcelable{
     }
 
     override fun toString() = ""
+
+    //Methods required to implement Parcelable
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(question)
         parcel.writeInt(nrOfPlayers)
