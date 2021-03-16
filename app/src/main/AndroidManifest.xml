@@ -24,6 +24,10 @@
         <activity android:name=".chooseSubmissionActivity" />
         <activity android:name=".PlayLvLGamesActivity" />
         <activity android:name=".PlayCardGamesActivity" />
+        <activity android:name=".SetReminderActivity"></activity>
+        <activity android:name=".ReviewSubmissionsActivity" />
+        <activity android:name=".PlayLvLGameActivity" />
+        <activity android:name=".PlayCardGameActivity" />
         <activity
             android:name=".AddSubmissionActivity"
             android:label="@string/title_activity_add_submission" >
@@ -44,11 +48,10 @@
         <activity android:name=".PlayDareOrDrinkActivity" />
         <activity android:name=".PrepareDareOrDrinkActivity" />
         <activity android:name=".PlayNeverHaveIEverActivity" />
-        <activity android:name=".SubmissionListActivity" />
-        <activity android:name=".adminPanelActivity" />
+        <activity android:name=".AdminPanelActivity" />
         <activity android:name=".LvLGamesActivity" />
         <activity android:name=".CardGamesActivity" />
-        <activity android:name=".mobileGamesActivity" />
+        <activity android:name=".MobileGamesActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" >
             <intent-filter>
@@ -57,6 +60,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:process=":remote" android:name=".ReminderNotificationReciever">
+            <intent-filter>
+                <action android:name="android.media.action.DISPLAY_NOTIFICATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

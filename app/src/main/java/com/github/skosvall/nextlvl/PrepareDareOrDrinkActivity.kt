@@ -19,8 +19,11 @@ import kotlin.random.Random
 
 
 class PrepareDareOrDrinkActivity : AppCompatActivity() {
-    lateinit var chipGroup: ChipGroup
-    lateinit var addPlayerEditText: EditText
+    companion object{
+        const val ADDED_PLAYER_NAMES = "ADDED_PLAYER_NAMES"
+    }
+    private lateinit var chipGroup: ChipGroup
+    private lateinit var addPlayerEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +45,7 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }else{
-            savedInstanceState.getStringArray("ADDED_PLAYER_NAMES")?.forEach {
-                Log.d("Playername", it)
+            savedInstanceState.getStringArray(ADDED_PLAYER_NAMES)?.forEach {
                 addChipToChipgroup(it)
             }
         }

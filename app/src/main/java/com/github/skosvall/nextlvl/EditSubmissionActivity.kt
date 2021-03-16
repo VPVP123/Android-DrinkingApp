@@ -14,9 +14,14 @@ class EditSubmissionActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
         val gameType = intent.getStringExtra("gameType")
+        var submission: Submission?
 
         val submissionId = intent.getIntExtra("submissionId", -1)
-        val submission = submissionRepository.getSubmissionById(submissionId)
+        if(gameType == ReviewSubmissionsActivity.DOR){
+            submission = dorSubmissionRepository.getSubmissionById(submissionId)
+        }else{
+            submission = nhieSubmissionRepository.getSubmissionById(submissionId)
+        }
 
 
         val editSubmissionTextViewEng = findViewById<EditText>(R.id.editSubmissionEng)as EditText
@@ -35,7 +40,7 @@ class EditSubmissionActivity : AppCompatActivity() {
 
 
         buttonSubmit.setOnClickListener{
-            if(gameType == chooseSubmissionActivity.DOR){
+            if(gameType == ReviewSubmissionsActivity.DOR){
                 val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.editSubmissionEng)as EditText
                 val newEditSubmissionTextViewSwe = findViewById<EditText>(R.id.editSubmissionSwe)as EditText
                 val newTextEng = newEditSubmissionTextViewEng.editableText.toString()

@@ -1,24 +1,28 @@
 package com.github.skosvall.nextlvl
 
 import android.annotation.SuppressLint
+import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
+
+    private lateinit var context: Context
+    private lateinit var alarmManager: AlarmManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        context = this
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val db = FirebaseFirestore.getInstance()
 
         /** MOVING DATABASE DATA
@@ -46,9 +50,17 @@ class MainActivity : AppCompatActivity() {
         val mobileGamesBtn = findViewById<Button>(R.id.button)
         val cardGamesBtn = findViewById<Button>(R.id.button2)
         val lvlGamesBtn = findViewById<Button>(R.id.button3)
+        val alarmBtn = findViewById<Button>(R.id.button4)
+
+        alarmBtn.setOnClickListener{
+            val intent = Intent(this, SetReminderActivity::class.java)
+            startActivity(
+                intent
+            )
+        }
 
         mobileGamesBtn.setOnClickListener {
-            val intent = Intent(this, mobileGamesActivity::class.java)
+            val intent = Intent(this, MobileGamesActivity::class.java)
             startActivity(
                 intent
             )
@@ -98,5 +110,10 @@ class MainActivity : AppCompatActivity() {
         }
         //End of secret admin login panel
     }
+
+
+
+
+
 
 }

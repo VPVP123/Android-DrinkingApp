@@ -8,6 +8,7 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -16,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
 
-class mobileGamesActivity : AppCompatActivity() {
+class MobileGamesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mobile_games)
@@ -48,6 +49,7 @@ class mobileGamesActivity : AppCompatActivity() {
 
     private fun makeTextLink(textView: TextView, str: String, underlined: Boolean, color: Int?, action: (() -> Unit)? = null) {
         val spannableString = SpannableString(textView.text)
+        Log.d("Test: ", spannableString.toString())
         val textColor = color ?: textView.currentTextColor
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {

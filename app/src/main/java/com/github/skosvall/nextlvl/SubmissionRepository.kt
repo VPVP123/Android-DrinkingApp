@@ -1,14 +1,28 @@
 package com.github.skosvall.nextlvl
 
+import android.os.Parcel
+import android.os.Parcelable
+
+
+val dorSubmissionRepository = SubmissionRepository().apply {
+
+}
+
+val nhieSubmissionRepository = SubmissionRepository().apply {
+
+}
 
 val submissionRepository = SubmissionRepository().apply {
 
 }
 
 
-class SubmissionRepository{
+class SubmissionRepository() : Parcelable{
 
     private val submissions = mutableListOf<Submission>()
+
+    constructor(parcel: Parcel) : this() {
+    }
 
     fun addSubmission(text: String, lang: String): Int{
         val id = when {
@@ -50,5 +64,24 @@ class SubmissionRepository{
         }
 
     }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<SubmissionRepository> {
+        override fun createFromParcel(parcel: Parcel): SubmissionRepository {
+            return SubmissionRepository(parcel)
+        }
+
+        override fun newArray(size: Int): Array<SubmissionRepository?> {
+            return arrayOfNulls(size)
+        }
+    }
+
 
 }

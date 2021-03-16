@@ -15,16 +15,13 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import java.lang.Exception
 
 const val RC_SIGN_IN = 1
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var auth: FirebaseAuth
     private lateinit var listOfAdminAccounts: MutableList<String>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,14 +65,8 @@ class LoginActivity : AppCompatActivity() {
             }
 
         buttonLogin.setOnClickListener{
-
             val email = findViewById<EditText>(R.id.email) as EditText
             val password = findViewById<EditText>(R.id.password) as EditText
-
-
-
-
-
 
             if(!email.text.toString().isEmpty() || !password.text.toString().isEmpty()){
                 auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
@@ -83,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             val user = auth.currentUser
                             startActivity(
-                                Intent(this, adminPanelActivity::class.java)
+                                Intent(this, AdminPanelActivity::class.java)
                             )
                         } else {
                             val popUpError1 = AlertDialog.Builder(this)
@@ -109,11 +100,10 @@ class LoginActivity : AppCompatActivity() {
     }
     override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if(currentUser != null){
             startActivity(
-                Intent(this, adminPanelActivity::class.java)
+                Intent(this, AdminPanelActivity::class.java)
             )
         }
     }
@@ -134,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
 
                             if(currentUser != null && listOfAdminAccounts.contains(currentUserEmail))
                             startActivity(
-                                Intent(this, adminPanelActivity::class.java)
+                                Intent(this, AdminPanelActivity::class.java)
                             )else{
                                 val popUpError1 = AlertDialog.Builder(this)
                                 popUpError1.setTitle("Login failed")
