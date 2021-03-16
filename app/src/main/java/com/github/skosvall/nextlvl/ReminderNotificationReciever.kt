@@ -1,16 +1,18 @@
 package com.github.skosvall.nextlvl
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.os.Build
+import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.core.content.res.TypedArrayUtils.getText
 import com.github.skosvall.nextlvl.R.*
@@ -19,11 +21,30 @@ class ReminderNotificationReciever : BroadcastReceiver() {
     private val channelId = "com.github.skosvall.nextlvl"
     private val notificationId = 123
 
-    override fun onReceive(context: Context?, intent: Intent?) {
+    companion object{
+        const val NOTIFICATION_TITLE = "NOTIFICATION_TITLE"
+        const val NOTIFICATION_TEXT = "NOTIFICATION_TEXT"
+    }
+
+    override fun onReceive(context: Context?, intent: Intent) {
         if (context != null) {
             createNotificationChannel(context)
-            sendNotification(context)
+            val title = context.applicationContext.getString(R.string.nextlvl)
+            val text = context.applicationContext.getString(R.string.reminder_notification_text)
+            //sendNotification(context, title, text)
+
+            val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+
+            val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notification = Notification.Builder(context, channelId)
+                    .setSmallIcon(mipmap.ic_launcher_round)
+                    .setContentTitle(title)
+                    .setContentText(text)
+                    .setContentIntent(pendingIntent)
+
+            notificationManager.notify(1, notification.build())
         }
+
     }
 
     private fun createNotificationChannel(context: Context){
@@ -39,8 +60,8 @@ class ReminderNotificationReciever : BroadcastReceiver() {
         }
     }
 
-    private fun sendNotification(context: Context){
-        val intent = Intent(context, MainActivity::class.java).apply{
+    private fun sendNotification(context: Context, title: String, text: String) {
+        val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
@@ -49,15 +70,15 @@ class ReminderNotificationReciever : BroadcastReceiver() {
         val bitmap = BitmapFactory.decodeResource(context.resources, mipmap.ic_launcher_round)
 
         val builder = NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(mipmap.ic_launcher_round)
+                .setSmallIcon(mipmap.ic_launcher)
+                .setLargeIcon(bitmap)
                 .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap))
-                .setContentTitle(Resources.getSystem().getString(R.string.nextlvl))
-                .setContentText(Resources.getSystem().getString(R.string.reminder_notification_text))
+                .setContentTitle(title)
+                .setContentText(text)
                 .setContentIntent(pendingIntent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        with(NotificationManagerCompat.from(context)){
-            notify(notificationId, builder.build())
-        }
-    }
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
 
+        val NM = NotificationManagerCompat.from(context)
+        NM.notify(1, builder.build())
+    }
 }

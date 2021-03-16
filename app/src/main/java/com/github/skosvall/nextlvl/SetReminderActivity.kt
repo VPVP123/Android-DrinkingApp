@@ -1,6 +1,7 @@
 package com.github.skosvall.nextlvl
 
 import android.app.AlarmManager
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -8,7 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.TimePicker
+import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.core.view.get
 import java.sql.Time
@@ -48,9 +52,12 @@ class SetReminderActivity : AppCompatActivity() {
         fun createNotification(selectedHour: Int, selectedMinute: Int){
             val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
             val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
+            val currentSeconds = Calendar.getInstance().get(Calendar.SECOND)
             val millisUntilReminder = (((selectedHour - currentHour) * 3600000) + ((selectedMinute - currentMinute) * 60000)).toLong()
 
             val intent = Intent(this, ReminderNotificationReciever::class.java)
+            intent.putExtra(ReminderNotificationReciever.NOTIFICATION_TITLE, getString(R.string.nextlvl))
+            intent.putExtra(ReminderNotificationReciever.NOTIFICATION_TEXT, getString(R.string.reminder_notification_text))
 
             intent.putExtra("reason", "notification")
             intent.putExtra("timestamp", (System.currentTimeMillis() + millisUntilReminder))
@@ -66,6 +73,7 @@ class SetReminderActivity : AppCompatActivity() {
                     (System.currentTimeMillis() + millisUntilReminder),
                     pendingIntent
             )
+            Toast.makeText(applicationContext, "Reminder has been set!", Toast.LENGTH_SHORT).show()
         }
 
         val toggleButton = findViewById<ToggleButton>(R.id.reminderToggleButton)
@@ -95,5 +103,10 @@ class SetReminderActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putInt(SELECTED_HOURS, timePicker.hour)
         outState.putInt(SELECTED_MINUTES, timePicker.minute)
+    }
+
+    override fun onStop() {
+        super.onStop()
+
     }
 }
