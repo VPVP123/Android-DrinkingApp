@@ -1,5 +1,6 @@
 package com.github.skosvall.nextlvl
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
@@ -7,12 +8,19 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
+import android.location.Location
+import android.location.LocationManager
+import android.os.Looper
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.*
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
@@ -22,6 +30,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var context: Context
     private lateinit var alarmManager: AlarmManager
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    var country = ""
+    val PERMISSION_ID = 1010
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,56 +41,69 @@ class MainActivity : AppCompatActivity() {
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val db = FirebaseFirestore.getInstance()
 
+        val userLocation = db.collection("userData").document("Location")
+        val currentLocation = "India"
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        checkgetPermission()
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
+            if (location != null) {
+                country = getCountryName(location.latitude, location.longitude)
+                userLocation.update(country, FieldValue.increment(1))
+            }
+        }
+
+
         /** MOVING DATABASE DATA
         val dareOrDrinkDb = db.collection("mobileGamesData").document("vågaEllerDrick")
 
         dareOrDrinkDb.get()
-            .addOnSuccessListener { fields ->
-                if(fields != null){
-                    val myArray = fields.get("frågor") as List<String>?
-                    if (myArray != null) {
-                        for(item in myArray){
-                            db.collection("mobileGamesData").document("dareOrDrink").collection("swedish").document("questions").update("questions", FieldValue.arrayUnion(item) )
-                        }
-                    }
-                }else{
-                    Log.d("noExist", "No document found")
-                }
-            }
-            .addOnFailureListener {exception ->
-                Log.d("errorDB", "get failed with ", exception)
+        .addOnSuccessListener { fields ->
+        if(fields != null){
+        val myArray = fields.get("frågor") as List<String>?
+        if (myArray != null) {
+        for(item in myArray){
+        db.collection("mobileGamesData").document("dareOrDrink").collection("swedish").document("questions").update("questions", FieldValue.arrayUnion(item) )
+        }
+        }
+        }else{
+        Log.d("noExist", "No document found")
+        }
+        }
+        .addOnFailureListener {exception ->
+        Log.d("errorDB", "get failed with ", exception)
 
-            }
-*/
+        }
+         */
 
         val mobileGamesBtn = findViewById<Button>(R.id.button)
         val cardGamesBtn = findViewById<Button>(R.id.button2)
         val lvlGamesBtn = findViewById<Button>(R.id.button3)
         val alarmBtn = findViewById<Button>(R.id.button4)
 
-        alarmBtn.setOnClickListener{
+        alarmBtn.setOnClickListener {
             val intent = Intent(this, SetReminderActivity::class.java)
             startActivity(
-                intent
+                    intent
             )
         }
 
         mobileGamesBtn.setOnClickListener {
             val intent = Intent(this, MobileGamesActivity::class.java)
             startActivity(
-                intent
+                    intent
             )
         }
         cardGamesBtn.setOnClickListener {
             val intent = Intent(this, CardGamesActivity::class.java)
             startActivity(
-                intent
+                    intent
             )
         }
         lvlGamesBtn.setOnClickListener {
             val intent = Intent(this, LvLGamesActivity::class.java)
             startActivity(
-                intent
+                    intent
             )
         }
 
@@ -106,27 +130,29 @@ class MainActivity : AppCompatActivity() {
                         // Five fingers have been down for 5 seconds!
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(
-                            intent
+                                intent
                         )
                     }
                 }
             }
             true
         }
+    }
+
+    fun checkgetPermission(){
 
         if(
-                ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
         ){
             return
         }else{
             ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,android.Manifest.permission.ACCESS_FINE_LOCATION),
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
                     PERMISSION_ID
             )
         }
     }
-
 
     override fun onRequestPermissionsResult(
             requestCode: Int,
