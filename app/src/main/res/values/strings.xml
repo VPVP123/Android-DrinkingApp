@@ -2,7 +2,7 @@
     <string name="app_name">nextLvL</string>
     <string name="MB_button">Mobile Games</string>
     <string name="CG_button">Card Games</string>
-    <string name="LVL_button">LvL Games</string>
+    <string name="LVL_button">LvL-Games</string>
     <string name="DOR_button">Dare Or Drink</string>
     <string name="NHIE_button">Never Have I Ever</string>
     <string name="SelectGameText">Choose a game to play</string>
@@ -75,16 +75,7 @@
         <item>Never have i ever</item>
     </string-array>
     <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-    <string name="widget_text">Hello my man</string>
-    <string name="widget_title">3-2-1</string>
-    <string name="widget_description">3-2-1 is a card drinking game where players nominate each other to drink while taking turns to flip cards from the pyramid over.</string>
-    <string name="widget_title1">Equipment</string>
-    <string name="widget_text1">Card deck \n\nTable to play on \n\nA drink of your choice</string>
-    <string name="widget_title2">Setup</string>
-    <string name="widget_text2">Set up the cards into a flat pyramid shape 4-3-2-1 on the table. Then hand out three cards to each player. Then make sure to choose one person who will act as a human timer.</string>
-
-
+<string name="set_alarm">Set reminder</string>
 
 
 </resources>
