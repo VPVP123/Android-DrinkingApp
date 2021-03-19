@@ -35,14 +35,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center">
-                                <TextView
-                                    android:id="@+id/widgetStatementTextView"
+                                <StackView
+                                    android:id="@+id/widgetStack"
                                     android:layout_width="300dp"
                                     android:layout_height="150dp"
                                     android:background="@drawable/rounded_corner_textview"
-                                    android:gravity="center"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp"/>
+                                    android:layout_gravity="center"
+                                    android:textAlignment="center"
+                                    android:loopViews="true"/>
+                                <TextView
+                                    android:id="@+id/testEmpty"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="testEmpty"
+                                    android:layout_gravity="center"/>
                         </FrameLayout>
                         <Button
                             android:id="@+id/widgetNeverHaveIEverNextButton"
