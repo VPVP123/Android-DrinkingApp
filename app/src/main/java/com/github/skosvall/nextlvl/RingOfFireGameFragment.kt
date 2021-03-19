@@ -86,6 +86,7 @@ class ringOfFireGameFragment : Fragment() {
         view.findViewById<TextView>(R.id.cardGameSectionTwoTitle)?.text = setupTitle
         view.findViewById<TextView>(R.id.cardGameSetup)?.text = setup
         view.findViewById<TextView>(R.id.cardGameSectionThreeTitle)?.text = howToPlayTitle
+        view.findViewById<TextView>(R.id.cardGameHowToPlay)?.text = howToPlay
         view.findViewById<TextView>(R.id.cardGameSectionFourTitle)?.text = sectionFourTitle
         view.findViewById<TextView>(R.id.cardGameSectionFourText)?.text = sectionFourText
 
@@ -98,9 +99,15 @@ class ringOfFireGameFragment : Fragment() {
          * this fragment using the provided parameters.
          *
          * @param title The title of the game.
+         * @param description Short introduction about the game.
+         * @param equipmentTitle Title for equipment.
          * @param equipment Equipment needed to play.
+         *  @param setupTitle Title for setup.
          * @param setup Instructions on how to setup the game.
+         * @param howToPlayTitle Title for how to play.
          * @param howToPlay Instructions on how to play the game.
+         * @param sectionFourTitle Title for section four.
+         * @param sectionFourText Instructions for rules available in section four.
          * @return A new instance of fragment CardGamesFragment.
          */
         @JvmStatic

@@ -59,16 +59,22 @@ class CardGamesFragment : Fragment() {
         private const val ARG_SETUP = "setup"
         private const val ARG_HOWTOPLAY_TITLE = "howToPlayTitle"
         private const val ARG_HOWTOPLAY = "howToPlay"
+
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
          * @param title The title of the game.
+         * @param description Short introduction about the game.
+         * @param equipmentTitle Title for equipment.
          * @param equipment Equipment needed to play.
+         *  @param setupTitle Title for setup.
          * @param setup Instructions on how to setup the game.
+         * @param howToPlayTitle Title for how to play.
          * @param howToPlay Instructions on how to play the game.
          * @return A new instance of fragment CardGamesFragment.
          */
+
         @JvmStatic
         fun newInstance(title: String, description: String, equipmentTitle: String, equipment: String, setupTitle: String, setup: String, howToPlayTitle: String, howToPlay: String) =
             CardGamesFragment().apply {
