@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">nextLvL</string>
-    <string name="MB_button">Mobil Spel</string>
-    <string name="CG_button">Kort Spel</string>
-    <string name="LVL_button">LvL Spel</string>
+    <string name="MB_button">Mobilspel</string>
+    <string name="CG_button">Kortspel</string>
+    <string name="LVL_button">LvL-spel</string>
     <string name="DOR_button">Dare Or Drink</string>
     <string name="NHIE_button">Jag Har Aldrig</string>
     <string name="SelectGameText">Välj ett spel för att spela</string>
@@ -64,6 +64,12 @@
         <item>Dare or drink</item>
         <item>Jag har aldrig</item>
     </string-array>
+    <string name="set_alarm">Sätt påminnelse</string>
+
+    <!-- ErrorMessage Strings -->
+    <string name="error">Error</string>
+    <string name="back">Bakåt</string>
+    <string name="db_error_message">Problem uppstod vi kontakt med databas, var god försök igen!</string>
 
 
 </resources>
