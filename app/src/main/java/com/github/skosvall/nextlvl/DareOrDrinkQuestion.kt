@@ -26,7 +26,7 @@ class DareOrDrinkQuestion(var question: String?) : Parcelable{
 
     fun getCompleteQuestion(playerNames: List<String>): String?{
         var questionToReturn = question
-        for(i in range(0, nrOfPlayers)){
+        for(i in 0 until nrOfPlayers){
             questionToReturn = questionToReturn?.replace((i+1).toString(), playerNames[i])
         }
         return questionToReturn
