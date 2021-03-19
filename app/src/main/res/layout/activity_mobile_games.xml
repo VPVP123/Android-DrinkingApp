@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MobileGamesActivity"
-    android:gravity="center">
+    tools:context=".MobileGamesActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/submitText">
 
         <ImageView
             android:id="@+id/imageView"
@@ -24,41 +27,46 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
             android:text="@string/SelectGameText"
             android:textColor="@color/white"
-            android:textSize="22sp"
-            android:layout_marginBottom="80dp"/>
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/neverHaveIEverButton"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
-            android:text="@string/NHIE_button"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/rounded_button"
-            android:textSize="20sp"
+            android:text="@string/NHIE_button"
             android:textAllCaps="false"
-            android:layout_marginBottom="40dp"/>
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/DOR_button"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
-            android:text="@string/DOR_button"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_button"
-            android:textSize="20sp"
+            android:text="@string/DOR_button"
             android:textAllCaps="false"
-            android:layout_marginBottom="20dp"/>
+            android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/submitText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="@string/dont_like_nhie_dares"
-            android:textColor="@color/white"
-            android:lineSpacingExtra="15dp"
-            android:textSize="14sp"/>
+
     </LinearLayout>
+    <TextView
+        android:id="@+id/submitText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="15dp"
+        android:text="@string/dont_like_nhie_dares"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

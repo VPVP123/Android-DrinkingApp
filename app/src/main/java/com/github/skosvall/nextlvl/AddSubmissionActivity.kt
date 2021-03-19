@@ -16,7 +16,10 @@ class AddSubmissionActivity : AppCompatActivity() {
 
         val submissionTextField = this.findViewById<EditText>(R.id.addSubmissionText)
         val exampleTextField = this.findViewById<TextView>(R.id.exampleTextView)
+
         val buttonSubmit = this.findViewById<Button>(R.id.buttonSubmit)
+        val buttonBack = this.findViewById<Button>(R.id.buttonDismiss)
+
         val gameSpinner = this.findViewById<Spinner>(R.id.gameSpinner)
         val options = resources.getStringArray(R.array.gameArray)
         val currentLang = getString(R.string.currentLang)
@@ -62,7 +65,12 @@ class AddSubmissionActivity : AppCompatActivity() {
                         .collection(currentLang).document("statements")
                         .update("statementSuggestions", FieldValue.arrayUnion(submission))
                 }
+                Toast.makeText(applicationContext, getString(R.string.suggestion_successfully_submitted), Toast.LENGTH_SHORT).show()
             }
+        }
+
+        buttonBack.setOnClickListener{
+            finish()
         }
     }
 }

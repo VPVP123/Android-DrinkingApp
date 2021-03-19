@@ -56,4 +56,16 @@
         android:layout_marginTop="15dp"
         />
 
+    <ProgressBar
+        android:id="@+id/reminderSpinner"
+        app:layout_constraintTop_toBottomOf="@id/reminderToggleButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

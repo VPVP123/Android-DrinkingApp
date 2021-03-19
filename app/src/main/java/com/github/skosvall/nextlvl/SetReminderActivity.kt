@@ -1,24 +1,19 @@
 package com.github.skosvall.nextlvl
 
 import android.app.AlarmManager
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
+import android.os.Handler
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TimePicker
 import android.widget.Toast
 import android.widget.ToggleButton
-import androidx.core.view.get
-import java.sql.Time
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.*
 import java.util.*
-import kotlin.math.min
-import kotlin.time.hours
 
 
 class SetReminderActivity : AppCompatActivity() {
@@ -34,6 +29,9 @@ class SetReminderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_reminder)
 
+        val reminderSpinner = findViewById<ProgressBar>(R.id.reminderSpinner)
+        reminderSpinner.visibility = View.INVISIBLE
+
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         timePicker = findViewById<TimePicker>(R.id.timePicker)
@@ -43,7 +41,6 @@ class SetReminderActivity : AppCompatActivity() {
         if(savedInstanceState == null) {
             timePicker.hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
             timePicker.minute = Calendar.getInstance().get(Calendar.MINUTE)
-
         } else{
             timePicker.hour = savedInstanceState.getInt(SELECTED_HOURS)
             timePicker.minute = savedInstanceState.getInt(SELECTED_MINUTES)
@@ -53,14 +50,11 @@ class SetReminderActivity : AppCompatActivity() {
             val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
             val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
             val currentSeconds = Calendar.getInstance().get(Calendar.SECOND)
-            val millisUntilReminder = (((selectedHour - currentHour) * 3600000) + ((selectedMinute - currentMinute) * 60000)).toLong()
+            val millisUntilReminder = (((selectedHour - currentHour) * 3600000) + ((selectedMinute - currentMinute) * 60000) - (currentSeconds * 1000)).toLong()
 
             val intent = Intent(this, ReminderNotificationReciever::class.java)
             intent.putExtra(ReminderNotificationReciever.NOTIFICATION_TITLE, getString(R.string.nextlvl))
             intent.putExtra(ReminderNotificationReciever.NOTIFICATION_TEXT, getString(R.string.reminder_notification_text))
-
-            intent.putExtra("reason", "notification")
-            intent.putExtra("timestamp", (System.currentTimeMillis() + millisUntilReminder))
 
             val pendingIntent = PendingIntent.getBroadcast(
                     this,
@@ -73,7 +67,16 @@ class SetReminderActivity : AppCompatActivity() {
                     (System.currentTimeMillis() + millisUntilReminder),
                     pendingIntent
             )
-            Toast.makeText(applicationContext, "Reminder has been set!", Toast.LENGTH_SHORT).show()
+            reminderSpinner.visibility = View.VISIBLE
+
+            CoroutineScope(Dispatchers.IO).launch {
+                delay(java.util.concurrent.TimeUnit.SECONDS.toMillis(1))
+                withContext(Dispatchers.Main) {
+                    reminderSpinner.visibility = View.INVISIBLE
+                    Toast.makeText(applicationContext, getString(R.string.reminder_successfully_set), Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            }
         }
 
         val toggleButton = findViewById<ToggleButton>(R.id.reminderToggleButton)
@@ -103,10 +106,5 @@ class SetReminderActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putInt(SELECTED_HOURS, timePicker.hour)
         outState.putInt(SELECTED_MINUTES, timePicker.minute)
-    }
-
-    override fun onStop() {
-        super.onStop()
-
     }
 }

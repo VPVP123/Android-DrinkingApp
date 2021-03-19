@@ -23,25 +23,11 @@
                 android:resource="@xml/app_widget_info" />
         </receiver>
 
-        <activity android:name=".chooseSubmissionActivity" />
-        <activity android:name=".PlayLvLGamesActivity" />
-        <activity android:name=".PlayCardGamesActivity" />
-        <activity android:name=".SetReminderActivity"></activity>
-        <activity android:name=".ReviewSubmissionsActivity" />
         <activity android:name=".PlayLvLGameActivity" />
         <activity android:name=".PlayCardGameActivity" />
-        <activity
-            android:name=".AddSubmissionActivity"
-            android:label="@string/title_activity_add_submission" >
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
+        <activity android:name=".SetReminderActivity" />
+        <activity android:name=".ReviewSubmissionsActivity" />
+        <activity android:name=".AddSubmissionActivity"/>
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
