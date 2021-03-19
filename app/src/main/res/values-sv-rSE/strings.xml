@@ -33,13 +33,17 @@
     <string name="new_submissions">Nya Förslag</string>
     <string name="logout">Logga ut</string>
 
+    <string name="set_alarm">Sätt påminnelse</string>
     <string name="reminderTitle">Sätt en festpåminnelse</string>
     <string name="reminderLinkText">Se till att inte missa NextLvL under festen genom att sätta en spel påminnelse här!</string>
     <string name="reminderDescription">Här kan du välja en tid idag när du vill bli påmind att spela NextLvL. Sätt på timern så kommer vi att skicka en notification när det är dags att spela!</string>
+    <string name="reminder_successfully_set">En påminnelse har skapats!</string>
+    <string name="reminder_notification_text">"Vi saknar dig! Glöm inte att spela nextLvL så att er fest blir så bra som bara möjligt!"</string>
 
     <string name="dare_or_drink_suggestions">Dare Or Drink-förslag:</string>
     <string name="never_have_i_ever_suggestions">Jag har aldrig-förslag:</string>
     <string name="i_want_to_submit_a">"Jag vill föreslå en "</string>
+    <string name="suggestion_successfully_submitted">Ditt förslag har skickats in!</string>
     <string name="submit">Skicka</string>
     <string name="dismiss">Tillbaka</string>
 
@@ -48,7 +52,8 @@
     <string name="english">Engelska</string>
 
     <string name="nextlvl">nextLvL</string>
-    <string name="reminder_notification_text">"Vi saknar dig! Glöm inte att spela nextLvL så att er fest blir så bra som bara möjligt!"</string>
+
+
 
     <string name="submission">Förslag</string>
     <string name="submission_edit_popup_message">Välj vad du vill göra med detta förslag</string>
@@ -64,7 +69,7 @@
         <item>Dare or drink</item>
         <item>Jag har aldrig</item>
     </string-array>
-    <string name="set_alarm">Sätt påminnelse</string>
+
 
     <!-- ErrorMessage Strings -->
     <string name="error">Error</string>

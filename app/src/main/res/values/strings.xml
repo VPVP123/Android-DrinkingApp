@@ -20,16 +20,10 @@
     <string name="start_game">Start game</string>
     <string name="next">Next</string>
     <string name="currentLang">english</string>
+
     <string name="dont_like_nhie_dares">"Don't like our Never have i ever/ Dares?\n Submit your own"</string>
     <string name="submit_your_own">Submit your own</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_add_submission">AddSubmissionActivity</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
+
     <string name="what_is_needded">What is needded</string>
     <string name="setup">Setup</string>
     <string name="how_to_play">How to play</string>
@@ -41,6 +35,9 @@
     <string name="reminderTitle">Set a party reminder</string>
     <string name="reminderLinkText">Make sure you don´t miss playing some NextLvL by setting a party game reminder here!</string>
     <string name="reminderDescription">Here you can select a time today when you want to be reminded to play some NextLvL. Enable the timer and we will send you a notification at the selected time!</string>
+    <string name="reminder_successfully_set">A reminder has ben set!</string>
+    <string name="set_alarm">Set reminder</string>
+    <string name="reminder_notification_text">"We miss you! Don't forget to play some nextLvL to make sure you have the best party possible!"</string>
 
     <string name="dare_or_drink_suggestions">Dare Or Drink-suggestions:</string>
     <string name="never_have_i_ever_suggestions">Never Have I Ever-suggestions:</string>
@@ -53,7 +50,6 @@
     <string name="english">English</string>
 
     <string name="nextlvl">nextLvL</string>
-    <string name="reminder_notification_text">"We miss you! Don't forget to play some nextLvL to make sure you have the best party possible!"</string>
 
     <string name="submission">Submission</string>
     <string name="submission_edit_popup_message">Choose what you want to do with this submission</string>
@@ -64,6 +60,7 @@
     <string name="submission_placeholder_never_have_i_ever">Enter a Never have i ever-statement</string>
     <string name="dare_or_drink_example">Ex: "Player1, let Player2 use your facebook account for 1 minute, or drink 3 sips"</string>
     <string name="never_have_i_ever_example">Ex: "Never have i ever driven over the speed limit"</string>
+    <string name="suggestion_successfully_submitted">Your suggestion has been submitted!</string>
     
     <!-- ErrorMessage Strings -->
     <string name="error">Error</string>
@@ -75,7 +72,7 @@
         <item>Never have i ever</item>
     </string-array>
     <string name="appwidget_text">EXAMPLE</string>
-<string name="set_alarm">Set reminder</string>
+
 
 
 </resources>

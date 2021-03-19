@@ -56,9 +56,6 @@ class SetReminderActivity : AppCompatActivity() {
             intent.putExtra(ReminderNotificationReciever.NOTIFICATION_TITLE, getString(R.string.nextlvl))
             intent.putExtra(ReminderNotificationReciever.NOTIFICATION_TEXT, getString(R.string.reminder_notification_text))
 
-            //intent.putExtra("reason", "notification")
-            //intent.putExtra("timestamp", (System.currentTimeMillis() + millisUntilReminder))
-
             val pendingIntent = PendingIntent.getBroadcast(
                     this,
                     standardRequestCode,
@@ -76,7 +73,7 @@ class SetReminderActivity : AppCompatActivity() {
                 delay(java.util.concurrent.TimeUnit.SECONDS.toMillis(1))
                 withContext(Dispatchers.Main) {
                     reminderSpinner.visibility = View.INVISIBLE
-                    Toast.makeText(applicationContext, "Reminder has been set!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.reminder_successfully_set), Toast.LENGTH_SHORT).show()
                     finish()
                 }
             }
