@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PrepareDareOrDrinkActivity">
+    tools:context=".PrepareDareOrDrinkActivity"
+    android:background="@drawable/games_black_background">
 
     <LinearLayout
         android:layout_width="match_parent"
