@@ -91,7 +91,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                                         val myArray = fields.get("questionSuggestions") as List<String>?
                                         if (myArray != null) {
                                             for (item in myArray) {
-                                                submissionRepository.addSubmission(item, "swedish")
+                                                dorSubmissionRepository.addSubmission(item, "swedish")
                                             }
                                             dorAdapter.notifyDataSetChanged()
                                         }
