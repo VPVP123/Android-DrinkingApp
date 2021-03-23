@@ -94,8 +94,8 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                                                 submissionRepository.addSubmission(item, "swedish")
                                             }
                                             dorAdapter.notifyDataSetChanged()
-                                            dorLoadingSpinner.visibility = View.INVISIBLE
                                         }
+                                        dorLoadingSpinner.visibility = View.INVISIBLE
                                     } else {
                                         displayDbError()
                                     }
@@ -128,10 +128,10 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                                         if (myArray != null) {
                                             for (item in myArray) {
                                                 nhieSubmissionRepository.addSubmission(item, "swedish")
-                                                nhieLoadingSpinner.visibility = View.INVISIBLE
                                             }
                                             nhieAdapter.notifyDataSetChanged()
                                         }
+                                        nhieLoadingSpinner.visibility = View.INVISIBLE
                                     } else {
                                         displayDbError()
                                     }
