@@ -58,9 +58,9 @@ class ReminderNotificationReciever : BroadcastReceiver() {
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0)
 
         val NM = NotificationManagerCompat.from(context)
-        val notification = Notification.Builder(context, channelId)
+        val notification = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(mipmap.ic_launcher_round)
-            .setStyle(Notification.BigTextStyle())
+            .setStyle(NotificationCompat.BigTextStyle())
             .setContentTitle(title)
             .setContentText(text)
             .setContentIntent(pendingIntent)

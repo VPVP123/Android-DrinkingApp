@@ -12,7 +12,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NextLvL" >
+        android:theme="@style/Theme.NextLvL"
+        android:largeHeap="true"
+        android:hardwareAccelerated="false">
         <receiver android:name=".AppWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

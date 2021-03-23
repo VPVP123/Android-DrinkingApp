@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
                                 Intent(this, AdminPanelActivity::class.java)
                             )
                         } else {
-                            val popUpError1 = AlertDialog.Builder(this)
+                            val popUpError1 = androidx.appcompat.app.AlertDialog.Builder(this)
                             popUpError1.setTitle("Login failed")
                             popUpError1.setMessage("The email and/or password you entered is incorrect")
                             popUpError1.setPositiveButton( "Ok") { dialog, which ->
@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
             }else{
-                val popUpError1 = AlertDialog.Builder(this)
+                val popUpError1 = androidx.appcompat.app.AlertDialog.Builder(this)
                 popUpError1.setTitle("Enter all fields")
                 popUpError1.setMessage("The email and password fields cannot be empty")
                 popUpError1.setPositiveButton( "Ok") { dialog, which ->
@@ -126,7 +126,7 @@ class LoginActivity : AppCompatActivity() {
                             startActivity(
                                 Intent(this, AdminPanelActivity::class.java)
                             )else{
-                                val popUpError1 = AlertDialog.Builder(this)
+                                val popUpError1 = androidx.appcompat.app.AlertDialog.Builder(this)
                                 popUpError1.setTitle("Login failed")
                                 popUpError1.setMessage("The email and/or password you entered is incorrect")
                                 popUpError1.setPositiveButton("Ok") { dialog, which ->
@@ -136,7 +136,7 @@ class LoginActivity : AppCompatActivity() {
                                 FirebaseAuth.getInstance().signOut()
                             }
                         } else {
-                            val popUpError1 = AlertDialog.Builder(this)
+                            val popUpError1 = androidx.appcompat.app.AlertDialog.Builder(this)
                             popUpError1.setTitle("Login failed")
                             popUpError1.setMessage("The email and/or password you entered is incorrect")
                             popUpError1.setPositiveButton("Ok") { dialog, which ->

@@ -151,7 +151,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
 
             val submission = dareOrDrinkListView.adapter.getItem(position) as Submission
 
-            val dareOrDrinkPopUp = AlertDialog.Builder(this)
+            val dareOrDrinkPopUp = androidx.appcompat.app.AlertDialog.Builder(this)
             dareOrDrinkPopUp.setTitle(getString(R.string.submission))
             dareOrDrinkPopUp.setMessage(getString(R.string.submission_edit_popup_message))
             dareOrDrinkPopUp.setPositiveButton(getString(R.string.remove)) { dialog, _ ->
@@ -179,7 +179,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
 
             val submission = neverHaveIEverListView.adapter.getItem(position) as Submission
 
-            val neverHaveIEverPopUp = AlertDialog.Builder(this)
+            val neverHaveIEverPopUp = androidx.appcompat.app.AlertDialog.Builder(this)
             neverHaveIEverPopUp.setTitle(getString(R.string.submission))
             neverHaveIEverPopUp.setMessage(getString(R.string.submission_edit_popup_message))
             neverHaveIEverPopUp.setPositiveButton(getString(R.string.remove)) { dialog, _ ->
@@ -206,7 +206,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
     }
 
     fun displayDbError(){
-        val errorPopUp = AlertDialog.Builder(this)
+        val errorPopUp = androidx.appcompat.app.AlertDialog.Builder(this)
         errorPopUp.setTitle(getString(R.string.error))
         errorPopUp.setMessage(getString(R.string.db_error_message))
         errorPopUp.setPositiveButton(getString(R.string.back)) { dialog, _ ->

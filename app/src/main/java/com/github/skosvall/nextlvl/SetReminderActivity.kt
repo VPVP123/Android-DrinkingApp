@@ -12,6 +12,7 @@ import android.widget.TimePicker
 import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -36,7 +37,7 @@ class SetReminderActivity : AppCompatActivity() {
 
         timePicker = findViewById<TimePicker>(R.id.timePicker)
         timePicker.setIs24HourView(true)
-        timePicker.setBackgroundColor(getColor(R.color.white))
+        timePicker.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.white))
 
         if(savedInstanceState == null) {
             timePicker.hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)

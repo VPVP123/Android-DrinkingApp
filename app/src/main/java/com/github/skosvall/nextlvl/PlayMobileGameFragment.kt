@@ -225,7 +225,7 @@ class PlayMobileGamesFragment : Fragment() {
 
                     if (nrOfPlayersRequiredForQuestion <= playersCopy.count()) {
                         if (nrOfPlayersRequiredForQuestion > 0) {
-                            for (i in range(0, nrOfPlayersRequiredForQuestion)) {
+                            for (i in 0 until nrOfPlayersRequiredForQuestion) {
                                 val randomPlayer = playersCopy.shuffled().takeLast(1)[0]
                                 currentQuestionPlayers.add(randomPlayer)
                                 playersCopy.remove(randomPlayer)
