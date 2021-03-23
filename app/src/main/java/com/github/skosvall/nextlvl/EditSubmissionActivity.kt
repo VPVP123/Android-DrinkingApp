@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.properties.Delegates
@@ -54,11 +55,13 @@ class EditSubmissionActivity : AppCompatActivity() {
         val buttonDismiss = this.findViewById<Button>(R.id.buttonDismiss)
 
         buttonSubmit.setOnClickListener{
+            var succeded = false
             if(gameType == ReviewSubmissionsActivity.DOR){
                 val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.editSubmissionEng)as EditText
                 val newEditSubmissionTextViewSwe = findViewById<EditText>(R.id.editSubmissionSwe)as EditText
                 val newTextEng = newEditSubmissionTextViewEng.editableText.toString()
                 val newTextSwe = newEditSubmissionTextViewSwe.editableText.toString()
+
                 if (submission != null) {
                     db.collection("mobileGamesData").document("dareOrDrink")
                         .collection("english").document("questions")
@@ -66,15 +69,21 @@ class EditSubmissionActivity : AppCompatActivity() {
                     db.collection("mobileGamesData").document("dareOrDrink")
                         .collection("english").document("questions")
                         .update("questions", FieldValue.arrayUnion(newTextEng))
-
                     db.collection("mobileGamesData").document("dareOrDrink")
                         .collection("swedish").document("questions")
                         .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
                     db.collection("mobileGamesData").document("dareOrDrink")
                         .collection("swedish").document("questions")
                         .update("questions", FieldValue.arrayUnion(newTextSwe))
-                    submissionRepository.deleteSubmissionById(submissionId)
-                    this.finish()
+                            .addOnSuccessListener {
+                                onSuccess()
+                                succeded = true
+                                submissionRepository.deleteSubmissionById(submissionId)
+                            }
+
+                    if(!succeded) {
+                        displayError()
+                    }
                 }
             }else{
                 val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.editSubmissionEng)as EditText
@@ -89,15 +98,20 @@ class EditSubmissionActivity : AppCompatActivity() {
                     db.collection("mobileGamesData").document("neverHaveIEver")
                         .collection("english").document("statements")
                         .update("statements", FieldValue.arrayUnion(newTextEng))
-
                     db.collection("mobileGamesData").document("neverHaveIEver")
                         .collection("swedish").document("statements")
                         .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
                     db.collection("mobileGamesData").document("neverHaveIEver")
                         .collection("swedish").document("statements")
                         .update("statements", FieldValue.arrayUnion(newTextSwe))
-                    submissionRepository.deleteSubmissionById(submissionId)
-                    this.finish()
+                            .addOnSuccessListener {
+                                onSuccess()
+                                succeded = true
+                            }
+
+                    if(!succeded) {
+                        displayError()
+                    }
                 }
             }
         }
@@ -105,6 +119,15 @@ class EditSubmissionActivity : AppCompatActivity() {
         buttonDismiss.setOnClickListener {
             this.finish()
         }
+    }
+
+    private fun onSuccess(){
+        Toast.makeText(applicationContext, getString(R.string.suggestion_successfully_approved), Toast.LENGTH_SHORT).show()
+        this.finish()
+    }
+
+    private fun displayError(){
+        Toast.makeText(applicationContext, getString(R.string.error_has_occured), Toast.LENGTH_LONG).show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
