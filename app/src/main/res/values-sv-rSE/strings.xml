@@ -44,6 +44,7 @@
     <string name="never_have_i_ever_suggestions">Jag har aldrig-förslag:</string>
     <string name="i_want_to_submit_a">"Jag vill föreslå en "</string>
     <string name="suggestion_successfully_submitted">Ditt förslag har skickats in!</string>
+    <string name="suggestion_successfully_approved">Förslaget har godkännts och lagts till!</string>
     <string name="submit">Skicka</string>
     <string name="dismiss">Tillbaka</string>
 
@@ -73,6 +74,7 @@
 
     <!-- ErrorMessage Strings -->
     <string name="error">Error</string>
+    <string name="error_has_occured">Ett problem har inträffat, var god försök igen</string>
     <string name="back">Bakåt</string>
     <string name="db_error_message">Problem uppstod vi kontakt med databas, var god försök igen!</string>
 

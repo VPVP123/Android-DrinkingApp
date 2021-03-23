@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -40,11 +41,22 @@ class SetReminderActivity : AppCompatActivity() {
         timePicker.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.white))
 
         if(savedInstanceState == null) {
-            timePicker.hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-            timePicker.minute = Calendar.getInstance().get(Calendar.MINUTE)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                timePicker.hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+                timePicker.minute = Calendar.getInstance().get(Calendar.MINUTE)
+            }else{
+                timePicker.currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+                timePicker.currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
+            }
+
         } else{
-            timePicker.hour = savedInstanceState.getInt(SELECTED_HOURS)
-            timePicker.minute = savedInstanceState.getInt(SELECTED_MINUTES)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                timePicker.hour = savedInstanceState.getInt(SELECTED_HOURS)
+                timePicker.minute = savedInstanceState.getInt(SELECTED_MINUTES)
+            }else{
+                timePicker.currentHour = savedInstanceState.getInt(SELECTED_HOURS)
+                timePicker.currentMinute = savedInstanceState.getInt(SELECTED_MINUTES)
+            }
         }
 
         fun createNotification(selectedHour: Int, selectedMinute: Int){
@@ -83,7 +95,11 @@ class SetReminderActivity : AppCompatActivity() {
         val toggleButton = findViewById<ToggleButton>(R.id.reminderToggleButton)
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                createNotification(timePicker.hour, timePicker.minute)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    createNotification(timePicker.hour, timePicker.minute)
+                }else{
+                    createNotification(timePicker.currentHour, timePicker.currentMinute)
+                }
             } else {
                 val intent = Intent(this, ReminderNotificationReciever::class.java)
                 val pendingIntent = PendingIntent.getBroadcast(

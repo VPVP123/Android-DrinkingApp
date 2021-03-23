@@ -49,22 +49,44 @@ class AddSubmissionActivity : AppCompatActivity() {
                     selectedGame = ReviewSubmissionsActivity.NHIE
                 }
             }
+        }
 
+        fun onSuccess(){
+            submissionTextField.setText("")
+            Toast.makeText(applicationContext, getString(R.string.suggestion_successfully_approved), Toast.LENGTH_SHORT).show()
         }
 
         buttonSubmit.setOnClickListener{
+            var succeded = false
             if(selectedGame != null.toString()){
                 if(selectedGame == ReviewSubmissionsActivity.DOR){
                     val submission = submissionTextField.editableText.toString()
                     db.collection("mobileGamesData").document("dareOrDrink")
                         .collection(currentLang).document("questions")
                         .update("questionSuggestions", FieldValue.arrayUnion(submission))
+                            .addOnSuccessListener {
+                                onSuccess()
+                                succeded = true
+                            }
+
+                    if(!succeded) {
+                        displayError()
+                    }
                 }else{
                     val submission = submissionTextField.editableText.toString()
                     db.collection("mobileGamesData").document("neverHaveIEver")
                         .collection(currentLang).document("statements")
                         .update("statementSuggestions", FieldValue.arrayUnion(submission))
+                            .addOnSuccessListener {
+                                onSuccess()
+                                succeded = true
+                            }
+
+                    if(!succeded) {
+                        displayError()
+                    }
                 }
+
                 Toast.makeText(applicationContext, getString(R.string.suggestion_successfully_submitted), Toast.LENGTH_SHORT).show()
             }
         }
@@ -72,5 +94,13 @@ class AddSubmissionActivity : AppCompatActivity() {
         buttonBack.setOnClickListener{
             finish()
         }
+
+
+    }
+
+
+
+    private fun displayError(){
+        Toast.makeText(applicationContext, getString(R.string.error_has_occured), Toast.LENGTH_LONG).show()
     }
 }

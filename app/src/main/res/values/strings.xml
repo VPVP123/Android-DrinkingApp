@@ -61,9 +61,11 @@
     <string name="dare_or_drink_example">Ex: "Player1, let Player2 use your facebook account for 1 minute, or drink 3 sips"</string>
     <string name="never_have_i_ever_example">Ex: "Never have i ever driven over the speed limit"</string>
     <string name="suggestion_successfully_submitted">Your suggestion has been submitted!</string>
+    <string name="suggestion_successfully_approved">The suggestion has been approved!</string>
     
     <!-- ErrorMessage Strings -->
     <string name="error">Error</string>
+    <string name="error_has_occured">An error has occured, please try again later</string>
     <string name="back">Back</string>
     <string name="db_error_message">Error communicating with the database, please try again</string>
 

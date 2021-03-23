@@ -37,6 +37,7 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
 
             buttonAdd.setOnClickListener {
                 addChipToChipgroup(addPlayerEditText.text.toString())
+                addPlayerEditText.setText("")
             }
 
             startGameButton.setOnClickListener {
