@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
@@ -68,11 +67,6 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
         // Show the chip icon in chip
         chip.isCloseIconVisible = true
 
-        // Set the chip click listener
-        chip.setOnClickListener{
-            toast("Clicked: ${chip.text}")
-        }
-
         // Set chip close icon click listener
         chip.setOnCloseIconClickListener{
             // Smoothly remove chip from chip group
@@ -97,9 +91,3 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
         outState.putStringArray("ADDED_PLAYER_NAMES", getPlayerNames().toTypedArray())
     }
 }
-
-
-
-
-fun Context.toast(message:String)=
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()

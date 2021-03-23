@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -69,7 +70,6 @@ class PlayCardGameActivity : AppCompatActivity() {
         getCardGamesRingOfFire.get()
             .addOnSuccessListener { document ->
                 if(document != null){
-                    Log.d("exist", "DocumentSnapshot data: ${document.data}")
                     if(savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
                             .add(R.id.playCardGameFrameLayout, ringOfFireGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
@@ -99,12 +99,11 @@ class PlayCardGameActivity : AppCompatActivity() {
                     }
                     loadingSpinner.visibility = View.INVISIBLE;
                 }else{
-                    Log.d("noExist", "No document found")
+                    displayError()
                 }
             }
             .addOnFailureListener {exception ->
-                Log.d("errorDB", "get failed with ", exception)
-
+                displayError()
             }
     }
     fun startFuckTheDealer(savedInstanceState: Bundle?){
@@ -112,7 +111,6 @@ class PlayCardGameActivity : AppCompatActivity() {
         getCardGamesFuckTheDealer.get()
             .addOnSuccessListener { document ->
                 if(document != null){
-                    Log.d("exist", "DocumentSnapshot data: ${document.data}")
                     if(savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
                             .add(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
@@ -138,12 +136,11 @@ class PlayCardGameActivity : AppCompatActivity() {
                     }
                     loadingSpinner.visibility = View.INVISIBLE;
                 }else{
-                    Log.d("noExist", "No document found")
+                    displayError()
                 }
             }
             .addOnFailureListener {exception ->
-                Log.d("errorDB", "get failed with ", exception)
-
+                displayError()
             }
     }
     fun startThreeTwoOne(savedInstanceState: Bundle?){
@@ -151,7 +148,6 @@ class PlayCardGameActivity : AppCompatActivity() {
         getCardGames123.get()
             .addOnSuccessListener { document ->
                 if(document != null){
-                    Log.d("exist", "DocumentSnapshot data: ${document.data}")
                     if(savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
                             .add(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
@@ -177,13 +173,17 @@ class PlayCardGameActivity : AppCompatActivity() {
                     }
                     loadingSpinner.visibility = View.INVISIBLE;
                 }else{
-                    Log.d("noExist", "No document found")
+                    displayError()
                 }
             }
             .addOnFailureListener {exception ->
-                Log.d("errorDB", "get failed with ", exception)
+                displayError()
 
             }
+    }
+
+    private fun displayError(){
+        Toast.makeText(applicationContext, getString(R.string.db_error_message), Toast.LENGTH_LONG).show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

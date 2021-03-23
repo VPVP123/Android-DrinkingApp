@@ -121,7 +121,13 @@ class SetReminderActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(SELECTED_HOURS, timePicker.hour)
-        outState.putInt(SELECTED_MINUTES, timePicker.minute)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            outState.putInt(SELECTED_HOURS, timePicker.hour)
+            outState.putInt(SELECTED_MINUTES, timePicker.minute)
+        }else{
+            outState.putInt(SELECTED_HOURS, timePicker.currentHour)
+            outState.putInt(SELECTED_MINUTES, timePicker.currentMinute)
+        }
     }
 }

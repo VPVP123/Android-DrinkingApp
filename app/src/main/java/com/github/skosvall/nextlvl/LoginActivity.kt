@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -61,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                     startActivityForResult(signInIntent, RC_SIGN_IN)
                 }
             }.addOnFailureListener { exception ->
-                Log.d("errorDB", "get failed with ", exception)
+                    displayError()
             }
 
         buttonLogin.setOnClickListener{
@@ -147,7 +148,11 @@ class LoginActivity : AppCompatActivity() {
                     }
             }
         } catch (exception: Exception){
-            Log.d("LOGIN", exception.toString())
+            displayError()
         }
+    }
+
+    private fun displayError(){
+        Toast.makeText(applicationContext, getString(R.string.db_error_message), Toast.LENGTH_LONG).show()
     }
 }

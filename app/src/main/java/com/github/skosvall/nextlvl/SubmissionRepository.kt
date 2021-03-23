@@ -16,7 +16,6 @@ val submissionRepository = SubmissionRepository().apply {
 
 }
 
-
 class SubmissionRepository() : Parcelable{
 
     private val submissions = mutableListOf<Submission>()
