@@ -12,9 +12,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 
 
 class MobileGamesActivity : AppCompatActivity() {
@@ -22,24 +20,19 @@ class MobileGamesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mobile_games)
 
-        val DOR_Btn = findViewById<Button>(R.id.DOR_button)
+        val dareOrDrinkButton = findViewById<Button>(R.id.DOR_button)
         val neverHaveIEverButton = findViewById<Button>(R.id.neverHaveIEverButton)
         val submitTextFull = findViewById<TextView>(R.id.submitText)
         val str = getString(R.string.submit_your_own)
 
         makeTextLink(submitTextFull, str, false, Color.RED, action = {
             val intent = Intent(this, AddSubmissionActivity::class.java)
-            startActivity(
-                    intent
-            )
+            startActivity(intent)
         })
 
-
-        DOR_Btn.setOnClickListener {
+        dareOrDrinkButton.setOnClickListener {
             val intent = Intent(this, PrepareDareOrDrinkActivity::class.java)
-            startActivity(
-                    intent
-            )
+            startActivity(intent)
         }
 
         neverHaveIEverButton.setOnClickListener {

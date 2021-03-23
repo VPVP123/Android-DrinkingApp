@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -70,7 +71,6 @@ class PlayLvLGameActivity : AppCompatActivity() {
         getLvLGamesBeerPong.get()
             .addOnSuccessListener { document ->
                 if(document != null){
-                    Log.d("exist", "DocumentSnapshot data: ${document.data}")
                     if(savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
                             .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
@@ -96,12 +96,11 @@ class PlayLvLGameActivity : AppCompatActivity() {
                     }
                     loadingSpinner.visibility = View.INVISIBLE
                 }else{
-                    Log.d("noExist", "No document found")
+                    displayError()
                 }
             }
             .addOnFailureListener {exception ->
-                Log.d("errorDB", "get failed with ", exception)
-
+                displayError()
             }
     }
     private fun startGasGas(savedInstanceState: Bundle?){
@@ -109,7 +108,6 @@ class PlayLvLGameActivity : AppCompatActivity() {
         getLvLGamesGasGas.get()
                 .addOnSuccessListener { document ->
                     if(document != null) {
-                        Log.d("exist", "DocumentSnapshot data: ${document.data}")
                         if(savedInstanceState == null) {
                             supportFragmentManager.beginTransaction()
                                 .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
@@ -135,11 +133,11 @@ class PlayLvLGameActivity : AppCompatActivity() {
                         }
                         loadingSpinner.visibility = View.INVISIBLE
                     } else {
-                        Log.d("noExist", "No document found")
+                        displayError()
                     }
                 }
                 .addOnFailureListener { exception ->
-                    Log.d("errorDB", "get failed with ", exception)
+                    displayError()
                 }
     }
     private fun startHorseRace(savedInstanceState: Bundle?){
@@ -147,7 +145,6 @@ class PlayLvLGameActivity : AppCompatActivity() {
         getLvLGamesHorseRace.get()
             .addOnSuccessListener { document ->
                 if(document != null){
-                    Log.d("exist", "DocumentSnapshot data: ${document.data}")
                     if(savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
                             .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
@@ -173,13 +170,16 @@ class PlayLvLGameActivity : AppCompatActivity() {
                     }
                     loadingSpinner.visibility = View.INVISIBLE
                 }else{
-                    Log.d("noExist", "No document found")
+                    displayError()
                 }
             }
             .addOnFailureListener {exception ->
-                Log.d("errorDB", "get failed with ", exception)
-
+                displayError()
             }
+    }
+
+    private fun displayError(){
+        Toast.makeText(applicationContext, getString(R.string.db_error_message), Toast.LENGTH_LONG).show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

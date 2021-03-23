@@ -102,7 +102,7 @@ class ringOfFireGameFragment : Fragment() {
          * @param description Short introduction about the game.
          * @param equipmentTitle Title for equipment.
          * @param equipment Equipment needed to play.
-         *  @param setupTitle Title for setup.
+         * @param setupTitle Title for setup.
          * @param setup Instructions on how to setup the game.
          * @param howToPlayTitle Title for how to play.
          * @param howToPlay Instructions on how to play the game.
@@ -124,7 +124,6 @@ class ringOfFireGameFragment : Fragment() {
                     putString(ARG_HOWTOPLAY, howToPlay)
                     putString(ARG_SECTION_FOUR_TITLE, sectionFourTitle)
                     putString(ARG_SECTION_FOUR_TEXT, sectionFourText)
-
                 }
             }
     }

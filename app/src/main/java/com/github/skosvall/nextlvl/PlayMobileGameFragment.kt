@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import org.w3c.dom.Text
@@ -50,11 +51,10 @@ class PlayMobileGamesFragment : Fragment() {
 
         loadingSpinner.visibility = View.VISIBLE
 
-        if (textView != null && nextButton != null) {
-            nextButton.setOnClickListener {
-                nextButtonClick()
-            }
+        nextButton.setOnClickListener {
+            nextButtonClick()
         }
+
         initializeGame(savedInstanceState)
         return view
     }
@@ -126,7 +126,6 @@ class PlayMobileGamesFragment : Fragment() {
         getStatements.get()
             .addOnSuccessListener { statement ->
                 if (statement != null) {
-                    Log.d("exist", "DocumentSnapshot data: ${statement.data}")
                     val myArray = statement.get("statements") as List<String>?
                     if (myArray != null) {
                         for (item in myArray) {
@@ -141,7 +140,7 @@ class PlayMobileGamesFragment : Fragment() {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("errorDB", "get failed with ", exception)
+                displayError()
             }
     }
 
@@ -151,11 +150,10 @@ class PlayMobileGamesFragment : Fragment() {
         getQuestions.get()
             .addOnSuccessListener { question ->
                 if (question != null) {
-                    Log.d("exist", "DocumentSnapshot data: ${question.data}")
                     val myArray = question.get("questions") as List<String>?
                     if (myArray != null) {
                         for (item in myArray) {
-                            var newQuestion = DareOrDrinkQuestion(item)
+                            val newQuestion = DareOrDrinkQuestion(item)
                             (questions as MutableList<DareOrDrinkQuestion>).add(newQuestion)
                             loadingSpinner.visibility = View.INVISIBLE;
                         }
@@ -165,11 +163,11 @@ class PlayMobileGamesFragment : Fragment() {
                         changeDareOrDrinkQuestion()
                     }
                 } else {
-                    Log.d("noExist", "No document found")
+                    displayError()
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("errorDB", "get failed with ", exception)
+                displayError()
             }
     }
 
@@ -274,5 +272,9 @@ class PlayMobileGamesFragment : Fragment() {
                     putStringArray(PLAYER_NAMES, playerNamesArray)
                 }
             }
+    }
+
+    private fun displayError(){
+        Toast.makeText(context, getString(R.string.db_error_message), Toast.LENGTH_LONG).show()
     }
 }

@@ -138,12 +138,9 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-
-    private fun checkgetPermission(){
-
-        if(
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        ){
+    
+    fun checkgetPermission(){
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             return
         }else{
             ActivityCompat.requestPermissions(
@@ -172,7 +169,6 @@ class MainActivity : AppCompatActivity() {
         var Adress = geoCoder.getFromLocation(lat,long,3)
 
         countryName = Adress.get(0).countryName
-        Log.d("Debug:","Your Country " + countryName)
         return countryName
     }
 }
