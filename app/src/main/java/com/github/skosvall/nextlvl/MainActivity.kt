@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     var country = ""
     val PERMISSION_ID = 1010
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
         val userLocation = db.collection("userData").document("Location")
-        val currentLocation = "India"
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         checkgetPermission()
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
 
         var fiveFingerDownTime: Long = -1
 
-        window.decorView.findViewById<View>(android.R.id.content).setOnTouchListener { v, ev ->
+        window.decorView.findViewById<View>(android.R.id.content).setOnTouchListener {v, ev ->
             val action = ev.action
             when (action and MotionEvent.ACTION_MASK) {
                 MotionEvent.ACTION_POINTER_DOWN -> if (ev.pointerCount == 2) {
@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun checkgetPermission(){
+    private fun checkgetPermission(){
 
         if(
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
