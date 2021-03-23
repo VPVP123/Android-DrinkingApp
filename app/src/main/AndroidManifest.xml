@@ -28,9 +28,6 @@
         <service android:name=".AppWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <activity android:name=".chooseSubmissionActivity" />
-        <activity android:name=".PlayLvLGamesActivity" />
-        <activity android:name=".PlayCardGamesActivity" />
         <activity android:name=".ReviewSubmissionsActivity" />
         <activity android:name=".PlayLvLGameActivity" />
         <activity android:name=".PlayCardGameActivity" />
