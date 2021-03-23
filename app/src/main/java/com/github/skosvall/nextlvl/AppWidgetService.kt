@@ -3,9 +3,7 @@ package com.github.skosvall.nextlvl
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
-import android.os.SystemClock
 import android.util.Log
-import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.google.android.gms.tasks.Task
@@ -31,9 +29,7 @@ class AppWidgetService : RemoteViewsService() {
 
             statementList = mutableListOf()
 
-            getData(getStatements).addOnCompleteListener{
-
-            }
+            getData(getStatements)
         }
 
         override fun onDataSetChanged() {
@@ -50,6 +46,9 @@ class AppWidgetService : RemoteViewsService() {
                                     statementList.add(item)
                                 }
                                 statementList.shuffle()
+                                val updateWidgetIntent = Intent(context, AppWidget::class.java)
+                                updateWidgetIntent.action = AppWidget.ACTION_DATA_UPDATED
+                                context.sendBroadcast(updateWidgetIntent)
                             }
                         }
                     }
