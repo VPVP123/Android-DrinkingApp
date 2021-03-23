@@ -1,8 +1,6 @@
 package com.github.skosvall.nextlvl
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
-import org.w3c.dom.Text
-import java.util.stream.IntStream.range
-import kotlin.properties.Delegates
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -45,8 +40,8 @@ class PlayMobileGamesFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_play_mobile_games, container, false)
-        textView = view.findViewById<TextView>(R.id.statementTextview)
-        nextButton = view.findViewById<Button>(R.id.neverHaveIEverNextButton)
+        textView = view.findViewById<TextView>(R.id.statement_textview)
+        nextButton = view.findViewById<Button>(R.id.never_have_i_ever_next_button)
         loadingSpinner = view.findViewById<ProgressBar>(R.id.progressSpinner)
 
         loadingSpinner.visibility = View.VISIBLE
@@ -61,7 +56,7 @@ class PlayMobileGamesFragment : Fragment() {
 
     fun initializeGame(savedInstanceState: Bundle?){
         val db = FirebaseFirestore.getInstance()
-        val currentLang = getString(R.string.currentLang)
+        val currentLang = getString(R.string.current_lang)
 
 
         if (activity is PlayNeverHaveIEverActivity) {
@@ -183,7 +178,7 @@ class PlayMobileGamesFragment : Fragment() {
             outState.putParcelableArray(QUESTIONS_COPY, questionsCopy.toTypedArray())
             outState.putStringArray(PLAYER_NAMES, players.toTypedArray())
         }
-        outState.putString(PREVIOUS_LANGUAGE, getString(R.string.currentLang))
+        outState.putString(PREVIOUS_LANGUAGE, getString(R.string.current_lang))
     }
 
     private fun nextButtonClick() {

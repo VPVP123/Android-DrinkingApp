@@ -19,91 +19,91 @@
             android:padding="15dp">
 
             <TextView
-                android:id="@+id/cardGameTitle"
+                android:id="@+id/card_game_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="25dp" />
+                android:textSize="25sp" />
 
             <TextView
-                android:id="@+id/cardGameDescription"
+                android:id="@+id/card_game_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/cardGameSectionOneTitle"
+                android:id="@+id/card_game_section_one_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="22dp" />
+                android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/cardGameEquipment"
+                android:id="@+id/card_game_equipment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/cardGameSectionTwoTitle"
+                android:id="@+id/card_game_section_two_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="22dp" />
+                android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/cardGameSetup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="16dp" />
-
-            <TextView
-                android:id="@+id/cardGameSectionThreeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="22dp" />
-
-            <TextView
-                android:id="@+id/cardGameHowToPlay"
+                android:id="@+id/card_game_setup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/cardGameSectionFourTitle"
+                android:id="@+id/card_game_section_three_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="22dp" />
+                android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/cardGameSectionFourText"
+                android:id="@+id/card_game_how_to_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/card_game_section_four_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/card_game_section_four_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -111,8 +111,7 @@
                 android:layout_marginBottom="20dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="16dp" />
-
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 

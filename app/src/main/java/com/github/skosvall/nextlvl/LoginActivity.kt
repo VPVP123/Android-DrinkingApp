@@ -1,6 +1,5 @@
 package com.github.skosvall.nextlvl
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -34,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         listOfAdminAccounts = mutableListOf()
 
         val accounts = db.collection("adminAccounts").document("accounts")
-        val buttonLogin = this.findViewById<Button>(R.id.login)
+        val buttonLogin = this.findViewById<Button>(R.id.login_button)
         val googleLogin = this.findViewById<SignInButton>(R.id.google_sign_in_button)
 
         accounts.get()

@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">nextLvL</string>
-    <string name="MB_button">Mobile Games</string>
-    <string name="CG_button">Card Games</string>
-    <string name="LVL_button">LvL-Games</string>
-    <string name="DOR_button">Dare Or Drink</string>
-    <string name="NHIE_button">Never Have I Ever</string>
-    <string name="SelectGameText">Choose a game to play</string>
+    <string name="mobile_games">Mobile Games</string>
+    <string name="card_games">Card Games</string>
+    <string name="lvl_games">LvL-Games</string>
+    <string name="dare_or_drink">Dare Or Drink</string>
+    <string name="never_have_i_ever">Never Have I Ever</string>
+    <string name="select_game_text">Choose a game to play</string>
     <string name="username">Username</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
@@ -13,13 +13,13 @@
     <string name="gasgas">GasGas</string>
     <string name="horserace">Horse Race</string>
     <string name="_321">3–2–1</string>
-    <string name="ringoffire">Ring Of Fire</string>
-    <string name="fuckthedealer">Fuck The Dealer</string>
+    <string name="ring_of_fire">Ring Of Fire</string>
+    <string name="fuck_the_dealer">Fuck The Dealer</string>
     <string name="enter_name">Enter name</string>
-    <string name="addplayer">+ Add Player</string>
+    <string name="add_player">+ Add Player</string>
     <string name="start_game">Start game</string>
     <string name="next">Next</string>
-    <string name="currentLang">english</string>
+    <string name="current_lang">english</string>
 
     <string name="dont_like_nhie_dares">"Don't like our Never have i ever/ Dares?\n Submit your own"</string>
     <string name="submit_your_own">Submit your own</string>
@@ -27,14 +27,14 @@
     <string name="what_is_needded">What is needded</string>
     <string name="setup">Setup</string>
     <string name="how_to_play">How to play</string>
-    <string name="this_is_the_admin_panel_nwhat_would_you_like_to_do_today">This is the admin panel!\nWhat would you like to do today?</string>
+    <string name="admin_panel_what_to_do_today">This is the admin panel!\nWhat would you like to do today?</string>
     <string name="manage_games">Manage games</string>
     <string name="new_submissions">New Submissions</string>
     <string name="logout">Logout</string>
 
-    <string name="reminderTitle">Set a party reminder</string>
-    <string name="reminderLinkText">Make sure you don´t miss playing some NextLvL by setting a party game reminder here!</string>
-    <string name="reminderDescription">Here you can select a time today when you want to be reminded to play some NextLvL. Enable the timer and we will send you a notification at the selected time!</string>
+    <string name="reminder_title">Set a party reminder</string>
+    <string name="reminder_link_text">Make sure you don´t miss playing some NextLvL by setting a party game reminder here!</string>
+    <string name="reminder_description">Here you can select a time today when you want to be reminded to play some NextLvL. Enable the timer and we will send you a notification at the selected time!</string>
     <string name="reminder_successfully_set">A reminder has ben set!</string>
     <string name="set_alarm">Set reminder</string>
     <string name="reminder_notification_text">"We miss you! Don't forget to play some nextLvL to make sure you have the best party possible!"</string>
@@ -69,7 +69,7 @@
     <string name="back">Back</string>
     <string name="db_error_message">Error communicating with the database, please try again</string>
 
-    <string-array name="gameArray">
+    <string-array name="game_array">
         <item>Dare or drink</item>
         <item>Never have i ever</item>
     </string-array>

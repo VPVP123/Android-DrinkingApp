@@ -14,15 +14,15 @@ class AddSubmissionActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
 
-        val submissionTextField = this.findViewById<EditText>(R.id.addSubmissionText)
-        val exampleTextField = this.findViewById<TextView>(R.id.exampleTextView)
+        val submissionTextField = this.findViewById<EditText>(R.id.add_submission_text)
+        val exampleTextField = this.findViewById<TextView>(R.id.example_text_view)
 
-        val buttonSubmit = this.findViewById<Button>(R.id.buttonSubmit)
-        val buttonBack = this.findViewById<Button>(R.id.buttonDismiss)
+        val buttonSubmit = this.findViewById<Button>(R.id.submit_button)
+        val buttonBack = this.findViewById<Button>(R.id.dismiss_button)
 
-        val gameSpinner = this.findViewById<Spinner>(R.id.gameSpinner)
-        val options = resources.getStringArray(R.array.gameArray)
-        val currentLang = getString(R.string.currentLang)
+        val gameSpinner = this.findViewById<Spinner>(R.id.game_spinner)
+        val options = resources.getStringArray(R.array.game_array)
+        val currentLang = getString(R.string.current_lang)
         var selectedGame: String = null.toString()
 
         gameSpinner.adapter = ArrayAdapter<String>(this, R.layout.spinner_item, options)

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import kotlin.math.sign
 
 
 class AdminPanelActivity : AppCompatActivity() {
@@ -17,8 +16,8 @@ class AdminPanelActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        val buttonSubmissions = this.findViewById<Button>(R.id.manageSubmissionsButton)
-        val buttonLogout = this.findViewById<Button>(R.id.buttonLogout)
+        val buttonSubmissions = this.findViewById<Button>(R.id.manage_submissions_button)
+        val buttonLogout = this.findViewById<Button>(R.id.logout_button)
 
         buttonSubmissions.setOnClickListener{
             startActivity(

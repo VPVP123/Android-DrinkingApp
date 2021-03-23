@@ -1,6 +1,5 @@
 package com.github.skosvall.nextlvl
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -23,7 +22,7 @@ class AppWidget : AppWidgetProvider() {
         if (intent.action == ACTION_DATA_UPDATED) {
             val appWidgetManager = AppWidgetManager.getInstance(context)
             val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(context!!, javaClass))
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widgetStack)
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_stack)
         }
     }
 
@@ -49,8 +48,8 @@ internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManage
     intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
 
     val rv = RemoteViews(context.packageName, R.layout.app_widget)
-    rv.setRemoteAdapter(R.id.widgetStack, intent)
-    rv.setEmptyView(R.id.widgetStack, R.id.testEmpty)
+    rv.setRemoteAdapter(R.id.widget_stack, intent)
+    rv.setEmptyView(R.id.widget_stack, R.id.testEmpty)
 
     appWidgetManager.updateAppWidget(appWidgetId, rv)
 }

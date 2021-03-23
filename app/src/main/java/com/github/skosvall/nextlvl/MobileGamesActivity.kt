@@ -20,9 +20,9 @@ class MobileGamesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mobile_games)
 
-        val dareOrDrinkButton = findViewById<Button>(R.id.DOR_button)
-        val neverHaveIEverButton = findViewById<Button>(R.id.neverHaveIEverButton)
-        val submitTextFull = findViewById<TextView>(R.id.submitText)
+        val dareOrDrinkButton = findViewById<Button>(R.id.dare_or_drink_button)
+        val neverHaveIEverButton = findViewById<Button>(R.id.never_have_i_ever_button)
+        val submitTextFull = findViewById<TextView>(R.id.submit_your_own_textview)
         val str = getString(R.string.submit_your_own)
 
         makeTextLink(submitTextFull, str, false, Color.RED, action = {

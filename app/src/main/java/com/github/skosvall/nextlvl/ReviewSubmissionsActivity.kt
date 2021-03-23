@@ -1,10 +1,8 @@
 package com.github.skosvall.nextlvl
 
-import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -29,11 +27,11 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
 
-        val dareOrDrinkListView = this.findViewById<ListView>(R.id.dorList)
-        val neverHaveIEverListView = this.findViewById<ListView>(R.id.nhieList)
+        val dareOrDrinkListView = this.findViewById<ListView>(R.id.dare_or_drink_list)
+        val neverHaveIEverListView = this.findViewById<ListView>(R.id.never_have_i_ever_list)
 
-        val dorLoadingSpinner = this.findViewById<ProgressBar>(R.id.dorSpinner)
-        val nhieLoadingSpinner = this.findViewById<ProgressBar>(R.id.nhieSpinner)
+        val dorLoadingSpinner = this.findViewById<ProgressBar>(R.id.dare_or_drink_spinner)
+        val nhieLoadingSpinner = this.findViewById<ProgressBar>(R.id.never_have_i_ever_spinner)
 
         val dareOrDrinkDbEng =
                 db.collection("mobileGamesData").document("dareOrDrink").collection("english")

@@ -2,7 +2,6 @@ package com.github.skosvall.nextlvl
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 
 class PlayNeverHaveIEverActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,7 +11,7 @@ class PlayNeverHaveIEverActivity : AppCompatActivity() {
         if(savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.neverHaveIEverFrameLayout, PlayMobileGamesFragment())
+                .add(R.id.never_have_i_ever_frame_layout, PlayMobileGamesFragment())
                 .commit()
         }
     }

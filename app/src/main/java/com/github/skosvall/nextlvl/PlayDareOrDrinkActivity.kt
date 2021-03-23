@@ -17,7 +17,7 @@ class PlayDareOrDrinkActivity : AppCompatActivity() {
             val players = intent.getStringArrayExtra(PLAYER_NAMES) as Array<String>
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.dareOrDrinkFrameLayout, PlayMobileGamesFragment.newInstance(players))
+                .add(R.id.dare_or_drink_frame_layout, PlayMobileGamesFragment.newInstance(players))
                 .commit()
         }
     }

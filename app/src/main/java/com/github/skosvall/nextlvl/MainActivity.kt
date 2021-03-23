@@ -9,16 +9,12 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
 import android.location.Location
-import android.location.LocationManager
-import android.os.Looper
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -76,10 +72,10 @@ class MainActivity : AppCompatActivity() {
         }
          */
 
-        val mobileGamesBtn = findViewById<Button>(R.id.button)
-        val cardGamesBtn = findViewById<Button>(R.id.button2)
-        val lvlGamesBtn = findViewById<Button>(R.id.button3)
-        val alarmBtn = findViewById<Button>(R.id.button4)
+        val mobileGamesBtn = findViewById<Button>(R.id.mobile_games_button)
+        val cardGamesBtn = findViewById<Button>(R.id.card_games_button)
+        val lvlGamesBtn = findViewById<Button>(R.id.lvl_games_button)
+        val alarmBtn = findViewById<Button>(R.id.set_reminder_button)
 
         alarmBtn.setOnClickListener {
             val intent = Intent(this, SetReminderActivity::class.java)
@@ -138,7 +134,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-    
+
     fun checkgetPermission(){
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             return
