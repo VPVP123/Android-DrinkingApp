@@ -4,7 +4,10 @@
     android:id="@android:id/text1"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:layout_width="fill_parent"
+    android:autoSizeTextType="uniform"
+    android:autoSizeMaxTextSize="20sp"
     android:textSize="20sp"
+    android:padding="10dp"
     android:gravity="center"
     android:textColor="@color/white"
     />
