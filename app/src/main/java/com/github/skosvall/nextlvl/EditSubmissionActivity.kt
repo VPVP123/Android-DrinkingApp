@@ -2,8 +2,10 @@ package com.github.skosvall.nextlvl
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,6 +25,9 @@ class EditSubmissionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_submission)
 
         val db = FirebaseFirestore.getInstance()
+
+        val loadingSpinner = findViewById<ProgressBar>(R.id.edit_submission_spinner)
+        loadingSpinner.visibility = View.INVISIBLE
 
         if(savedInstanceState == null){
             gameType = intent.getStringExtra(GAME_TYPE).toString()
@@ -55,7 +60,8 @@ class EditSubmissionActivity : AppCompatActivity() {
         val buttonDismiss = this.findViewById<Button>(R.id.dismiss_button)
 
         buttonSubmit.setOnClickListener{
-            var succeded = false
+            loadingSpinner.visibility = View.VISIBLE
+
             if(gameType == ReviewSubmissionsActivity.DARE_OR_DRINK){
                 val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)as EditText
                 val newEditSubmissionTextViewSwe = findViewById<EditText>(R.id.edit_submission_edittext_swedish)as EditText
@@ -77,13 +83,9 @@ class EditSubmissionActivity : AppCompatActivity() {
                         .update("questions", FieldValue.arrayUnion(newTextSwe))
                             .addOnSuccessListener {
                                 onSuccess()
-                                succeded = true
-                                submissionRepository.deleteSubmissionById(submissionId)
+                                dareOrDrinkSubmissionRepository.deleteSubmissionById(submissionId)
+                                loadingSpinner.visibility = View.INVISIBLE
                             }
-
-                    if(!succeded) {
-                        displayError()
-                    }
                 }
             }else{
                 val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)as EditText
@@ -106,12 +108,9 @@ class EditSubmissionActivity : AppCompatActivity() {
                         .update("statements", FieldValue.arrayUnion(newTextSwe))
                             .addOnSuccessListener {
                                 onSuccess()
-                                succeded = true
+                                neverHaveIEverSubmissionRepository.deleteSubmissionById(submissionId)
+                                loadingSpinner.visibility = View.INVISIBLE
                             }
-
-                    if(!succeded) {
-                        displayError()
-                    }
                 }
             }
         }
