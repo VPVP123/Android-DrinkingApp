@@ -76,6 +76,7 @@
         <item>Dare or drink</item>
         <item>Never have i ever</item>
     </string-array>
+    <string name="field_needs_content">Please enter text before submitting</string>
     <string name="both_fields_needs_content">Please enter text in both fields before submitting</string>
 
 

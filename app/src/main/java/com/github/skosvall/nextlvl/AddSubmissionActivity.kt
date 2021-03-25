@@ -64,23 +64,29 @@ class AddSubmissionActivity : AppCompatActivity() {
             loadingSpinner.visibility = View.VISIBLE
 
             if(selectedGame != null.toString()){
-                if(selectedGame == ReviewSubmissionsActivity.DARE_OR_DRINK){
-                    val submission = submissionTextField.editableText.toString()
-                    db.collection("mobileGamesData").document("dareOrDrink")
-                        .collection(currentLang).document("questions")
-                        .update("questionSuggestions", FieldValue.arrayUnion(submission))
-                            .addOnSuccessListener {
-                                onSuccess()
-                            }
+                if(submissionTextField.editableText.toString().isNotEmpty()){
+                    if(selectedGame == ReviewSubmissionsActivity.DARE_OR_DRINK){
+                        val submission = submissionTextField.editableText.toString()
+                        db.collection("mobileGamesData").document("dareOrDrink")
+                                .collection(currentLang).document("questions")
+                                .update("questionSuggestions", FieldValue.arrayUnion(submission))
+                                .addOnSuccessListener {
+                                    onSuccess()
+                                }
+                    }else{
+                        val submission = submissionTextField.editableText.toString()
+                        db.collection("mobileGamesData").document("neverHaveIEver")
+                                .collection(currentLang).document("statements")
+                                .update("statementSuggestions", FieldValue.arrayUnion(submission))
+                                .addOnSuccessListener {
+                                    onSuccess()
+                                }
+                    }
                 }else{
-                    val submission = submissionTextField.editableText.toString()
-                    db.collection("mobileGamesData").document("neverHaveIEver")
-                        .collection(currentLang).document("statements")
-                        .update("statementSuggestions", FieldValue.arrayUnion(submission))
-                            .addOnSuccessListener {
-                                onSuccess()
-                            }
+                    loadingSpinner.visibility = View.INVISIBLE
+                    Toast.makeText(applicationContext, getString(R.string.field_needs_content), Toast.LENGTH_LONG).show()
                 }
+
             }
         }
         buttonBack.setOnClickListener{
