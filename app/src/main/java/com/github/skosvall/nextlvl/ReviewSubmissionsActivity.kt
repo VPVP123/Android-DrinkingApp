@@ -140,8 +140,8 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                         displayDbError()
                     }
         } else {
-            dareOrDrinkLoadingSpinner.visibility = View.INVISIBLE;
-            neverHaveIEverLoadingSpinner.visibility = View.INVISIBLE;
+            dareOrDrinkLoadingSpinner.visibility = View.INVISIBLE
+            neverHaveIEverLoadingSpinner.visibility = View.INVISIBLE
         }
 
 

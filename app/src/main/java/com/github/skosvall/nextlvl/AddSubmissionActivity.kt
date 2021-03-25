@@ -20,6 +20,9 @@ class AddSubmissionActivity : AppCompatActivity() {
         val buttonSubmit = this.findViewById<Button>(R.id.submit_button)
         val buttonBack = this.findViewById<Button>(R.id.dismiss_button)
 
+        val loadingSpinner = this.findViewById<ProgressBar>(R.id.add_submission_spinner)
+        loadingSpinner.visibility = View.INVISIBLE
+
         val gameSpinner = this.findViewById<Spinner>(R.id.game_spinner)
         val options = resources.getStringArray(R.array.game_array)
         val currentLang = getString(R.string.current_lang)
@@ -52,12 +55,14 @@ class AddSubmissionActivity : AppCompatActivity() {
         }
 
         fun onSuccess(){
+            loadingSpinner.visibility = View.INVISIBLE
             submissionTextField.setText("")
-            Toast.makeText(applicationContext, getString(R.string.suggestion_successfully_approved), Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.suggestion_successfully_submitted), Toast.LENGTH_SHORT).show()
         }
 
         buttonSubmit.setOnClickListener{
-            var succeded = false
+            loadingSpinner.visibility = View.VISIBLE
+
             if(selectedGame != null.toString()){
                 if(selectedGame == ReviewSubmissionsActivity.DARE_OR_DRINK){
                     val submission = submissionTextField.editableText.toString()
@@ -66,11 +71,7 @@ class AddSubmissionActivity : AppCompatActivity() {
                         .update("questionSuggestions", FieldValue.arrayUnion(submission))
                             .addOnSuccessListener {
                                 onSuccess()
-                                succeded = true
                             }
-                    if(!succeded) {
-                        displayError()
-                    }
                 }else{
                     val submission = submissionTextField.editableText.toString()
                     db.collection("mobileGamesData").document("neverHaveIEver")
@@ -78,13 +79,8 @@ class AddSubmissionActivity : AppCompatActivity() {
                         .update("statementSuggestions", FieldValue.arrayUnion(submission))
                             .addOnSuccessListener {
                                 onSuccess()
-                                succeded = true
                             }
-                    if(!succeded) {
-                        displayError()
-                    }
                 }
-                Toast.makeText(applicationContext, getString(R.string.suggestion_successfully_submitted), Toast.LENGTH_SHORT).show()
             }
         }
         buttonBack.setOnClickListener{

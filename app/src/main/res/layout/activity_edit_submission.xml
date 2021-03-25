@@ -60,27 +60,37 @@
             android:padding="20sp"
             android:layout_margin="30dp"
             android:inputType="textMultiLine"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_submission_textviews"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/submit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                android:layout_marginEnd="60dp"/>
+
+            <Button
+                android:id="@+id/dismiss_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dismiss"
+                android:layout_toEndOf="@id/submit_button"
+                android:layout_marginStart="60dp"
+                />
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/edit_submission_spinner"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
 </LinearLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/edit_submission_textviews"
-    android:gravity="center">
 
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/submit"
-        android:layout_marginEnd="60dp"/>
-
-    <Button
-        android:id="@+id/dismiss_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dismiss"
-        android:layout_toEndOf="@id/submit_button"
-        android:layout_marginStart="60dp"
-        />
-</RelativeLayout>
 </RelativeLayout>
