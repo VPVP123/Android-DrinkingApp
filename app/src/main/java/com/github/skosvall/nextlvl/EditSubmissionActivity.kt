@@ -27,7 +27,7 @@ class EditSubmissionActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
 
-        val loadingSpinner = findViewById<ProgressBar>(R.id.edit_submission_spinner)
+        loadingSpinner = findViewById<ProgressBar>(R.id.edit_submission_spinner)
         loadingSpinner.visibility = View.INVISIBLE
 
         if(savedInstanceState == null){

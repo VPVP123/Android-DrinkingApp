@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.transition.TransitionManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
 import com.google.android.material.chip.ChipGroup
@@ -35,9 +36,13 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
             }
 
             startGameButton.setOnClickListener {
-                val intent = Intent(this, PlayDareOrDrinkActivity::class.java)
-                intent.putExtra(PlayDareOrDrinkActivity.PLAYER_NAMES, getPlayerNames().toTypedArray())
-                startActivity(intent)
+                if(getPlayerNames().isNotEmpty()){
+                    val intent = Intent(this, PlayDareOrDrinkActivity::class.java)
+                    intent.putExtra(PlayDareOrDrinkActivity.PLAYER_NAMES, getPlayerNames().toTypedArray())
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(applicationContext, getString(R.string.please_add_players), Toast.LENGTH_LONG).show()
+                }
             }
         }else{
             savedInstanceState.getStringArray(ADDED_PLAYER_NAMES)?.forEach {

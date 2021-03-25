@@ -23,6 +23,7 @@
     <string name="current_lang">swedish</string>
     <string name="dont_like_nhie_dares">"Gillar du inte våra 'Jag har aldrig' / Dares?\n Ge förslag på nya"</string>
     <string name="submit_your_own">Ge förslag på nya</string>
+    <string name="please_add_players">Vänligen lägg till spelare innan du startar spelet</string>
 
     <string name="what_is_needded">Vad som behövs</string>
     <string name="setup">Setup</string>
