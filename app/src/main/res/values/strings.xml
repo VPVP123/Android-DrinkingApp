@@ -73,7 +73,7 @@
         <item>Dare or drink</item>
         <item>Never have i ever</item>
     </string-array>
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="both_fields_needs_content">Please enter text in both fields before submitting</string>
 
 
 

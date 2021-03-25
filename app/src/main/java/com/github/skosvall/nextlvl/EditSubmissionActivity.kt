@@ -58,54 +58,62 @@ class EditSubmissionActivity : AppCompatActivity() {
                 val newTextEng = editSubmissionTextViewEng.editableText.toString()
                 val newTextSwe = editSubmissionTextViewSwe.editableText.toString()
 
-                if (submission != null) {
-                    db.collection("mobileGamesData").document("dareOrDrink")
-                        .collection("english").document("questions")
-                        .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
-                    db.collection("mobileGamesData").document("dareOrDrink")
-                        .collection("english").document("questions")
-                        .update("questions", FieldValue.arrayUnion(newTextEng))
-                    db.collection("mobileGamesData").document("dareOrDrink")
-                        .collection("swedish").document("questions")
-                        .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
-                    db.collection("mobileGamesData").document("dareOrDrink")
-                        .collection("swedish").document("questions")
-                        .update("questions", FieldValue.arrayUnion(newTextSwe))
-                            .addOnSuccessListener {
-                                onSuccess()
-                                succeded = true
-                                submissionRepository.deleteSubmissionById(submissionId)
-                            }
+                if (newTextEng.isEmpty() && newTextSwe.isEmpty()){
+                    if (submission != null) {
+                        db.collection("mobileGamesData").document("dareOrDrink")
+                                .collection("english").document("questions")
+                                .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
+                        db.collection("mobileGamesData").document("dareOrDrink")
+                                .collection("english").document("questions")
+                                .update("questions", FieldValue.arrayUnion(newTextEng))
+                        db.collection("mobileGamesData").document("dareOrDrink")
+                                .collection("swedish").document("questions")
+                                .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
+                        db.collection("mobileGamesData").document("dareOrDrink")
+                                .collection("swedish").document("questions")
+                                .update("questions", FieldValue.arrayUnion(newTextSwe))
+                                .addOnSuccessListener {
+                                    onSuccess()
+                                    succeded = true
+                                    submissionRepository.deleteSubmissionById(submissionId)
+                                }
 
-                    if(!succeded) {
-                        displayError()
+                        if(!succeded) {
+                            displayError()
+                        }
                     }
+                }else{
+                    Toast.makeText(applicationContext, getString(R.string.both_fields_needs_content), Toast.LENGTH_LONG).show()
                 }
-            }else{
+                }else{
                 val newTextEng = editSubmissionTextViewEng.editableText.toString()
                 val newTextSwe = editSubmissionTextViewSwe.editableText.toString()
 
-                if (submission != null) {
-                    db.collection("mobileGamesData").document("neverHaveIEver")
-                        .collection("english").document("statements")
-                        .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
-                    db.collection("mobileGamesData").document("neverHaveIEver")
-                        .collection("english").document("statements")
-                        .update("statements", FieldValue.arrayUnion(newTextEng))
-                    db.collection("mobileGamesData").document("neverHaveIEver")
-                        .collection("swedish").document("statements")
-                        .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
-                    db.collection("mobileGamesData").document("neverHaveIEver")
-                        .collection("swedish").document("statements")
-                        .update("statements", FieldValue.arrayUnion(newTextSwe))
-                            .addOnSuccessListener {
-                                onSuccess()
-                                succeded = true
-                            }
+                if (newTextEng.isEmpty() && newTextSwe.isEmpty()){
+                    if (submission != null) {
+                        db.collection("mobileGamesData").document("neverHaveIEver")
+                                .collection("english").document("statements")
+                                .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
+                        db.collection("mobileGamesData").document("neverHaveIEver")
+                                .collection("english").document("statements")
+                                .update("statements", FieldValue.arrayUnion(newTextEng))
+                        db.collection("mobileGamesData").document("neverHaveIEver")
+                                .collection("swedish").document("statements")
+                                .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
+                        db.collection("mobileGamesData").document("neverHaveIEver")
+                                .collection("swedish").document("statements")
+                                .update("statements", FieldValue.arrayUnion(newTextSwe))
+                                .addOnSuccessListener {
+                                    onSuccess()
+                                    succeded = true
+                                }
 
-                    if(!succeded) {
-                        displayError()
+                        if(!succeded) {
+                            displayError()
+                        }
                     }
+                }else{
+                    Toast.makeText(applicationContext, getString(R.string.both_fields_needs_content), Toast.LENGTH_LONG).show()
                 }
             }
         }
