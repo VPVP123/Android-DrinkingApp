@@ -20,7 +20,7 @@ class PlayCardGameActivity : AppCompatActivity() {
     }
 
     private lateinit var currentGame: String
-    private lateinit var getCardGames123: DocumentReference
+    private lateinit var getCardGames321: DocumentReference
     private lateinit var getCardGamesFuckTheDealer: DocumentReference
     private lateinit var getCardGamesRingOfFire: DocumentReference
     private lateinit var loadingSpinner: ProgressBar
@@ -29,14 +29,14 @@ class PlayCardGameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_card_games)
 
-        loadingSpinner = this.findViewById<ProgressBar>(R.id.card_games_spinner)
+        loadingSpinner = this.findViewById(R.id.card_games_spinner)
         loadingSpinner.visibility = View.VISIBLE
 
         val db = FirebaseFirestore.getInstance()
 
         val currentLang = getString(R.string.current_lang)
 
-        getCardGames123 = db.collection("cardGamesData").document("1-2-3").collection(currentLang).document("texts")
+        getCardGames321 = db.collection("cardGamesData").document("1-2-3").collection(currentLang).document("texts")
         getCardGamesFuckTheDealer = db.collection("cardGamesData").document("fuckTheDealer").collection(currentLang).document("texts")
         getCardGamesRingOfFire = db.collection("cardGamesData").document("ringOfFire").collection(currentLang).document("texts")
 
@@ -62,14 +62,13 @@ class PlayCardGameActivity : AppCompatActivity() {
         }
     }
 
-    fun startRingOfFire(savedInstanceState: Bundle?){
-        //Insert everything from firestore in fragment
+    private fun startRingOfFire(savedInstanceState: Bundle?){
         getCardGamesRingOfFire.get()
             .addOnSuccessListener { document ->
                 if(document != null){
                     if(savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
-                            .add(R.id.playCardGameFrameLayout, ringOfFireGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
+                            .add(R.id.playCardGameFrameLayout, RingOfFireGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
                                     (document.getString("shortDescription") as String).replace("\\n", "\n"),
                                     (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
                                     (document.getString("sectionOneText") as String).replace("\\n", "\n"),
@@ -82,7 +81,7 @@ class PlayCardGameActivity : AppCompatActivity() {
                             .commit()
                     } else {
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.playCardGameFrameLayout, ringOfFireGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
+                            .replace(R.id.playCardGameFrameLayout, RingOfFireGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
                                     (document.getString("shortDescription") as String).replace("\\n", "\n"),
                                     (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
                                     (document.getString("sectionOneText") as String).replace("\\n", "\n"),
@@ -103,8 +102,7 @@ class PlayCardGameActivity : AppCompatActivity() {
                 displayError()
             }
     }
-    fun startFuckTheDealer(savedInstanceState: Bundle?){
-        //Insert everything from firestore in fragment
+    private fun startFuckTheDealer(savedInstanceState: Bundle?){
         getCardGamesFuckTheDealer.get()
             .addOnSuccessListener { document ->
                 if(document != null){
@@ -140,9 +138,8 @@ class PlayCardGameActivity : AppCompatActivity() {
                 displayError()
             }
     }
-    fun startThreeTwoOne(savedInstanceState: Bundle?){
-        //Insert everything from firestore in fragment
-        getCardGames123.get()
+    private fun startThreeTwoOne(savedInstanceState: Bundle?){
+        getCardGames321.get()
             .addOnSuccessListener { document ->
                 if(document != null){
                     if(savedInstanceState == null) {
@@ -173,9 +170,8 @@ class PlayCardGameActivity : AppCompatActivity() {
                     displayError()
                 }
             }
-            .addOnFailureListener {exception ->
+            .addOnFailureListener { _ ->
                 displayError()
-
             }
     }
 

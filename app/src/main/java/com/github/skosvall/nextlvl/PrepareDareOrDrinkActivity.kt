@@ -15,6 +15,7 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
     companion object{
         const val ADDED_PLAYER_NAMES = "ADDED_PLAYER_NAMES"
     }
+
     private lateinit var chipGroup: ChipGroup
     private lateinit var addPlayerEditText: EditText
 
@@ -23,10 +24,10 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
         setContentView(R.layout.activity_prepare_dare_or_drink)
 
         if(savedInstanceState == null) {
-            val buttonAdd = findViewById<Button>(R.id.add_player_button) as Button
-            chipGroup = findViewById<ChipGroup>(R.id.chip_group) as ChipGroup
-            val startGameButton = findViewById<Button>(R.id.start_game_button) as Button
-            addPlayerEditText = findViewById<EditText>(R.id.add_player_name) as EditText
+            val buttonAdd = findViewById<Button>(R.id.add_player_button)
+            chipGroup = findViewById(R.id.chip_group)
+            val startGameButton = findViewById<Button>(R.id.start_game_button)
+            addPlayerEditText = findViewById(R.id.add_player_name)
 
             buttonAdd.setOnClickListener {
                 addChipToChipgroup(addPlayerEditText.text.toString())
@@ -46,29 +47,19 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
     }
 
     private fun addChipToChipgroup(nameToAdd: String){
-        // Initialize a new chip instance
         val chip = Chip(this)
         chip.text = nameToAdd
 
-        // Set the chip icon
-        //chip.chipIcon = ContextCompat.getDrawable(this,R.drawable.ic_action_android)
-        //chip.setChipIconTintResource(R.color.abc_search_url_text)
-
-        // Make the chip clickable
         chip.isClickable = true
         chip.isCheckable = false
 
-        // Show the chip icon in chip
         chip.isCloseIconVisible = true
 
-        // Set chip close icon click listener
         chip.setOnCloseIconClickListener{
-            // Smoothly remove chip from chip group
             TransitionManager.beginDelayedTransition(chipGroup)
             chipGroup.removeView(chip)
         }
 
-        // Finally, add the chip to chip group
         chipGroup.addView(chip)
     }
 

@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_TITLE = "title"
 private const val ARG_DESCRIPTION = "description"
 private const val ARG_EQUIPMENT_TITLE = "equipmentTitle"
@@ -20,13 +18,7 @@ private const val ARG_HOWTOPLAY = "howToPlay"
 private const val ARG_SECTION_FOUR_TITLE = "sectionFourTitle"
 private const val ARG_SECTION_FOUR_TEXT = "sectionFourText"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CardGamesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ringOfFireGameFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+class RingOfFireGameFragment : Fragment() {
     private var title: String? = null
     private var description: String? = null
     private var equipmentTitle: String? = null
@@ -55,18 +47,6 @@ class ringOfFireGameFragment : Fragment() {
             sectionFourText = it.getString(ARG_SECTION_FOUR_TEXT)
 
         }
-
-        /**val titleTextView = view?.findViewById<TextView>(R.id.cardGameTitle)?.setText(title)
-        val descriptionTextView = view?.findViewById<TextView>(R.id.cardGameDescription)?.setText(title)
-        val titleEquipmentTextView = view?.findViewById<TextView>(R.id.cardGameSectionOneTitle)?.setText(equipmentTitle)
-        val equipmentTextView = view?.findViewById<TextView>(R.id.cardGameEquipment)?.setText(equipment)
-        val titleSetupTextView = view?.findViewById<TextView>(R.id.cardGameSectionTwoTitle)?.setText(setupTitle)
-        val setupTextView = view?.findViewById<TextView>(R.id.cardGameSetup)?.setText(setup)
-        val titleHowToPlayTextView = view?.findViewById<TextView>(R.id.cardGameSectionThreeTitle)?.setText(howToPlayTitle)
-        val howToPlayTextView = view?.findViewById<TextView>(R.id.cardGameHowToPlay)?.setText(howToPlay)
-        val SectionFourTitleTextView = view?.findViewById<TextView>(R.id.cardGameSectionFourTitle)?.setText(sectionFourTitle)
-        val SectionFourTextTextView = view?.findViewById<TextView>(R.id.cardGameSectionFourText)?.setText(sectionFourText)
-        */
     }
 
     override fun onCreateView(
@@ -109,7 +89,7 @@ class ringOfFireGameFragment : Fragment() {
          */
         @JvmStatic
         fun newInstance(title: String, description: String, equipmentTitle: String, equipment: String, setupTitle: String, setup: String, howToPlayTitle: String, howToPlay: String, sectionFourTitle: String, sectionFourText: String) =
-                ringOfFireGameFragment().apply {
+                RingOfFireGameFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_TITLE, title)
                     putString(ARG_DESCRIPTION, description)

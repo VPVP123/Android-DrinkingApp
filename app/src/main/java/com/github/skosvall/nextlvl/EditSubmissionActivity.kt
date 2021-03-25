@@ -32,10 +32,12 @@ class EditSubmissionActivity : AppCompatActivity() {
             submissionId = savedInstanceState.getInt(SUBMISSION_ID)
         }
 
-        val submission: Submission? = if(gameType == ReviewSubmissionsActivity.DOR){
-            dorSubmissionRepository.getSubmissionById(submissionId)
+        var submission: Submission?
+
+        if(gameType == ReviewSubmissionsActivity.DARE_OR_DRINK){
+            submission = dareOrDrinkSubmissionRepository.getSubmissionById(submissionId)
         }else{
-            nhieSubmissionRepository.getSubmissionById(submissionId)
+            submission = neverHaveIEverSubmissionRepository.getSubmissionById(submissionId)
         }
 
         val editSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)

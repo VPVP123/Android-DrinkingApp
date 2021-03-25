@@ -66,7 +66,6 @@ class PlayLvLGameActivity : AppCompatActivity() {
     }
 
     private fun startBeerpong(savedInstanceState: Bundle?){
-        //Insert everything from firestore in fragment
         getLvLGamesBeerPong.get()
             .addOnSuccessListener { document ->
                 if(document != null){
@@ -98,12 +97,11 @@ class PlayLvLGameActivity : AppCompatActivity() {
                     displayError()
                 }
             }
-            .addOnFailureListener {exception ->
+            .addOnFailureListener { _ ->
                 displayError()
             }
     }
     private fun startGasGas(savedInstanceState: Bundle?){
-        //Insert everything from firestore in fragment
         getLvLGamesGasGas.get()
                 .addOnSuccessListener { document ->
                     if(document != null) {
@@ -135,12 +133,11 @@ class PlayLvLGameActivity : AppCompatActivity() {
                         displayError()
                     }
                 }
-                .addOnFailureListener { exception ->
+                .addOnFailureListener { _ ->
                     displayError()
                 }
     }
     private fun startHorseRace(savedInstanceState: Bundle?){
-        //Insert everything from firestore in fragment
         getLvLGamesHorseRace.get()
             .addOnSuccessListener { document ->
                 if(document != null){
@@ -172,7 +169,7 @@ class PlayLvLGameActivity : AppCompatActivity() {
                     displayError()
                 }
             }
-            .addOnFailureListener {exception ->
+            .addOnFailureListener { _ ->
                 displayError()
             }
     }
