@@ -164,9 +164,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                 val intent = Intent(this, EditSubmissionActivity::class.java)
                 intent.putExtra(EditSubmissionActivity.SUBMISSION_ID, submission.id)
                 intent.putExtra(EditSubmissionActivity.GAME_TYPE, ReviewSubmissionsActivity.DARE_OR_DRINK)
-                startActivity(
-                        intent
-                )
+                startActivity(intent)
                 dialog.dismiss()
             }
             dareOrDrinkPopUp.show()
@@ -192,9 +190,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                 val intent = Intent(this, EditSubmissionActivity::class.java)
                 intent.putExtra(EditSubmissionActivity.SUBMISSION_ID, submission.id)
                 intent.putExtra(EditSubmissionActivity.GAME_TYPE, ReviewSubmissionsActivity.NEVER_HAVE_I_EVER)
-                startActivity(
-                        intent
-                )
+                startActivity(intent)
                 dialog.dismiss()
             }
             neverHaveIEverPopUp.show()
