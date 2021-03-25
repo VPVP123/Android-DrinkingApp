@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:gravity="center">
         <TextView
-            android:id="@+id/submissionTextView"
+            android:id="@+id/submission_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/i_want_to_submit_a"
@@ -30,17 +30,17 @@
             android:layout_marginTop="20dp" />
 
         <Spinner
-            android:id="@+id/gameSpinner"
+            android:id="@+id/game_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/submissionTextView"
-            android:layout_toEndOf="@id/submissionTextView"
+            android:layout_alignTop="@id/submission_text_view"
+            android:layout_toEndOf="@id/submission_text_view"
             />
         </RelativeLayout>
 
         </LinearLayout>
         <TextView
-            android:id="@+id/exampleTextView"
+            android:id="@+id/example_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
@@ -51,7 +51,7 @@
 
 
         <EditText
-            android:id="@+id/addSubmissionText"
+            android:id="@+id/add_submission_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="13"
@@ -66,14 +66,14 @@
             android:inputType="textMultiLine"/>
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
+            android:id="@+id/button_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/buttonSubmit"
+                android:id="@+id/submit_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/submit"
@@ -86,14 +86,12 @@
                 android:layout_weight="1" />
             <!--Separating buttons-->
             <Button
-                android:id="@+id/buttonDismiss"
+                android:id="@+id/dismiss_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dismiss"
                 android:layout_marginEnd="35dp"
                 />
         </LinearLayout>
-
     </LinearLayout>
-
 </RelativeLayout>

@@ -2,11 +2,8 @@ package com.github.skosvall.nextlvl
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,12 +29,12 @@ class PlayCardGameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_card_games)
 
-        loadingSpinner = this.findViewById<ProgressBar>(R.id.cardGamesSpinner)
+        loadingSpinner = this.findViewById<ProgressBar>(R.id.card_games_spinner)
         loadingSpinner.visibility = View.VISIBLE
 
         val db = FirebaseFirestore.getInstance()
 
-        val currentLang = getString(R.string.currentLang)
+        val currentLang = getString(R.string.current_lang)
 
         getCardGames123 = db.collection("cardGamesData").document("1-2-3").collection(currentLang).document("texts")
         getCardGamesFuckTheDealer = db.collection("cardGamesData").document("fuckTheDealer").collection(currentLang).document("texts")
@@ -189,6 +186,6 @@ class PlayCardGameActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(CURRENT_GAME, currentGame)
-        outState.putString(PREVIOUS_LANG, getString(R.string.currentLang))
+        outState.putString(PREVIOUS_LANG, getString(R.string.current_lang))
     }
 }

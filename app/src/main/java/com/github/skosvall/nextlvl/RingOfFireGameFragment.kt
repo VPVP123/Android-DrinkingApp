@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.view.isVisible
-import com.google.firebase.firestore.FirebaseFirestore
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,16 +76,16 @@ class ringOfFireGameFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_card_games, container, false) as View
 
-        view.findViewById<TextView>(R.id.cardGameTitle)?.text = title
-        view.findViewById<TextView>(R.id.cardGameDescription)?.text = description
-        view.findViewById<TextView>(R.id.cardGameSectionOneTitle)?.text = equipmentTitle
-        view.findViewById<TextView>(R.id.cardGameEquipment)?.text = equipment
-        view.findViewById<TextView>(R.id.cardGameSectionTwoTitle)?.text = setupTitle
-        view.findViewById<TextView>(R.id.cardGameSetup)?.text = setup
-        view.findViewById<TextView>(R.id.cardGameSectionThreeTitle)?.text = howToPlayTitle
-        view.findViewById<TextView>(R.id.cardGameHowToPlay)?.text = howToPlay
-        view.findViewById<TextView>(R.id.cardGameSectionFourTitle)?.text = sectionFourTitle
-        view.findViewById<TextView>(R.id.cardGameSectionFourText)?.text = sectionFourText
+        view.findViewById<TextView>(R.id.card_game_title)?.text = title
+        view.findViewById<TextView>(R.id.card_game_description)?.text = description
+        view.findViewById<TextView>(R.id.card_game_section_one_title)?.text = equipmentTitle
+        view.findViewById<TextView>(R.id.card_game_equipment)?.text = equipment
+        view.findViewById<TextView>(R.id.card_game_section_two_title)?.text = setupTitle
+        view.findViewById<TextView>(R.id.card_game_setup)?.text = setup
+        view.findViewById<TextView>(R.id.card_game_section_three_title)?.text = howToPlayTitle
+        view.findViewById<TextView>(R.id.card_game_how_to_play)?.text = howToPlay
+        view.findViewById<TextView>(R.id.card_game_section_four_title)?.text = sectionFourTitle
+        view.findViewById<TextView>(R.id.card_game_section_four_text)?.text = sectionFourText
 
         return view
     }

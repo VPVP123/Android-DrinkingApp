@@ -10,13 +10,13 @@ class LvLGamesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lvl_games)
 
-        findViewById<Button>(R.id.beerpongButton).setOnClickListener {
+        findViewById<Button>(R.id.beerpong_button).setOnClickListener {
             startGame(PlayLvLGameActivity.BEERPONG)
         }
-        findViewById<Button>(R.id.gasGasButton).setOnClickListener {
+        findViewById<Button>(R.id.gasgas_button).setOnClickListener {
             startGame(PlayLvLGameActivity.GAS_GAS)
         }
-        findViewById<Button>(R.id.horseRaceButton).setOnClickListener {
+        findViewById<Button>(R.id.horse_race_button).setOnClickListener {
             startGame(PlayLvLGameActivity.HORSE_RACE)
         }
     }

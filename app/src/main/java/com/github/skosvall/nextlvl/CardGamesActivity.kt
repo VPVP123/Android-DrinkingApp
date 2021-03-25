@@ -10,13 +10,13 @@ class CardGamesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_games)
 
-        findViewById<Button>(R.id.fuckTheDealerButton).setOnClickListener {
+        findViewById<Button>(R.id.fuck_the_dealer_button).setOnClickListener {
             startGame(PlayCardGameActivity.FUCK_THE_DEALER)
         }
-        findViewById<Button>(R.id.ringOfFireButton).setOnClickListener {
+        findViewById<Button>(R.id.ring_of_fire_button).setOnClickListener {
             startGame(PlayCardGameActivity.RING_OF_FIRE)
         }
-        findViewById<Button>(R.id.threeTwoOneButton).setOnClickListener {
+        findViewById<Button>(R.id.three_two_one_button).setOnClickListener {
             startGame(PlayCardGameActivity.THREE_TWO_ONE)
         }
     }

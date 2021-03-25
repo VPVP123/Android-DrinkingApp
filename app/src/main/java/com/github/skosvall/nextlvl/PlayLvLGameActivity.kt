@@ -2,7 +2,6 @@ package com.github.skosvall.nextlvl
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -29,11 +28,11 @@ class PlayLvLGameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_lvl_games)
 
-        loadingSpinner = this.findViewById<ProgressBar>(R.id.lvlGamesSpinner)
+        loadingSpinner = this.findViewById<ProgressBar>(R.id.lvl_games_spinner)
 
         val db = FirebaseFirestore.getInstance()
 
-        val currentLang = getString(R.string.currentLang)
+        val currentLang = getString(R.string.current_lang)
 
         getLvLGamesBeerPong = db.collection("lvlGamesData").document("beerpong").collection(currentLang).document("texts")
         getLvLGamesGasGas = db.collection("lvlGamesData").document("gasGas").collection(currentLang).document("texts")
@@ -185,6 +184,6 @@ class PlayLvLGameActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(CURRENT_GAME, currentGame)
-        outState.putString(PREVIOUS_LANG, getString(R.string.currentLang))
+        outState.putString(PREVIOUS_LANG, getString(R.string.current_lang))
     }
 }

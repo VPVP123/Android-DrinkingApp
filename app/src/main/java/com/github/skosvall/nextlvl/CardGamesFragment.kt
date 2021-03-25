@@ -38,14 +38,14 @@ class CardGamesFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_card_games, container, false) as View
 
-        view.findViewById<TextView>(R.id.cardGameTitle)?.text = title
-        view.findViewById<TextView>(R.id.cardGameDescription)?.text = description
-        view.findViewById<TextView>(R.id.cardGameSectionOneTitle)?.text = equipmentTitle
-        view.findViewById<TextView>(R.id.cardGameEquipment)?.text = equipment
-        view.findViewById<TextView>(R.id.cardGameSectionTwoTitle)?.text = setupTitle
-        view.findViewById<TextView>(R.id.cardGameSetup)?.text = setup
-        view.findViewById<TextView>(R.id.cardGameSectionThreeTitle)?.text = howToPlayTitle
-        view.findViewById<TextView>(R.id.cardGameHowToPlay)?.text = howToPlay
+        view.findViewById<TextView>(R.id.card_game_title)?.text = title
+        view.findViewById<TextView>(R.id.card_game_description)?.text = description
+        view.findViewById<TextView>(R.id.card_game_section_one_title)?.text = equipmentTitle
+        view.findViewById<TextView>(R.id.card_game_equipment)?.text = equipment
+        view.findViewById<TextView>(R.id.card_game_section_two_title)?.text = setupTitle
+        view.findViewById<TextView>(R.id.card_game_setup)?.text = setup
+        view.findViewById<TextView>(R.id.card_game_section_three_title)?.text = howToPlayTitle
+        view.findViewById<TextView>(R.id.card_game_how_to_play)?.text = howToPlay
 
         return view
     }

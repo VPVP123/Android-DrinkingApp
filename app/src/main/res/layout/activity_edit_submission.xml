@@ -8,7 +8,7 @@
     android:background="@drawable/games_black_background">
 
     <LinearLayout
-        android:id="@+id/textArea"
+        android:id="@+id/edit_submission_textviews"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -22,7 +22,7 @@
             android:textStyle="bold"/>
 
     <EditText
-        android:id="@+id/editSubmissionEng"
+        android:id="@+id/edit_submission_edittext_english"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="13"
@@ -46,7 +46,7 @@
             android:textStyle="bold"/>
 
         <EditText
-            android:id="@+id/editSubmissionSwe"
+            android:id="@+id/edit_submission_edittext_swedish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="13"
@@ -64,25 +64,23 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/textArea"
+    android:layout_below="@id/edit_submission_textviews"
     android:gravity="center">
 
     <Button
-        android:id="@+id/buttonSubmit"
+        android:id="@+id/submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit"
         android:layout_marginEnd="60dp"/>
 
     <Button
-        android:id="@+id/buttonDismiss"
+        android:id="@+id/dismiss_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dismiss"
-        android:layout_toEndOf="@id/buttonSubmit"
+        android:layout_toEndOf="@id/submit_button"
         android:layout_marginStart="60dp"
         />
 </RelativeLayout>
-
-
 </RelativeLayout>

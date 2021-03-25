@@ -14,48 +14,48 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/card_games_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/SelectGameText"
+            android:text="@string/select_game_text"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:layout_marginBottom="80dp"/>
 
         <Button
-            android:id="@+id/beerpongButton"
+            android:id="@+id/beerpong_button"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:text="@string/beerpong"
             android:textAllCaps="false"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
         <Button
-            android:id="@+id/gasGasButton"
+            android:id="@+id/gasgas_button"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:text="@string/gasgas"
             android:textAllCaps="false"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
         <Button
-            android:id="@+id/horseRaceButton"
+            android:id="@+id/horse_race_button"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:text="@string/horserace"
             android:textAllCaps="false"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="40dp"/>
 
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/card_games_nextlvl_logo_imageview"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

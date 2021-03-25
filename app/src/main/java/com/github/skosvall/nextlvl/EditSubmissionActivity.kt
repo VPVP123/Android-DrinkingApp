@@ -40,8 +40,8 @@ class EditSubmissionActivity : AppCompatActivity() {
             submission = nhieSubmissionRepository.getSubmissionById(submissionId)
         }
 
-        val editSubmissionTextViewEng = findViewById<EditText>(R.id.editSubmissionEng)as EditText
-        val editSubmissionTextViewSwe = findViewById<EditText>(R.id.editSubmissionSwe)as EditText
+        val editSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)as EditText
+        val editSubmissionTextViewSwe = findViewById<EditText>(R.id.edit_submission_edittext_swedish)as EditText
 
         if(submission != null){
             if(submission.lang == "swedish"){
@@ -51,14 +51,14 @@ class EditSubmissionActivity : AppCompatActivity() {
             }
         }
 
-        val buttonSubmit = this.findViewById<Button>(R.id.buttonSubmit)
-        val buttonDismiss = this.findViewById<Button>(R.id.buttonDismiss)
+        val buttonSubmit = this.findViewById<Button>(R.id.submit_button)
+        val buttonDismiss = this.findViewById<Button>(R.id.dismiss_button)
 
         buttonSubmit.setOnClickListener{
             var succeded = false
             if(gameType == ReviewSubmissionsActivity.DOR){
-                val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.editSubmissionEng)as EditText
-                val newEditSubmissionTextViewSwe = findViewById<EditText>(R.id.editSubmissionSwe)as EditText
+                val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)as EditText
+                val newEditSubmissionTextViewSwe = findViewById<EditText>(R.id.edit_submission_edittext_swedish)as EditText
                 val newTextEng = newEditSubmissionTextViewEng.editableText.toString()
                 val newTextSwe = newEditSubmissionTextViewSwe.editableText.toString()
 
@@ -86,8 +86,8 @@ class EditSubmissionActivity : AppCompatActivity() {
                     }
                 }
             }else{
-                val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.editSubmissionEng)as EditText
-                val newEditSubmissionTextViewSwe = findViewById<EditText>(R.id.editSubmissionSwe)as EditText
+                val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)as EditText
+                val newEditSubmissionTextViewSwe = findViewById<EditText>(R.id.edit_submission_edittext_swedish)as EditText
                 val newTextEng = newEditSubmissionTextViewEng.editableText.toString()
                 val newTextSwe = newEditSubmissionTextViewSwe.editableText.toString()
 

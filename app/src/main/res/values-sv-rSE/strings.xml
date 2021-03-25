@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">nextLvL</string>
-    <string name="MB_button">Mobilspel</string>
-    <string name="CG_button">Kortspel</string>
-    <string name="LVL_button">LvL-spel</string>
-    <string name="DOR_button">Dare Or Drink</string>
-    <string name="NHIE_button">Jag Har Aldrig</string>
-    <string name="SelectGameText">Välj ett spel för att spela</string>
+    <string name="mobile_games">Mobilspel</string>
+    <string name="card_games">Kortspel</string>
+    <string name="lvl_games">LvL-spel</string>
+    <string name="dare_or_drink">Dare Or Drink</string>
+    <string name="never_have_i_ever">Jag Har Aldrig</string>
+    <string name="select_game_text">Välj ett spel för att spela</string>
     <string name="username">Användarnamn</string>
     <string name="login">Logga in</string>
     <string name="password">Lösenord</string>
@@ -14,13 +14,13 @@
     <string name="gasgas">GasGas</string>
     <string name="horserace">Hästkapplöpning</string>
     <string name="_321">3-2-1</string>
-    <string name="ringoffire">Ring Of Fire</string>
-    <string name="fuckthedealer">Fuck The Dealer</string>
+    <string name="ring_of_fire">Ring Of Fire</string>
+    <string name="fuck_the_dealer">Fuck The Dealer</string>
     <string name="enter_name">Lägg till namn</string>
-    <string name="addplayer">+ Lägg till spelare</string>
+    <string name="add_player">+ Lägg till spelare</string>
     <string name="start_game">Starta spel</string>
     <string name="next">Nästa</string>
-    <string name="currentLang">swedish</string>
+    <string name="current_lang">swedish</string>
     <string name="dont_like_nhie_dares">"Gillar du inte våra 'Jag har aldrig' / Dares?\n Ge förslag på nya"</string>
     <string name="submit_your_own">Ge förslag på nya</string>
 
@@ -28,15 +28,15 @@
     <string name="setup">Setup</string>
     <string name="how_to_play">Hur man spelar</string>
 
-    <string name="this_is_the_admin_panel_nwhat_would_you_like_to_do_today">Det här är admin sidan!\nVad vill du göra?</string>
+    <string name="admin_panel_what_to_do_today">Det här är admin sidan!\nVad vill du göra?</string>
     <string name="manage_games">Hantera spel</string>
     <string name="new_submissions">Nya Förslag</string>
     <string name="logout">Logga ut</string>
 
     <string name="set_alarm">Sätt påminnelse</string>
-    <string name="reminderTitle">Sätt en festpåminnelse</string>
-    <string name="reminderLinkText">Se till att inte missa NextLvL under festen genom att sätta en spel påminnelse här!</string>
-    <string name="reminderDescription">Här kan du välja en tid idag när du vill bli påmind att spela NextLvL. Sätt på timern så kommer vi att skicka en notification när det är dags att spela!</string>
+    <string name="reminder_title">Sätt en festpåminnelse</string>
+    <string name="reminder_link_text">Se till att inte missa NextLvL under festen genom att sätta en spel påminnelse här!</string>
+    <string name="reminder_description">Här kan du välja en tid idag när du vill bli påmind att spela NextLvL. Sätt på timern så kommer vi att skicka en notification när det är dags att spela!</string>
     <string name="reminder_successfully_set">En påminnelse har skapats!</string>
     <string name="reminder_notification_text">"Vi saknar dig! Glöm inte att spela nextLvL så att er fest blir så bra som bara möjligt!"</string>
 
@@ -66,7 +66,7 @@
     <string name="dare_or_drink_example">Ex: "Spelare1, låt Spelare2 använda ditt Facebook-konto i 1 minut eller drick 3 klunkar"</string>
     <string name="never_have_i_ever_example">Ex: "Jag har aldrig kört över hastighetsgränsen"</string>
 
-    <string-array name="gameArray">
+    <string-array name="game_array">
         <item>Dare or drink</item>
         <item>Jag har aldrig</item>
     </string-array>

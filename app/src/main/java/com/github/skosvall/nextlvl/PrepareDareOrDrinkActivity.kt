@@ -1,20 +1,14 @@
 package com.github.skosvall.nextlvl
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.transition.TransitionManager
-import android.util.Log
-import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.chip.Chip
-import kotlin.random.Random
 
 
 class PrepareDareOrDrinkActivity : AppCompatActivity() {
@@ -29,10 +23,10 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
         setContentView(R.layout.activity_prepare_dare_or_drink)
 
         if(savedInstanceState == null) {
-            val buttonAdd = findViewById<Button>(R.id.addButton) as Button
-            chipGroup = findViewById<ChipGroup>(R.id.chipGroup) as ChipGroup
-            val startGameButton = findViewById<Button>(R.id.startGameButton) as Button
-            addPlayerEditText = findViewById<EditText>(R.id.playerName) as EditText
+            val buttonAdd = findViewById<Button>(R.id.add_player_button) as Button
+            chipGroup = findViewById<ChipGroup>(R.id.chip_group) as ChipGroup
+            val startGameButton = findViewById<Button>(R.id.start_game_button) as Button
+            addPlayerEditText = findViewById<EditText>(R.id.add_player_name) as EditText
 
             buttonAdd.setOnClickListener {
                 addChipToChipgroup(addPlayerEditText.text.toString())

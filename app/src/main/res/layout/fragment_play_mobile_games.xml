@@ -13,7 +13,7 @@
         tools:context=".PlayNeverHaveIEverActivity">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/card_games_nextlvl_logo_imageview"
             android:layout_width="280dp"
             android:layout_height="180dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
             <TextView
-                android:id="@+id/statementTextview"
+                android:id="@+id/statement_textview"
                 android:layout_width="280dp"
                 android:layout_height="180dp"
                 android:background="@drawable/rounded_corner_textview"
@@ -50,7 +50,7 @@
 
 
             <Button
-                android:id="@+id/neverHaveIEverNextButton"
+                android:id="@+id/never_have_i_ever_next_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"

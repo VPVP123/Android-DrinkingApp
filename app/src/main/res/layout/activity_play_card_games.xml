@@ -8,7 +8,7 @@
     tools:context=".PlayCardGameActivity">
 
     <ProgressBar
-        android:id="@+id/cardGamesSpinner"
+        android:id="@+id/card_games_spinner"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

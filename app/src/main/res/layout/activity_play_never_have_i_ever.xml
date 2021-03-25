@@ -7,8 +7,8 @@
     tools:context=".PlayNeverHaveIEverActivity">
 
     <FrameLayout
+        android:id="@+id/never_have_i_ever_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/neverHaveIEverFrameLayout"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

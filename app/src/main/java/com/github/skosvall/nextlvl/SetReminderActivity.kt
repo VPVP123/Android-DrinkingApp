@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TimePicker
@@ -31,12 +30,12 @@ class SetReminderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_reminder)
 
-        val reminderSpinner = findViewById<ProgressBar>(R.id.reminderSpinner)
+        val reminderSpinner = findViewById<ProgressBar>(R.id.reminder_spinner)
         reminderSpinner.visibility = View.INVISIBLE
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        timePicker = findViewById<TimePicker>(R.id.timePicker)
+        timePicker = findViewById<TimePicker>(R.id.reminder_time_picker)
         timePicker.setIs24HourView(true)
         timePicker.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.white))
 
@@ -92,7 +91,7 @@ class SetReminderActivity : AppCompatActivity() {
             }
         }
 
-        val toggleButton = findViewById<ToggleButton>(R.id.reminderToggleButton)
+        val toggleButton = findViewById<ToggleButton>(R.id.reminder_toggle_button)
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

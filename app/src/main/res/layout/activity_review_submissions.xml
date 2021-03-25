@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="@string/dare_or_drink_suggestions"
             android:textColor="@color/white"
-            android:textSize="22dp"
+            android:textSize="22sp"
             android:layout_marginBottom="20dp"/>
 
 
@@ -39,14 +39,14 @@
                     android:layout_height="200dp"
                     android:fillViewport="true">
                     <ListView
-                        android:id="@+id/dorList"
+                        android:id="@+id/dare_or_drink_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />
                 </ScrollView>
             </RelativeLayout>
             <ProgressBar
-                android:id="@+id/dorSpinner"
+                android:id="@+id/dare_or_drink_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"/>
@@ -58,7 +58,7 @@
             android:text="@string/never_have_i_ever_suggestions"
             android:background="@color/backGroundTint"
             android:textColor="@color/white"
-            android:textSize="22dp"
+            android:textSize="22sp"
             android:layout_margin="20dp"/>
 
         <FrameLayout
@@ -79,14 +79,14 @@
                     android:fillViewport="true">
 
                     <ListView
-                        android:id="@+id/nhieList"
+                        android:id="@+id/never_have_i_ever_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </ScrollView>
             </RelativeLayout>
 
             <ProgressBar
-                android:id="@+id/nhieSpinner"
+                android:id="@+id/never_have_i_ever_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"/>
