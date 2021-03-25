@@ -20,7 +20,6 @@
             android:id="@+id/prep_dare_or_drink_nextlvl_logo_imageview"
             android:layout_width="wrap_content"
             android:layout_height="110dp"
-            android:layout_marginBottom="40dp"
             app:srcCompat="@drawable/nextlvl_logo" />
 
         <RelativeLayout
@@ -78,7 +77,7 @@
         <Button
             android:id="@+id/start_game_button"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="@string/start_game"
             android:background="@drawable/rounded_button"
             android:textSize="14sp"

@@ -1,6 +1,5 @@
 package com.github.skosvall.nextlvl
 
-import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -17,9 +16,7 @@ class AppWidgetService : RemoteViewsService() {
     }
 
 
-    internal inner class StackRemoteViewsFactory(private val context: Context, intent: Intent) : RemoteViewsService.RemoteViewsFactory  {
-        private val appWidgetId: Int = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                AppWidgetManager.INVALID_APPWIDGET_ID)
+    internal inner class StackRemoteViewsFactory(private val context: Context, intent: Intent) : RemoteViewsFactory  {
         private lateinit var statementList: MutableList<String>
 
         override fun onCreate() {
@@ -35,7 +32,7 @@ class AppWidgetService : RemoteViewsService() {
         override fun onDataSetChanged() {
         }
 
-        fun getData(getStatements: DocumentReference): Task<DocumentSnapshot> {
+        private fun getData(getStatements: DocumentReference): Task<DocumentSnapshot> {
             return getStatements.get()
                     .addOnSuccessListener { statement ->
                         if (statement != null) {
@@ -52,8 +49,11 @@ class AppWidgetService : RemoteViewsService() {
                             }
                         }
                     }
-                    .addOnFailureListener { exception ->
-                        Log.d("errorDB", "get failed with ", exception)
+                    .addOnFailureListener {
+                        statementList.add(getString(R.string.db_error_message))
+                        val updateWidgetIntent = Intent(context, AppWidget::class.java)
+                        updateWidgetIntent.action = AppWidget.ACTION_DATA_UPDATED
+                        context.sendBroadcast(updateWidgetIntent)
                     }
         }
 
@@ -67,7 +67,7 @@ class AppWidgetService : RemoteViewsService() {
 
         override fun getViewAt(position: Int): RemoteViews {
             return RemoteViews(context.packageName, R.layout.widget_item).apply {
-                setTextViewText(R.id.widget_item_text, statementList[position].toString())
+                setTextViewText(R.id.widget_item_text, statementList[position])
             }
         }
 

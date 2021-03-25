@@ -1,7 +1,6 @@
 package com.github.skosvall.nextlvl
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
@@ -9,7 +8,6 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
 import android.location.Location
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
@@ -27,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var alarmManager: AlarmManager
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var country = ""
-    private val PERMISSION_ID = 1010
+    private val permissionId = 1010
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,12 +77,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Secret admin login panel
-        val ONE_SECOND = 1 * 1000
+        val oneSecond = 1 * 1000
 
         var fingerDownTime: Long = -1
         val fingersToHold = 2
 
-        window.decorView.findViewById<View>(android.R.id.content).setOnTouchListener(fun(v: View, ev: MotionEvent): Boolean {
+        window.decorView.findViewById<View>(android.R.id.content).setOnTouchListener(fun(_: View, ev: MotionEvent): Boolean {
             val action = ev.action
             when (action and MotionEvent.ACTION_MASK) {
                 MotionEvent.ACTION_POINTER_DOWN -> if (ev.pointerCount == fingersToHold) {
@@ -95,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                         fingerDownTime = -1
                     }
                     val now = System.currentTimeMillis()
-                    if (now - fingerDownTime >= ONE_SECOND && fingerDownTime != -1L) {
+                    if (now - fingerDownTime >= oneSecond && fingerDownTime != -1L) {
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(
                                 intent
@@ -114,13 +112,13 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
-                    PERMISSION_ID
+                    permissionId
             )
         }
     }
 
     private fun getCountryName(lat: Double,long: Double):String{
-        var countryName = ""
+        val countryName: String
         val geoCoder = Geocoder(this, Locale.getDefault())
         val address = geoCoder.getFromLocation(lat,long,3)
 
