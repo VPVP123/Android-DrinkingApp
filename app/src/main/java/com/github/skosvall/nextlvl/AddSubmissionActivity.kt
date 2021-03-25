@@ -42,11 +42,11 @@ class AddSubmissionActivity : AppCompatActivity() {
                 if(options[position] == "Dare or drink"){
                     exampleTextField.text = getString(R.string.dare_or_drink_example)
                     submissionTextField.hint = getString(R.string.submission_placeholder_dare_or_drink)
-                    selectedGame = ReviewSubmissionsActivity.DOR
+                    selectedGame = ReviewSubmissionsActivity.DARE_OR_DRINK
                 }else{
                     exampleTextField.text = getString(R.string.never_have_i_ever_example)
                     submissionTextField.hint = getString(R.string.submission_placeholder_never_have_i_ever)
-                    selectedGame = ReviewSubmissionsActivity.NHIE
+                    selectedGame = ReviewSubmissionsActivity.NEVER_HAVE_I_EVER
                 }
             }
         }
@@ -59,7 +59,7 @@ class AddSubmissionActivity : AppCompatActivity() {
         buttonSubmit.setOnClickListener{
             var succeded = false
             if(selectedGame != null.toString()){
-                if(selectedGame == ReviewSubmissionsActivity.DOR){
+                if(selectedGame == ReviewSubmissionsActivity.DARE_OR_DRINK){
                     val submission = submissionTextField.editableText.toString()
                     db.collection("mobileGamesData").document("dareOrDrink")
                         .collection(currentLang).document("questions")

@@ -35,7 +35,6 @@ class LvLGameFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_lvl_game, container, false) as View
 
         view.findViewById<TextView>(R.id.lvl_game_title).text = title
@@ -51,14 +50,15 @@ class LvLGameFragment : Fragment() {
     }
 
     companion object {
-            private const val ARG_TITLE = "title"
-            private const val ARG_DESCRIPTION = "description"
-            private const val ARG_EQUIPMENT_TITLE = "equipmentTitle"
-            private const val ARG_EQUIPMENT = "equipment"
-            private const val ARG_SETUP_TITLE = "setupTitle"
-            private const val ARG_SETUP = "setup"
-            private const val ARG_HOWTOPLAY_TITLE = "howToPlayTitle"
-            private const val ARG_HOWTOPLAY = "howToPlay"
+        private const val ARG_TITLE = "title"
+        private const val ARG_DESCRIPTION = "description"
+        private const val ARG_EQUIPMENT_TITLE = "equipmentTitle"
+        private const val ARG_EQUIPMENT = "equipment"
+        private const val ARG_SETUP_TITLE = "setupTitle"
+        private const val ARG_SETUP = "setup"
+        private const val ARG_HOWTOPLAY_TITLE = "howToPlayTitle"
+        private const val ARG_HOWTOPLAY = "howToPlay"
+
         /**
          *
          * Use this factory method to create a new instance of

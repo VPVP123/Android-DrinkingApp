@@ -11,12 +11,12 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ReviewSubmissionsActivity : AppCompatActivity() {
-    lateinit var dorAdapter: ArrayAdapter<Submission>
-    lateinit var nhieAdapter: ArrayAdapter<Submission>
+    lateinit var dareOrDrinkAdapter: ArrayAdapter<Submission>
+    lateinit var neverHaveIEverAdapter: ArrayAdapter<Submission>
     
     companion object FirebaseManager {
-        const val DOR = "Dare or Drink"
-        const val NHIE = "Never have i ever"
+        const val DARE_OR_DRINK = "Dare or Drink"
+        const val NEVER_HAVE_I_EVER = "Never have i ever"
         const val DOD_SUBMISSIONS = "DOD_SUBMISSIONS"
         const val NHIE_SUBMISSIONS = "NHIE_SUBMISSIONS"
     }
@@ -30,8 +30,8 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
         val dareOrDrinkListView = this.findViewById<ListView>(R.id.dare_or_drink_list)
         val neverHaveIEverListView = this.findViewById<ListView>(R.id.never_have_i_ever_list)
 
-        val dorLoadingSpinner = this.findViewById<ProgressBar>(R.id.dare_or_drink_spinner)
-        val nhieLoadingSpinner = this.findViewById<ProgressBar>(R.id.never_have_i_ever_spinner)
+        val dareOrDrinkLoadingSpinner = this.findViewById<ProgressBar>(R.id.dare_or_drink_spinner)
+        val neverHaveIEverLoadingSpinner = this.findViewById<ProgressBar>(R.id.never_have_i_ever_spinner)
 
         val dareOrDrinkDbEng =
                 db.collection("mobileGamesData").document("dareOrDrink").collection("english")
@@ -39,14 +39,14 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
         val dareOrDrinkDbSwe =
                 db.collection("mobileGamesData").document("dareOrDrink").collection("swedish")
                         .document("questions")
-        dorAdapter = ArrayAdapter<Submission>(
+        dareOrDrinkAdapter = ArrayAdapter<Submission>(
                 this,
                 R.layout.submissionrow,
                 android.R.id.text1,
-                dorSubmissionRepository.getAllSubmissions()
+                dareOrDrinkSubmissionRepository.getAllSubmissions()
         )
 
-        dareOrDrinkListView.adapter = dorAdapter
+        dareOrDrinkListView.adapter = dareOrDrinkAdapter
 
         val neverHaveIEverDbEng =
                 db.collection("mobileGamesData").document("neverHaveIEver").collection("english")
@@ -55,21 +55,21 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                 db.collection("mobileGamesData").document("neverHaveIEver").collection("swedish")
                         .document("statements")
 
-        nhieAdapter = ArrayAdapter<Submission>(
+        neverHaveIEverAdapter = ArrayAdapter<Submission>(
                 this,
                 R.layout.submissionrow,
                 android.R.id.text1,
-                nhieSubmissionRepository.getAllSubmissions()
+                neverHaveIEverSubmissionRepository.getAllSubmissions()
         )
 
-        neverHaveIEverListView.adapter = nhieAdapter
+        neverHaveIEverListView.adapter = neverHaveIEverAdapter
 
         if(savedInstanceState == null) {
-            dorLoadingSpinner.visibility = View.VISIBLE;
-            nhieLoadingSpinner.visibility = View.VISIBLE;
+            dareOrDrinkLoadingSpinner.visibility = View.VISIBLE;
+            neverHaveIEverLoadingSpinner.visibility = View.VISIBLE;
 
-            dorSubmissionRepository.clear()
-            nhieSubmissionRepository.clear()
+            dareOrDrinkSubmissionRepository.clear()
+            neverHaveIEverSubmissionRepository.clear()
 
             dareOrDrinkDbEng.get()
                     .addOnSuccessListener { fields ->
@@ -77,7 +77,7 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                             val myArray = fields.get("questionSuggestions") as List<String>?
                             if (myArray != null) {
                                 for (item in myArray) {
-                                    dorSubmissionRepository.addSubmission(item, "english")
+                                    dareOrDrinkSubmissionRepository.addSubmission(item, "english")
                                 }
                             }
                         } else {
@@ -89,20 +89,20 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                                         val myArray = fields.get("questionSuggestions") as List<String>?
                                         if (myArray != null) {
                                             for (item in myArray) {
-                                                dorSubmissionRepository.addSubmission(item, "swedish")
+                                                dareOrDrinkSubmissionRepository.addSubmission(item, "swedish")
                                             }
-                                            dorAdapter.notifyDataSetChanged()
+                                            dareOrDrinkAdapter.notifyDataSetChanged()
                                         }
-                                        dorLoadingSpinner.visibility = View.INVISIBLE
+                                        dareOrDrinkLoadingSpinner.visibility = View.INVISIBLE
                                     } else {
                                         displayDbError()
                                     }
                                 }
-                                .addOnFailureListener { exception ->
+                                .addOnFailureListener { _ ->
                                     displayDbError()
                                 }
                     }
-                    .addOnFailureListener { exception ->
+                    .addOnFailureListener { _ ->
                         displayDbError()
                     }
 
@@ -112,9 +112,9 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                             val myArray = fields.get("statementSuggestions") as List<String>?
                             if (myArray != null) {
                                 for (item in myArray) {
-                                    nhieSubmissionRepository.addSubmission(item, "english")
+                                    neverHaveIEverSubmissionRepository.addSubmission(item, "english")
                                 }
-                                nhieAdapter.notifyDataSetChanged()
+                                neverHaveIEverAdapter.notifyDataSetChanged()
                             }
                         } else {
                             displayDbError()
@@ -125,23 +125,23 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                                         val myArray = fields.get("statementSuggestions") as List<String>?
                                         if (myArray != null) {
                                             for (item in myArray) {
-                                                nhieSubmissionRepository.addSubmission(item, "swedish")
+                                                neverHaveIEverSubmissionRepository.addSubmission(item, "swedish")
                                             }
-                                            nhieAdapter.notifyDataSetChanged()
+                                            neverHaveIEverAdapter.notifyDataSetChanged()
                                         }
-                                        nhieLoadingSpinner.visibility = View.INVISIBLE
+                                        neverHaveIEverLoadingSpinner.visibility = View.INVISIBLE
                                     } else {
                                         displayDbError()
                                     }
-                                }.addOnFailureListener { exception ->
+                                }.addOnFailureListener { _ ->
                                     displayDbError()
                                 }
-                    }.addOnFailureListener { exception ->
+                    }.addOnFailureListener { _ ->
                         displayDbError()
                     }
         } else {
-            dorLoadingSpinner.visibility = View.INVISIBLE;
-            nhieLoadingSpinner.visibility = View.INVISIBLE;
+            dareOrDrinkLoadingSpinner.visibility = View.INVISIBLE;
+            neverHaveIEverLoadingSpinner.visibility = View.INVISIBLE;
         }
 
 
@@ -156,14 +156,14 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                 db.collection("mobileGamesData").document("dareOrDrink")
                         .collection(submission.lang).document("questions")
                         .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
-                dorSubmissionRepository.deleteSubmissionById(submission.id)
-                dorAdapter.notifyDataSetChanged()
+                dareOrDrinkSubmissionRepository.deleteSubmissionById(submission.id)
+                dareOrDrinkAdapter.notifyDataSetChanged()
                 dialog.dismiss()
             }
             dareOrDrinkPopUp.setNegativeButton(getString(R.string.edit_submit)) { dialog, _ ->
                 val intent = Intent(this, EditSubmissionActivity::class.java)
                 intent.putExtra(EditSubmissionActivity.SUBMISSION_ID, submission.id)
-                intent.putExtra(EditSubmissionActivity.GAME_TYPE, ReviewSubmissionsActivity.DOR)
+                intent.putExtra(EditSubmissionActivity.GAME_TYPE, ReviewSubmissionsActivity.DARE_OR_DRINK)
                 startActivity(
                         intent
                 )
@@ -184,14 +184,14 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
                 db.collection("mobileGamesData").document("neverHaveIEver")
                         .collection(submission.lang).document("statements")
                         .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
-                nhieSubmissionRepository.deleteSubmissionById(submission.id)
-                nhieAdapter.notifyDataSetChanged()
+                neverHaveIEverSubmissionRepository.deleteSubmissionById(submission.id)
+                neverHaveIEverAdapter.notifyDataSetChanged()
                 dialog.dismiss()
             }
             neverHaveIEverPopUp.setNegativeButton(getString(R.string.edit_submit)) { dialog, _ ->
                 val intent = Intent(this, EditSubmissionActivity::class.java)
                 intent.putExtra(EditSubmissionActivity.SUBMISSION_ID, submission.id)
-                intent.putExtra(EditSubmissionActivity.GAME_TYPE, ReviewSubmissionsActivity.NHIE)
+                intent.putExtra(EditSubmissionActivity.GAME_TYPE, ReviewSubmissionsActivity.NEVER_HAVE_I_EVER)
                 startActivity(
                         intent
                 )
@@ -199,11 +199,9 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
             }
             neverHaveIEverPopUp.show()
         }
-
-
     }
 
-    fun displayDbError(){
+    private fun displayDbError(){
         val errorPopUp = androidx.appcompat.app.AlertDialog.Builder(this)
         errorPopUp.setTitle(getString(R.string.error))
         errorPopUp.setMessage(getString(R.string.db_error_message))
@@ -213,15 +211,9 @@ class ReviewSubmissionsActivity : AppCompatActivity() {
         }
     }
 
-    /*override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable(DOD_SUBMISSIONS, dorSubmissionRepository)
-        outState.putParcelable(NHIE_SUBMISSIONS, nhieSubmissionRepository)
-    }*/
-
     override fun onResume() {
         super.onResume()
-        nhieAdapter.notifyDataSetChanged()
-        dorAdapter.notifyDataSetChanged()
+        neverHaveIEverAdapter.notifyDataSetChanged()
+        dareOrDrinkAdapter.notifyDataSetChanged()
     }
 }

@@ -3,23 +3,14 @@ package com.github.skosvall.nextlvl
 import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
-import android.content.Intent.getIntent
-import android.content.res.Resources
-import android.graphics.BitmapFactory
 import android.os.Build
-import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.res.TypedArrayUtils.getString
-import androidx.core.content.res.TypedArrayUtils.getText
 import com.github.skosvall.nextlvl.R.*
 
 class ReminderNotificationReciever : BroadcastReceiver() {
     private val channelId = "com.github.skosvall.nextlvl"
-    //private val notificationId = 123
 
     companion object{
         const val NOTIFICATION_TITLE = "NOTIFICATION_TITLE"
@@ -39,7 +30,7 @@ class ReminderNotificationReciever : BroadcastReceiver() {
 
     private fun createNotificationChannel(context: Context){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val title = "Title"
+            val title = "nextLvL"
             val descriptionText = "Time to party"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(channelId, title, importance).apply {
@@ -57,7 +48,7 @@ class ReminderNotificationReciever : BroadcastReceiver() {
 
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0)
 
-        val NM = NotificationManagerCompat.from(context)
+        val notificationManager = NotificationManagerCompat.from(context)
         val notification = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(mipmap.ic_launcher_round)
             .setStyle(NotificationCompat.BigTextStyle())
@@ -65,6 +56,6 @@ class ReminderNotificationReciever : BroadcastReceiver() {
             .setContentText(text)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
-        NM.notify(1, notification.build())
+        notificationManager.notify(1, notification.build())
     }
 }

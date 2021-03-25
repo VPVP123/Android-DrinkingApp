@@ -4,17 +4,11 @@ import android.os.Parcel
 import android.os.Parcelable
 
 
-val dorSubmissionRepository = SubmissionRepository().apply {
+val dareOrDrinkSubmissionRepository = SubmissionRepository().apply {}
 
-}
+val neverHaveIEverSubmissionRepository = SubmissionRepository().apply {}
 
-val nhieSubmissionRepository = SubmissionRepository().apply {
-
-}
-
-val submissionRepository = SubmissionRepository().apply {
-
-}
+val submissionRepository = SubmissionRepository().apply {}
 
 class SubmissionRepository() : Parcelable{
 
@@ -56,14 +50,6 @@ class SubmissionRepository() : Parcelable{
             }
         )
 
-    fun updateSubmissionById(id: Int, newText: String){
-
-        getSubmissionById(id)?.run{
-            text = newText
-        }
-
-    }
-
     override fun writeToParcel(parcel: Parcel, flags: Int) {
 
     }
@@ -81,6 +67,4 @@ class SubmissionRepository() : Parcelable{
             return arrayOfNulls(size)
         }
     }
-
-
 }

@@ -34,10 +34,10 @@ class EditSubmissionActivity : AppCompatActivity() {
 
         var submission: Submission?
 
-        if(gameType == ReviewSubmissionsActivity.DOR){
-            submission = dorSubmissionRepository.getSubmissionById(submissionId)
+        if(gameType == ReviewSubmissionsActivity.DARE_OR_DRINK){
+            submission = dareOrDrinkSubmissionRepository.getSubmissionById(submissionId)
         }else{
-            submission = nhieSubmissionRepository.getSubmissionById(submissionId)
+            submission = neverHaveIEverSubmissionRepository.getSubmissionById(submissionId)
         }
 
         val editSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)as EditText
@@ -56,7 +56,7 @@ class EditSubmissionActivity : AppCompatActivity() {
 
         buttonSubmit.setOnClickListener{
             var succeded = false
-            if(gameType == ReviewSubmissionsActivity.DOR){
+            if(gameType == ReviewSubmissionsActivity.DARE_OR_DRINK){
                 val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)as EditText
                 val newEditSubmissionTextViewSwe = findViewById<EditText>(R.id.edit_submission_edittext_swedish)as EditText
                 val newTextEng = newEditSubmissionTextViewEng.editableText.toString()

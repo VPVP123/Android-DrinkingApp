@@ -11,38 +11,26 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-
 class PlayMobileGamesFragment : Fragment() {
-    lateinit var statements: MutableList<String>
-    lateinit var statementsCopy: MutableList<String>
-
-    lateinit var questions: List<DareOrDrinkQuestion>
-    lateinit var questionsCopy: MutableList<DareOrDrinkQuestion>
-    lateinit var currentQuestion: DareOrDrinkQuestion
-    lateinit var players: List<String>
-    lateinit var playersCopy: MutableList<String>
-    var activityJustRestarted: Boolean = false
-    lateinit var previouslyDisplayedString: String
-
+    private lateinit var statements: MutableList<String>
+    private lateinit var statementsCopy: MutableList<String>
+    private lateinit var questions: List<DareOrDrinkQuestion>
+    private lateinit var questionsCopy: MutableList<DareOrDrinkQuestion>
+    private lateinit var currentQuestion: DareOrDrinkQuestion
+    private lateinit var players: List<String>
+    private lateinit var playersCopy: MutableList<String>
+    private lateinit var previouslyDisplayedString: String
     private lateinit var loadingSpinner: ProgressBar
-    lateinit var textView: TextView
-    lateinit var nextButton: Button
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var textView: TextView
+    private lateinit var nextButton: Button
+    private var activityJustRestarted: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_play_mobile_games, container, false)
-        textView = view.findViewById<TextView>(R.id.statement_textview)
-        nextButton = view.findViewById<Button>(R.id.never_have_i_ever_next_button)
-        loadingSpinner = view.findViewById<ProgressBar>(R.id.progressSpinner)
+        textView = view.findViewById(R.id.statement_textview)
+        nextButton = view.findViewById(R.id.never_have_i_ever_next_button)
+        loadingSpinner = view.findViewById(R.id.progressSpinner)
 
         loadingSpinner.visibility = View.VISIBLE
 
@@ -51,13 +39,13 @@ class PlayMobileGamesFragment : Fragment() {
         }
 
         initializeGame(savedInstanceState)
+
         return view
     }
 
-    fun initializeGame(savedInstanceState: Bundle?){
+    private fun initializeGame(savedInstanceState: Bundle?){
         val db = FirebaseFirestore.getInstance()
         val currentLang = getString(R.string.current_lang)
-
 
         if (activity is PlayNeverHaveIEverActivity) {
             statements = mutableListOf()
@@ -115,7 +103,7 @@ class PlayMobileGamesFragment : Fragment() {
         }
     }
 
-    fun loadStatementsFromDb(db: FirebaseFirestore, currentLang: String){
+    private fun loadStatementsFromDb(db: FirebaseFirestore, currentLang: String){
         val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang).document("statements")
 
         getStatements.get()
@@ -139,7 +127,7 @@ class PlayMobileGamesFragment : Fragment() {
             }
     }
 
-    fun loadQuestionsFromDb(db: FirebaseFirestore, currentLang: String){
+    private fun loadQuestionsFromDb(db: FirebaseFirestore, currentLang: String){
         val getQuestions = db.collection("mobileGamesData").document("dareOrDrink").collection(currentLang).document("questions")
 
         getQuestions.get()
@@ -161,7 +149,7 @@ class PlayMobileGamesFragment : Fragment() {
                     displayError()
                 }
             }
-            .addOnFailureListener { exception ->
+            .addOnFailureListener { _ ->
                 displayError()
             }
     }
@@ -205,7 +193,7 @@ class PlayMobileGamesFragment : Fragment() {
     }
 
     private fun changeDareOrDrinkQuestion() {
-        var currentQuestionPlayers = mutableListOf<String>()
+        val currentQuestionPlayers = mutableListOf<String>()
         var nrOfPlayersRequiredForQuestion: Int
 
         if (!activityJustRestarted) {
@@ -242,6 +230,10 @@ class PlayMobileGamesFragment : Fragment() {
         }
     }
 
+    private fun displayError(){
+        Toast.makeText(context, getString(R.string.db_error_message), Toast.LENGTH_LONG).show()
+    }
+
     companion object {
         const val CURRENT_STATEMENT = "CURRENT_STATEMENT"
         const val CURRENT_QUESTION = "CURRENT_QUESTION"
@@ -259,7 +251,6 @@ class PlayMobileGamesFragment : Fragment() {
          * @param playerNamesArray Show the text for mobile games.
          * @return A new instance of fragment PlayMobileGamesFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(playerNamesArray: Array<String>) =
             PlayMobileGamesFragment().apply {
@@ -267,9 +258,5 @@ class PlayMobileGamesFragment : Fragment() {
                     putStringArray(PLAYER_NAMES, playerNamesArray)
                 }
             }
-    }
-
-    private fun displayError(){
-        Toast.makeText(context, getString(R.string.db_error_message), Toast.LENGTH_LONG).show()
     }
 }
