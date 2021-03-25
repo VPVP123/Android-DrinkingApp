@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.google.api.Context
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.properties.Delegates
@@ -80,13 +81,8 @@ class EditSubmissionActivity : AppCompatActivity() {
                                 .update("questions", FieldValue.arrayUnion(newTextSwe))
                                 .addOnSuccessListener {
                                     onSuccess()
-                                    succeded = true
-                                    submissionRepository.deleteSubmissionById(submissionId)
+                                    dareOrDrinkSubmissionRepository.deleteSubmissionById(submissionId)
                                 }
-
-                        if(!succeded) {
-                            displayError()
-                        }
                     }
                 }else{
                     Toast.makeText(applicationContext, getString(R.string.both_fields_needs_content), Toast.LENGTH_LONG).show()
@@ -111,12 +107,8 @@ class EditSubmissionActivity : AppCompatActivity() {
                                 .update("statements", FieldValue.arrayUnion(newTextSwe))
                                 .addOnSuccessListener {
                                     onSuccess()
-                                    succeded = true
+                                    neverHaveIEverSubmissionRepository.deleteSubmissionById(submissionId)
                                 }
-
-                        if(!succeded) {
-                            displayError()
-                        }
                     }
                 }else{
                     Toast.makeText(applicationContext, getString(R.string.both_fields_needs_content), Toast.LENGTH_LONG).show()
