@@ -52,28 +52,20 @@ class MainActivity : AppCompatActivity() {
 
         alarmBtn.setOnClickListener {
             val intent = Intent(this, SetReminderActivity::class.java)
-            startActivity(
-                    intent
-            )
+            startActivity(intent)
         }
 
         mobileGamesBtn.setOnClickListener {
             val intent = Intent(this, MobileGamesActivity::class.java)
-            startActivity(
-                    intent
-            )
+            startActivity(intent)
         }
         cardGamesBtn.setOnClickListener {
             val intent = Intent(this, CardGamesActivity::class.java)
-            startActivity(
-                    intent
-            )
+            startActivity(intent)
         }
         lvlGamesBtn.setOnClickListener {
             val intent = Intent(this, LvLGamesActivity::class.java)
-            startActivity(
-                    intent
-            )
+            startActivity(intent)
         }
 
         //Secret admin login panel
@@ -95,9 +87,7 @@ class MainActivity : AppCompatActivity() {
                     val now = System.currentTimeMillis()
                     if (now - fingerDownTime >= oneSecond && fingerDownTime != -1L) {
                         val intent = Intent(this, LoginActivity::class.java)
-                        startActivity(
-                                intent
-                        )
+                        startActivity(intent)
                     }
                 }
             }
@@ -110,9 +100,9 @@ class MainActivity : AppCompatActivity() {
             return
         }else{
             ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
-                    permissionId
+                this,
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+                permissionId
             )
         }
     }

@@ -20,9 +20,7 @@ class AdminPanelActivity : AppCompatActivity() {
         val buttonLogout = this.findViewById<Button>(R.id.logout_button)
 
         buttonSubmissions.setOnClickListener{
-            startActivity(
-                Intent(this, ReviewSubmissionsActivity::class.java)
-            )
+            startActivity(Intent(this, ReviewSubmissionsActivity::class.java))
         }
 
         buttonLogout.setOnClickListener{
@@ -37,9 +35,7 @@ class AdminPanelActivity : AppCompatActivity() {
 
     private fun signOut(){
         FirebaseAuth.getInstance().signOut()
-        startActivity(
-                Intent(this, MainActivity::class.java)
-        )
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     public override fun onStart() {

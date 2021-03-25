@@ -71,9 +71,7 @@ class LoginActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            startActivity(
-                                Intent(this, AdminPanelActivity::class.java)
-                            )
+                            startActivity(Intent(this, AdminPanelActivity::class.java))
                             finish()
                         } else {
                             val popUpError1 = androidx.appcompat.app.AlertDialog.Builder(this)
@@ -101,9 +99,7 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         val currentUser = auth.currentUser
         if(currentUser != null){
-            startActivity(
-                Intent(this, AdminPanelActivity::class.java)
-            )
+            startActivity(Intent(this, AdminPanelActivity::class.java))
             finish()
         }
     }
@@ -122,9 +118,7 @@ class LoginActivity : AppCompatActivity() {
                             val currentUser = auth.currentUser
 
                             if(currentUser != null && listOfAdminAccounts.contains(currentUser.email!!)){
-                                startActivity(
-                                    Intent(this, AdminPanelActivity::class.java)
-                                )
+                                startActivity(Intent(this, AdminPanelActivity::class.java))
                                 finish()
                             }else{
                                 val popUpError1 = androidx.appcompat.app.AlertDialog.Builder(this)
