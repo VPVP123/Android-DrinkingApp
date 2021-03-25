@@ -23,9 +23,9 @@ class MobileGamesActivity : AppCompatActivity() {
         val dareOrDrinkButton = findViewById<Button>(R.id.DOR_button)
         val neverHaveIEverButton = findViewById<Button>(R.id.neverHaveIEverButton)
         val submitTextFull = findViewById<TextView>(R.id.submitText)
-        val str = getString(R.string.submit_your_own)
+        val clickableString = getString(R.string.submit_your_own)
 
-        makeTextLink(submitTextFull, str, false, Color.RED, action = {
+        makeTextLink(submitTextFull, clickableString, false, Color.RED, action = {
             val intent = Intent(this, AddSubmissionActivity::class.java)
             startActivity(intent)
         })
@@ -60,6 +60,5 @@ class MobileGamesActivity : AppCompatActivity() {
         textView.movementMethod = LinkMovementMethod.getInstance()
         textView.highlightColor = Color.TRANSPARENT
     }
-
 
 }
