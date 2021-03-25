@@ -78,6 +78,7 @@
     <string name="error_has_occured">Ett problem har inträffat, var god försök igen</string>
     <string name="back">Bakåt</string>
     <string name="db_error_message">Problem uppstod vi kontakt med databas, var god försök igen!</string>
+    <string name="field_needs_content">Vänligen skriv in text för att skicka förslaget</string>
     <string name="both_fields_needs_content">Var vänlig skriv in text i båda textfälten innan du godkänner förslaget</string>
 
 
