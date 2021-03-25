@@ -22,15 +22,13 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("ClickableViewAccessibility")
 
     private lateinit var context: Context
     private lateinit var alarmManager: AlarmManager
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    var country = ""
-    val PERMISSION_ID = 1010
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var country = ""
+    private val PERMISSION_ID = 1010
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -41,36 +39,13 @@ class MainActivity : AppCompatActivity() {
         val userLocation = db.collection("userData").document("Location")
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        checkgetPermission()
+        checkAndGetPermission()
         fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
             if (location != null) {
                 country = getCountryName(location.latitude, location.longitude)
                 userLocation.update(country, FieldValue.increment(1))
             }
         }
-
-
-        /** MOVING DATABASE DATA
-        val dareOrDrinkDb = db.collection("mobileGamesData").document("vågaEllerDrick")
-
-        dareOrDrinkDb.get()
-        .addOnSuccessListener { fields ->
-        if(fields != null){
-        val myArray = fields.get("frågor") as List<String>?
-        if (myArray != null) {
-        for(item in myArray){
-        db.collection("mobileGamesData").document("dareOrDrink").collection("swedish").document("questions").update("questions", FieldValue.arrayUnion(item) )
-        }
-        }
-        }else{
-        Log.d("noExist", "No document found")
-        }
-        }
-        .addOnFailureListener {exception ->
-        Log.d("errorDB", "get failed with ", exception)
-
-        }
-         */
 
         val mobileGamesBtn = findViewById<Button>(R.id.mobile_games_button)
         val cardGamesBtn = findViewById<Button>(R.id.card_games_button)
@@ -104,26 +79,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Secret admin login panel
-        val FIVE_SECONDS = 5 * 1000 // 5s * 1000 ms/s
         val ONE_SECOND = 1 * 1000
 
-        var fiveFingerDownTime: Long = -1
+        var fingerDownTime: Long = -1
+        val fingersToHold = 2
 
-        window.decorView.findViewById<View>(android.R.id.content).setOnTouchListener {v, ev ->
+        window.decorView.findViewById<View>(android.R.id.content).setOnTouchListener(fun(v: View, ev: MotionEvent): Boolean {
             val action = ev.action
             when (action and MotionEvent.ACTION_MASK) {
-                MotionEvent.ACTION_POINTER_DOWN -> if (ev.pointerCount == 2) {
-                    // We have five fingers touching, so start the timer
-                    fiveFingerDownTime = System.currentTimeMillis()
+                MotionEvent.ACTION_POINTER_DOWN -> if (ev.pointerCount == fingersToHold) {
+                    fingerDownTime = System.currentTimeMillis()
                 }
                 MotionEvent.ACTION_POINTER_UP -> {
-                    if (ev.pointerCount < 2) {
-                        // Fewer than five fingers, so reset the timer
-                        fiveFingerDownTime = -1
+                    if (ev.pointerCount < fingersToHold) {
+                        fingerDownTime = -1
                     }
                     val now = System.currentTimeMillis()
-                    if (now - fiveFingerDownTime >= ONE_SECOND && fiveFingerDownTime != -1L) {
-                        // Five fingers have been down for 5 seconds!
+                    if (now - fingerDownTime >= ONE_SECOND && fingerDownTime != -1L) {
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(
                                 intent
@@ -131,11 +103,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            true
-        }
+            return true
+        })
     }
-
-    fun checkgetPermission(){
+    
+    private fun checkAndGetPermission(){
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             return
         }else{
@@ -147,24 +119,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-    ) {
-        if(requestCode == PERMISSION_ID){
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Log.d("Debug:","You have the Permission")
-            }
-        }
-    }
-
     private fun getCountryName(lat: Double,long: Double):String{
         var countryName = ""
-        var geoCoder = Geocoder(this, Locale.getDefault())
-        var Adress = geoCoder.getFromLocation(lat,long,3)
+        val geoCoder = Geocoder(this, Locale.getDefault())
+        val address = geoCoder.getFromLocation(lat,long,3)
 
-        countryName = Adress.get(0).countryName
+        countryName = address[0].countryName
         return countryName
     }
 }
