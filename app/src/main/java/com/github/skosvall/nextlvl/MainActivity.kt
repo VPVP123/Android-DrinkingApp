@@ -47,10 +47,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val mobileGamesBtn = findViewById<Button>(R.id.button)
-        val cardGamesBtn = findViewById<Button>(R.id.button2)
-        val lvlGamesBtn = findViewById<Button>(R.id.button3)
-        val alarmBtn = findViewById<Button>(R.id.button4)
+        val mobileGamesBtn = findViewById<Button>(R.id.mobile_games_button)
+        val cardGamesBtn = findViewById<Button>(R.id.card_games_button)
+        val lvlGamesBtn = findViewById<Button>(R.id.lvl_games_button)
+        val alarmBtn = findViewById<Button>(R.id.set_reminder_button)
 
         alarmBtn.setOnClickListener {
             val intent = Intent(this, SetReminderActivity::class.java)
