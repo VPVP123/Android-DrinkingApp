@@ -74,43 +74,51 @@ class MainActivity : AppCompatActivity() {
         var fingerDownTime: Long = -1
         val fingersToHold = 2
 
-        window.decorView.findViewById<View>(android.R.id.content).setOnTouchListener(fun(_: View, ev: MotionEvent): Boolean {
-            val action = ev.action
-            when (action and MotionEvent.ACTION_MASK) {
-                MotionEvent.ACTION_POINTER_DOWN -> if (ev.pointerCount == fingersToHold) {
-                    fingerDownTime = System.currentTimeMillis()
-                }
-                MotionEvent.ACTION_POINTER_UP -> {
-                    if (ev.pointerCount < fingersToHold) {
-                        fingerDownTime = -1
+        window.decorView.findViewById<View>(android.R.id.content)
+            .setOnTouchListener(fun(_: View, ev: MotionEvent): Boolean {
+                val action = ev.action
+                when (action and MotionEvent.ACTION_MASK) {
+                    MotionEvent.ACTION_POINTER_DOWN -> if (ev.pointerCount == fingersToHold) {
+                        fingerDownTime = System.currentTimeMillis()
                     }
-                    val now = System.currentTimeMillis()
-                    if (now - fingerDownTime >= oneSecond && fingerDownTime != -1L) {
-                        val intent = Intent(this, LoginActivity::class.java)
-                        startActivity(intent)
+                    MotionEvent.ACTION_POINTER_UP -> {
+                        if (ev.pointerCount < fingersToHold) {
+                            fingerDownTime = -1
+                        }
+                        val now = System.currentTimeMillis()
+                        if (now - fingerDownTime >= oneSecond && fingerDownTime != -1L) {
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
+                        }
                     }
                 }
-            }
-            return true
-        })
+                return true
+            })
     }
-    
-    private fun checkAndGetPermission(){
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+
+    private fun checkAndGetPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             return
-        }else{
+        } else {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ),
                 permissionId
             )
         }
     }
 
-    private fun getCountryName(lat: Double,long: Double):String{
+    private fun getCountryName(lat: Double, long: Double): String {
         val countryName: String
         val geoCoder = Geocoder(this, Locale.getDefault())
-        val address = geoCoder.getFromLocation(lat,long,3)
+        val address = geoCoder.getFromLocation(lat, long, 3)
 
         countryName = address[0].countryName
         return countryName

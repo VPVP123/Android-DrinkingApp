@@ -10,29 +10,29 @@ val neverHaveIEverSubmissionRepository = SubmissionRepository().apply {}
 
 val submissionRepository = SubmissionRepository().apply {}
 
-class SubmissionRepository() : Parcelable{
+class SubmissionRepository() : Parcelable {
 
     private val submissions = mutableListOf<Submission>()
 
     constructor(parcel: Parcel) : this() {
     }
 
-    fun addSubmission(text: String, lang: String): Int{
+    fun addSubmission(text: String, lang: String): Int {
         val id = when {
             submissions.count() == 0 -> 1
-            else -> submissions.last().id+1
+            else -> submissions.last().id + 1
         }
         submissions.add(
             Submission(
-            id,
-            text,
-            lang
-        )
+                id,
+                text,
+                lang
+            )
         )
         return id
     }
 
-    fun clear(){
+    fun clear() {
         submissions.removeAll(submissions)
     }
 

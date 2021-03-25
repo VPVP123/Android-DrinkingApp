@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     displayError()
                 }
-                googleLogin.setOnClickListener{
+                googleLogin.setOnClickListener {
                     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestEmail()
                         .requestIdToken(getString(R.string.default_web_client_id))
@@ -60,14 +60,14 @@ class LoginActivity : AppCompatActivity() {
                     startActivityForResult(signInIntent, RC_SIGN_IN)
                 }
             }.addOnFailureListener {
-                    displayError()
+                displayError()
             }
 
-        buttonLogin.setOnClickListener{
+        buttonLogin.setOnClickListener {
             val email = findViewById<EditText>(R.id.email)
             val password = findViewById<EditText>(R.id.password)
 
-            if(email.text.toString().isNotEmpty() || password.text.toString().isNotEmpty()){
+            if (email.text.toString().isNotEmpty() || password.text.toString().isNotEmpty()) {
                 auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
@@ -77,17 +77,17 @@ class LoginActivity : AppCompatActivity() {
                             val popUpError1 = androidx.appcompat.app.AlertDialog.Builder(this)
                             popUpError1.setTitle("Login failed")
                             popUpError1.setMessage("The email and/or password you entered is incorrect")
-                            popUpError1.setPositiveButton( "Ok") { dialog, _ ->
+                            popUpError1.setPositiveButton("Ok") { dialog, _ ->
                                 dialog.dismiss()
                             }
                             popUpError1.show()
                         }
                     }
-            }else{
+            } else {
                 val popUpError1 = androidx.appcompat.app.AlertDialog.Builder(this)
                 popUpError1.setTitle("Enter all fields")
                 popUpError1.setMessage("The email and password fields cannot be empty")
-                popUpError1.setPositiveButton( "Ok") { dialog, _ ->
+                popUpError1.setPositiveButton("Ok") { dialog, _ ->
                     dialog.dismiss()
                 }
                 popUpError1.show()
@@ -95,32 +95,34 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-        if(currentUser != null){
+        if (currentUser != null) {
             startActivity(Intent(this, AdminPanelActivity::class.java))
             finish()
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         val task = GoogleSignIn.getSignedInAccountFromIntent(data)
 
-        try{
+        try {
             val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
-            if (account != null){
+            if (account != null) {
                 val token = account.idToken
                 auth.signInWithCredential(GoogleAuthProvider.getCredential(token, null))
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             val currentUser = auth.currentUser
 
-                            if(currentUser != null && listOfAdminAccounts.contains(currentUser.email!!)){
+                            if (currentUser != null && listOfAdminAccounts.contains(currentUser.email!!)) {
                                 startActivity(Intent(this, AdminPanelActivity::class.java))
                                 finish()
-                            }else{
+                            } else {
                                 val popUpError1 = androidx.appcompat.app.AlertDialog.Builder(this)
                                 popUpError1.setTitle("Login failed")
                                 popUpError1.setMessage("The email and/or password you entered is incorrect")
@@ -141,12 +143,13 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
             }
-        } catch (exception: Exception){
+        } catch (exception: Exception) {
             displayError()
         }
     }
 
-    private fun displayError(){
-        Toast.makeText(applicationContext, getString(R.string.db_error_message), Toast.LENGTH_LONG).show()
+    private fun displayError() {
+        Toast.makeText(applicationContext, getString(R.string.db_error_message), Toast.LENGTH_LONG)
+            .show()
     }
 }

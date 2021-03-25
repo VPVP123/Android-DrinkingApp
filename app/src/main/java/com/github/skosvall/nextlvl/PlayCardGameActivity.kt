@@ -10,7 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 class PlayCardGameActivity : AppCompatActivity() {
-    companion object{
+    companion object {
         const val CURRENT_GAME = "CURRENT_GAME"
         const val PREVIOUS_LANG = "PREVIOUS_LANG"
         const val GAME_TO_START = "gameToStart"
@@ -36,25 +36,30 @@ class PlayCardGameActivity : AppCompatActivity() {
 
         val currentLang = getString(R.string.current_lang)
 
-        getCardGames321 = db.collection("cardGamesData").document("1-2-3").collection(currentLang).document("texts")
-        getCardGamesFuckTheDealer = db.collection("cardGamesData").document("fuckTheDealer").collection(currentLang).document("texts")
-        getCardGamesRingOfFire = db.collection("cardGamesData").document("ringOfFire").collection(currentLang).document("texts")
+        getCardGames321 = db.collection("cardGamesData").document("1-2-3").collection(currentLang)
+            .document("texts")
+        getCardGamesFuckTheDealer =
+            db.collection("cardGamesData").document("fuckTheDealer").collection(currentLang)
+                .document("texts")
+        getCardGamesRingOfFire =
+            db.collection("cardGamesData").document("ringOfFire").collection(currentLang)
+                .document("texts")
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             currentGame = intent.getStringExtra(GAME_TO_START)!!
             startGame(savedInstanceState)
         } else {
             val previousLang = savedInstanceState.getString(PREVIOUS_LANG)
             currentGame = savedInstanceState.getString(CURRENT_GAME) as String
-            if(previousLang != currentLang){
+            if (previousLang != currentLang) {
                 startGame(savedInstanceState)
-            }else{
+            } else {
                 loadingSpinner.visibility = View.INVISIBLE
             }
         }
     }
 
-    private fun startGame(savedInstanceState: Bundle?){
+    private fun startGame(savedInstanceState: Bundle?) {
         when (currentGame) {
             RING_OF_FIRE -> startRingOfFire(savedInstanceState)
             FUCK_THE_DEALER -> startFuckTheDealer(savedInstanceState)
@@ -62,111 +67,275 @@ class PlayCardGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun startRingOfFire(savedInstanceState: Bundle?){
+    private fun startRingOfFire(savedInstanceState: Bundle?) {
         getCardGamesRingOfFire.get()
             .addOnSuccessListener { document ->
-                if(document != null){
-                    if(savedInstanceState == null) {
+                if (document != null) {
+                    if (savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
-                            .add(R.id.playCardGameFrameLayout, RingOfFireGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionFourTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionFourText") as String).replace("\\n", "\n")))
+                            .add(
+                                R.id.playCardGameFrameLayout, RingOfFireGameFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionFourTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionFourText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
                             .commit()
                     } else {
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.playCardGameFrameLayout, RingOfFireGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionFourTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionFourText") as String).replace("\\n", "\n")))
+                            .replace(
+                                R.id.playCardGameFrameLayout, RingOfFireGameFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionFourTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionFourText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
                             .commit()
                     }
                     loadingSpinner.visibility = View.INVISIBLE;
-                }else{
+                } else {
                     displayError()
                 }
             }
-            .addOnFailureListener {exception ->
+            .addOnFailureListener { exception ->
                 displayError()
             }
     }
-    private fun startFuckTheDealer(savedInstanceState: Bundle?){
+
+    private fun startFuckTheDealer(savedInstanceState: Bundle?) {
         getCardGamesFuckTheDealer.get()
             .addOnSuccessListener { document ->
-                if(document != null){
-                    if(savedInstanceState == null) {
+                if (document != null) {
+                    if (savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
-                            .add(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                            .add(
+                                R.id.playCardGameFrameLayout, CardGamesFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
                             .commit()
                     } else {
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                            .replace(
+                                R.id.playCardGameFrameLayout, CardGamesFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
                             .commit()
                     }
                     loadingSpinner.visibility = View.INVISIBLE;
-                }else{
+                } else {
                     displayError()
                 }
             }
-            .addOnFailureListener {exception ->
+            .addOnFailureListener { exception ->
                 displayError()
             }
     }
-    private fun startThreeTwoOne(savedInstanceState: Bundle?){
+
+    private fun startThreeTwoOne(savedInstanceState: Bundle?) {
         getCardGames321.get()
             .addOnSuccessListener { document ->
-                if(document != null){
-                    if(savedInstanceState == null) {
+                if (document != null) {
+                    if (savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
-                            .add(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                            .add(
+                                R.id.playCardGameFrameLayout, CardGamesFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
                             .commit()
                     } else {
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.playCardGameFrameLayout, CardGamesFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                            .replace(
+                                R.id.playCardGameFrameLayout, CardGamesFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
                             .commit()
                     }
                     loadingSpinner.visibility = View.INVISIBLE;
-                }else{
+                } else {
                     displayError()
                 }
             }
@@ -175,8 +344,9 @@ class PlayCardGameActivity : AppCompatActivity() {
             }
     }
 
-    private fun displayError(){
-        Toast.makeText(applicationContext, getString(R.string.db_error_message), Toast.LENGTH_LONG).show()
+    private fun displayError() {
+        Toast.makeText(applicationContext, getString(R.string.db_error_message), Toast.LENGTH_LONG)
+            .show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

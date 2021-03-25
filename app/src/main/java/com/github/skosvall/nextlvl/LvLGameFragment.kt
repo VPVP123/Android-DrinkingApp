@@ -35,7 +35,6 @@ class LvLGameFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_lvl_game, container, false) as View
 
         view.findViewById<TextView>(R.id.lvl_game_title).text = title
@@ -72,7 +71,16 @@ class LvLGameFragment : Fragment() {
          * @return A new instance of fragment LvlGamesFragment.
          */
         @JvmStatic
-        fun newInstance(title: String, description: String, equipmentTitle: String, equipment: String, setupTitle: String, setup: String, howToPlayTitle: String, howToPlay: String) =
+        fun newInstance(
+            title: String,
+            description: String,
+            equipmentTitle: String,
+            equipment: String,
+            setupTitle: String,
+            setup: String,
+            howToPlayTitle: String,
+            howToPlay: String
+        ) =
             LvLGameFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_TITLE, title)

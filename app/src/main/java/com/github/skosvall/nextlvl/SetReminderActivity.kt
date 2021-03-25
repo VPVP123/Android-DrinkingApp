@@ -39,45 +39,52 @@ class SetReminderActivity : AppCompatActivity() {
         timePicker.setIs24HourView(true)
         timePicker.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.white))
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 timePicker.hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
                 timePicker.minute = Calendar.getInstance().get(Calendar.MINUTE)
-            }else{
+            } else {
                 timePicker.currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
                 timePicker.currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
             }
 
-        } else{
+        } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 timePicker.hour = savedInstanceState.getInt(SELECTED_HOURS)
                 timePicker.minute = savedInstanceState.getInt(SELECTED_MINUTES)
-            }else{
+            } else {
                 timePicker.currentHour = savedInstanceState.getInt(SELECTED_HOURS)
                 timePicker.currentMinute = savedInstanceState.getInt(SELECTED_MINUTES)
             }
         }
 
-        fun createNotification(selectedHour: Int, selectedMinute: Int){
+        fun createNotification(selectedHour: Int, selectedMinute: Int) {
             val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
             val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
             val currentSeconds = Calendar.getInstance().get(Calendar.SECOND)
-            val millisUntilReminder = (((selectedHour - currentHour) * 3600000) + ((selectedMinute - currentMinute) * 60000) - (currentSeconds * 1000)).toLong()
+            val millisUntilReminder =
+                (((selectedHour - currentHour) * 3600000) + ((selectedMinute - currentMinute) * 60000) - (currentSeconds * 1000)).toLong()
 
             val intent = Intent(this, ReminderNotificationReciever::class.java)
-            intent.putExtra(ReminderNotificationReciever.NOTIFICATION_TITLE, getString(R.string.nextlvl))
-            intent.putExtra(ReminderNotificationReciever.NOTIFICATION_TEXT, getString(R.string.reminder_notification_text))
+            intent.putExtra(
+                ReminderNotificationReciever.NOTIFICATION_TITLE,
+                getString(R.string.nextlvl)
+            )
+            intent.putExtra(
+                ReminderNotificationReciever.NOTIFICATION_TEXT,
+                getString(R.string.reminder_notification_text)
+            )
 
             val pendingIntent = PendingIntent.getBroadcast(
-                    this,
-                    standardRequestCode,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                this,
+                standardRequestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
             )
             alarmManager.set(
-                    AlarmManager.RTC_WAKEUP,
-                    (System.currentTimeMillis() + millisUntilReminder),
-                    pendingIntent
+                AlarmManager.RTC_WAKEUP,
+                (System.currentTimeMillis() + millisUntilReminder),
+                pendingIntent
             )
             reminderSpinner.visibility = View.VISIBLE
 
@@ -85,7 +92,11 @@ class SetReminderActivity : AppCompatActivity() {
                 delay(java.util.concurrent.TimeUnit.SECONDS.toMillis(1))
                 withContext(Dispatchers.Main) {
                     reminderSpinner.visibility = View.INVISIBLE
-                    Toast.makeText(applicationContext, getString(R.string.reminder_successfully_set), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.reminder_successfully_set),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
                 }
             }
@@ -96,16 +107,16 @@ class SetReminderActivity : AppCompatActivity() {
             if (isChecked) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     createNotification(timePicker.hour, timePicker.minute)
-                }else{
+                } else {
                     createNotification(timePicker.currentHour, timePicker.currentMinute)
                 }
             } else {
                 val intent = Intent(this, ReminderNotificationReciever::class.java)
                 val pendingIntent = PendingIntent.getBroadcast(
-                        this,
-                        standardRequestCode,
-                        intent,
-                        0
+                    this,
+                    standardRequestCode,
+                    intent,
+                    0
                 )
                 alarmManager.cancel(pendingIntent)
             }
@@ -124,7 +135,7 @@ class SetReminderActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             outState.putInt(SELECTED_HOURS, timePicker.hour)
             outState.putInt(SELECTED_MINUTES, timePicker.minute)
-        }else{
+        } else {
             outState.putInt(SELECTED_HOURS, timePicker.currentHour)
             outState.putInt(SELECTED_MINUTES, timePicker.currentMinute)
         }

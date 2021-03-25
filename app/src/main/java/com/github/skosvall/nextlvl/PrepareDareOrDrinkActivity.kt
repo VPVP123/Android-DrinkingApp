@@ -13,7 +13,7 @@ import com.google.android.material.chip.Chip
 
 
 class PrepareDareOrDrinkActivity : AppCompatActivity() {
-    companion object{
+    companion object {
         const val ADDED_PLAYER_NAMES = "ADDED_PLAYER_NAMES"
     }
 
@@ -24,7 +24,7 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_prepare_dare_or_drink)
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             val buttonAdd = findViewById<Button>(R.id.add_player_button)
             chipGroup = findViewById(R.id.chip_group)
             val startGameButton = findViewById<Button>(R.id.start_game_button)
@@ -36,22 +36,29 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
             }
 
             startGameButton.setOnClickListener {
-                if(getPlayerNames().isNotEmpty()){
+                if (getPlayerNames().isNotEmpty()) {
                     val intent = Intent(this, PlayDareOrDrinkActivity::class.java)
-                    intent.putExtra(PlayDareOrDrinkActivity.PLAYER_NAMES, getPlayerNames().toTypedArray())
+                    intent.putExtra(
+                        PlayDareOrDrinkActivity.PLAYER_NAMES,
+                        getPlayerNames().toTypedArray()
+                    )
                     startActivity(intent)
                 } else {
-                    Toast.makeText(applicationContext, getString(R.string.please_add_players), Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.please_add_players),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
-        }else{
+        } else {
             savedInstanceState.getStringArray(ADDED_PLAYER_NAMES)?.forEach {
                 addChipToChipgroup(it)
             }
         }
     }
 
-    private fun addChipToChipgroup(nameToAdd: String){
+    private fun addChipToChipgroup(nameToAdd: String) {
         val chip = Chip(this)
         chip.text = nameToAdd
 
@@ -60,7 +67,7 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
 
         chip.isCloseIconVisible = true
 
-        chip.setOnCloseIconClickListener{
+        chip.setOnCloseIconClickListener {
             TransitionManager.beginDelayedTransition(chipGroup)
             chipGroup.removeView(chip)
         }
@@ -68,7 +75,7 @@ class PrepareDareOrDrinkActivity : AppCompatActivity() {
         chipGroup.addView(chip)
     }
 
-    private fun getPlayerNames() : MutableList<String>{
+    private fun getPlayerNames(): MutableList<String> {
         val playerNames = mutableListOf<String>()
         chipGroup.forEach {
             playerNames.add((it as Chip).text.toString())

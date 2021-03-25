@@ -21,7 +21,7 @@ class CardGamesActivity : AppCompatActivity() {
         }
     }
 
-    private fun startGame(gameToStart: String){
+    private fun startGame(gameToStart: String) {
         val intent = Intent(this, PlayCardGameActivity::class.java)
         intent.putExtra(PlayCardGameActivity.GAME_TO_START, gameToStart)
         startActivity(intent)

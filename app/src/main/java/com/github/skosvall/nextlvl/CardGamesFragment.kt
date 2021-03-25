@@ -76,7 +76,16 @@ class CardGamesFragment : Fragment() {
          */
 
         @JvmStatic
-        fun newInstance(title: String, description: String, equipmentTitle: String, equipment: String, setupTitle: String, setup: String, howToPlayTitle: String, howToPlay: String) =
+        fun newInstance(
+            title: String,
+            description: String,
+            equipmentTitle: String,
+            equipment: String,
+            setupTitle: String,
+            setup: String,
+            howToPlayTitle: String,
+            howToPlay: String
+        ) =
             CardGamesFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_TITLE, title)

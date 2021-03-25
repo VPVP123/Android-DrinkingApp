@@ -25,8 +25,10 @@ class PlayMobileGamesFragment : Fragment() {
     private lateinit var nextButton: Button
     private var activityJustRestarted: Boolean = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_play_mobile_games, container, false)
         textView = view.findViewById(R.id.statement_textview)
         nextButton = view.findViewById(R.id.never_have_i_ever_next_button)
@@ -43,7 +45,7 @@ class PlayMobileGamesFragment : Fragment() {
         return view
     }
 
-    private fun initializeGame(savedInstanceState: Bundle?){
+    private fun initializeGame(savedInstanceState: Bundle?) {
         val db = FirebaseFirestore.getInstance()
         val currentLang = getString(R.string.current_lang)
 
@@ -57,9 +59,10 @@ class PlayMobileGamesFragment : Fragment() {
                 val previousLang = savedInstanceState.getString(PREVIOUS_LANGUAGE)
                 if (previousLang != currentLang) {
                     loadStatementsFromDb(db, currentLang)
-                } else if(previousLang == currentLang) {
+                } else if (previousLang == currentLang) {
                     statements = savedInstanceState.getStringArray(STATEMENTS)!!.toMutableList()
-                    statementsCopy = savedInstanceState.getStringArray(STATEMENTS_COPY)!!.toMutableList()
+                    statementsCopy =
+                        savedInstanceState.getStringArray(STATEMENTS_COPY)!!.toMutableList()
 
                     val previousStatement = savedInstanceState.getString(CURRENT_STATEMENT)
                     statementsCopy.add(previousStatement as String)
@@ -72,7 +75,7 @@ class PlayMobileGamesFragment : Fragment() {
             questionsCopy = mutableListOf()
             players = mutableListOf()
 
-            if(savedInstanceState == null){
+            if (savedInstanceState == null) {
                 loadQuestionsFromDb(db, currentLang)
 
                 arguments.let {
@@ -81,14 +84,16 @@ class PlayMobileGamesFragment : Fragment() {
                         players = playersArray.toList()
                     }
                 }
-            }else{
+            } else {
                 val previousLang = savedInstanceState.getString(PREVIOUS_LANGUAGE)
 
                 if (previousLang != currentLang) {
                     loadQuestionsFromDb(db, currentLang)
                 } else {
-                    questions = savedInstanceState.getParcelableArray(QUESTIONS)!!.filterIsInstance<DareOrDrinkQuestion>()
-                    questionsCopy = savedInstanceState.getParcelableArray(QUESTIONS_COPY)!!.filterIsInstance<DareOrDrinkQuestion>().toMutableList()
+                    questions = savedInstanceState.getParcelableArray(QUESTIONS)!!
+                        .filterIsInstance<DareOrDrinkQuestion>()
+                    questionsCopy = savedInstanceState.getParcelableArray(QUESTIONS_COPY)!!
+                        .filterIsInstance<DareOrDrinkQuestion>().toMutableList()
                     players = savedInstanceState.getStringArray(PLAYER_NAMES)!!.toMutableList()
 
                     val question = savedInstanceState.getString(CURRENT_QUESTION)
@@ -103,8 +108,10 @@ class PlayMobileGamesFragment : Fragment() {
         }
     }
 
-    private fun loadStatementsFromDb(db: FirebaseFirestore, currentLang: String){
-        val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang).document("statements")
+    private fun loadStatementsFromDb(db: FirebaseFirestore, currentLang: String) {
+        val getStatements =
+            db.collection("mobileGamesData").document("neverHaveIEver").collection(currentLang)
+                .document("statements")
 
         getStatements.get()
             .addOnSuccessListener { statement ->
@@ -127,8 +134,10 @@ class PlayMobileGamesFragment : Fragment() {
             }
     }
 
-    private fun loadQuestionsFromDb(db: FirebaseFirestore, currentLang: String){
-        val getQuestions = db.collection("mobileGamesData").document("dareOrDrink").collection(currentLang).document("questions")
+    private fun loadQuestionsFromDb(db: FirebaseFirestore, currentLang: String) {
+        val getQuestions =
+            db.collection("mobileGamesData").document("dareOrDrink").collection(currentLang)
+                .document("questions")
 
         getQuestions.get()
             .addOnSuccessListener { question ->
@@ -211,7 +220,8 @@ class PlayMobileGamesFragment : Fragment() {
                                 currentQuestionPlayers.add(randomPlayer)
                                 playersCopy.remove(randomPlayer)
                             }
-                            textView.text = currentQuestion.getCompleteQuestion(currentQuestionPlayers)
+                            textView.text =
+                                currentQuestion.getCompleteQuestion(currentQuestionPlayers)
                             break
                         } else {
                             textView.text = currentQuestion.question
@@ -230,7 +240,7 @@ class PlayMobileGamesFragment : Fragment() {
         }
     }
 
-    private fun displayError(){
+    private fun displayError() {
         Toast.makeText(context, getString(R.string.db_error_message), Toast.LENGTH_LONG).show()
     }
 

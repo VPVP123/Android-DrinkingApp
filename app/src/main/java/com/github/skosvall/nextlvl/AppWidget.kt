@@ -9,7 +9,7 @@ import android.net.Uri
 import android.widget.RemoteViews
 
 class AppWidget : AppWidgetProvider() {
-    companion object{
+    companion object {
         const val ACTION_DATA_UPDATED = "data_updated"
     }
 
@@ -22,7 +22,11 @@ class AppWidget : AppWidgetProvider() {
         }
     }
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
@@ -33,7 +37,11 @@ class AppWidget : AppWidgetProvider() {
     override fun onDisabled(context: Context) {}
 }
 
-internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+internal fun updateAppWidget(
+    context: Context,
+    appWidgetManager: AppWidgetManager,
+    appWidgetId: Int
+) {
 
     val intent = Intent(context, AppWidgetService::class.java)
     intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)

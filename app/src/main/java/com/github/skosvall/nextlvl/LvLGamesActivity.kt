@@ -20,7 +20,8 @@ class LvLGamesActivity : AppCompatActivity() {
             startGame(PlayLvLGameActivity.HORSE_RACE)
         }
     }
-    private fun startGame(gameToStart: String){
+
+    private fun startGame(gameToStart: String) {
         val intent = Intent(this, PlayLvLGameActivity::class.java)
         intent.putExtra(PlayLvLGameActivity.GAME_TO_START, gameToStart)
         startActivity(intent)

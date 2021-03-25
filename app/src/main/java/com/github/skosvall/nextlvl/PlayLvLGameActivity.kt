@@ -9,7 +9,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 class PlayLvLGameActivity : AppCompatActivity() {
-    companion object{
+    companion object {
         const val CURRENT_GAME = "CURRENT_GAME"
         const val PREVIOUS_LANG = "PREVIOUS_LANG"
         const val GAME_TO_START = "gameToPlay"
@@ -34,30 +34,35 @@ class PlayLvLGameActivity : AppCompatActivity() {
 
         val currentLang = getString(R.string.current_lang)
 
-        getLvLGamesBeerPong = db.collection("lvlGamesData").document("beerpong").collection(currentLang).document("texts")
-        getLvLGamesGasGas = db.collection("lvlGamesData").document("gasGas").collection(currentLang).document("texts")
-        getLvLGamesHorseRace = db.collection("lvlGamesData").document("horseRace").collection(currentLang).document("texts")
+        getLvLGamesBeerPong =
+            db.collection("lvlGamesData").document("beerpong").collection(currentLang)
+                .document("texts")
+        getLvLGamesGasGas = db.collection("lvlGamesData").document("gasGas").collection(currentLang)
+            .document("texts")
+        getLvLGamesHorseRace =
+            db.collection("lvlGamesData").document("horseRace").collection(currentLang)
+                .document("texts")
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             loadingSpinner.visibility = View.VISIBLE
 
             currentGame = intent.getStringExtra(GAME_TO_START) as String
 
             startGame(savedInstanceState)
-        }else{
+        } else {
             val previousLang = savedInstanceState.getString(PREVIOUS_LANG)
 
             currentGame = savedInstanceState.getString(PlayCardGameActivity.CURRENT_GAME) as String
 
-            if(previousLang != currentLang){
+            if (previousLang != currentLang) {
                 startGame(savedInstanceState)
-            }else{
+            } else {
                 loadingSpinner.visibility = View.INVISIBLE
             }
         }
     }
 
-    private fun startGame(savedInstanceState: Bundle?){
+    private fun startGame(savedInstanceState: Bundle?) {
         when (currentGame) {
             BEERPONG -> startBeerpong(savedInstanceState)
             GAS_GAS -> startGasGas(savedInstanceState)
@@ -65,107 +70,85 @@ class PlayLvLGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun startBeerpong(savedInstanceState: Bundle?){
+    private fun startBeerpong(savedInstanceState: Bundle?) {
         getLvLGamesBeerPong.get()
             .addOnSuccessListener { document ->
-                if(document != null){
-                    if(savedInstanceState == null) {
+                if (document != null) {
+                    if (savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
-                            .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                            .add(
+                                R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
                             .commit()
                     } else {
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
+                            .replace(
+                                R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
                             .commit()
                     }
                     loadingSpinner.visibility = View.INVISIBLE
-                }else{
-                    displayError()
-                }
-            }
-            .addOnFailureListener { _ ->
-                displayError()
-            }
-    }
-    private fun startGasGas(savedInstanceState: Bundle?){
-        getLvLGamesGasGas.get()
-                .addOnSuccessListener { document ->
-                    if(document != null) {
-                        if(savedInstanceState == null) {
-                            supportFragmentManager.beginTransaction()
-                                .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
-                                .commit()
-                        } else {
-                            supportFragmentManager.beginTransaction()
-                                .replace(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                    (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                    (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
-                                .commit()
-                        }
-                        loadingSpinner.visibility = View.INVISIBLE
-                    } else {
-                        displayError()
-                    }
-                }
-                .addOnFailureListener { _ ->
-                    displayError()
-                }
-    }
-    private fun startHorseRace(savedInstanceState: Bundle?){
-        getLvLGamesHorseRace.get()
-            .addOnSuccessListener { document ->
-                if(document != null){
-                    if(savedInstanceState == null) {
-                        supportFragmentManager.beginTransaction()
-                            .add(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
-                            .commit()
-                    } else {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance((document.getString("title") as String).replace("\\n", "\n"),
-                                (document.getString("shortDescription") as String).replace("\\n", "\n"),
-                                (document.getString("sectionOneTitle") as String).replace("\\n", "\n"),
-                                (document.getString("sectionOneText") as String).replace("\\n", "\n"),
-                                (document.getString("sectionTwoTitle") as String).replace("\\n", "\n"),
-                                (document.getString("sectionTwoText") as String).replace("\\n", "\n"),
-                                (document.getString("sectionThreeTitle") as String).replace("\\n", "\n"),
-                                (document.getString("sectionThreeText") as String).replace("\\n", "\n")))
-                            .commit()
-                    }
-                    loadingSpinner.visibility = View.INVISIBLE
-                }else{
+                } else {
                     displayError()
                 }
             }
@@ -174,8 +157,183 @@ class PlayLvLGameActivity : AppCompatActivity() {
             }
     }
 
-    private fun displayError(){
-        Toast.makeText(applicationContext, getString(R.string.db_error_message), Toast.LENGTH_LONG).show()
+    private fun startGasGas(savedInstanceState: Bundle?) {
+        getLvLGamesGasGas.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    if (savedInstanceState == null) {
+                        supportFragmentManager.beginTransaction()
+                            .add(
+                                R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
+                            .commit()
+                    } else {
+                        supportFragmentManager.beginTransaction()
+                            .replace(
+                                R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
+                            .commit()
+                    }
+                    loadingSpinner.visibility = View.INVISIBLE
+                } else {
+                    displayError()
+                }
+            }
+            .addOnFailureListener { _ ->
+                displayError()
+            }
+    }
+
+    private fun startHorseRace(savedInstanceState: Bundle?) {
+        getLvLGamesHorseRace.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    if (savedInstanceState == null) {
+                        supportFragmentManager.beginTransaction()
+                            .add(
+                                R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
+                            .commit()
+                    } else {
+                        supportFragmentManager.beginTransaction()
+                            .replace(
+                                R.id.PlayLvLGamesFrameLayout, LvLGameFragment.newInstance(
+                                    (document.getString("title") as String).replace("\\n", "\n"),
+                                    (document.getString("shortDescription") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionOneText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionTwoText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeTitle") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    ),
+                                    (document.getString("sectionThreeText") as String).replace(
+                                        "\\n",
+                                        "\n"
+                                    )
+                                )
+                            )
+                            .commit()
+                    }
+                    loadingSpinner.visibility = View.INVISIBLE
+                } else {
+                    displayError()
+                }
+            }
+            .addOnFailureListener { _ ->
+                displayError()
+            }
+    }
+
+    private fun displayError() {
+        Toast.makeText(applicationContext, getString(R.string.db_error_message), Toast.LENGTH_LONG)
+            .show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

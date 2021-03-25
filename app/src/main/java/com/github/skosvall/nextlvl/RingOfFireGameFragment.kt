@@ -31,7 +31,6 @@ class RingOfFireGameFragment : Fragment() {
     private var sectionFourText: String? = null
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -53,7 +52,6 @@ class RingOfFireGameFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_card_games, container, false) as View
 
         view.findViewById<TextView>(R.id.card_game_title)?.text = title
@@ -88,8 +86,19 @@ class RingOfFireGameFragment : Fragment() {
          * @return A new instance of fragment CardGamesFragment.
          */
         @JvmStatic
-        fun newInstance(title: String, description: String, equipmentTitle: String, equipment: String, setupTitle: String, setup: String, howToPlayTitle: String, howToPlay: String, sectionFourTitle: String, sectionFourText: String) =
-                RingOfFireGameFragment().apply {
+        fun newInstance(
+            title: String,
+            description: String,
+            equipmentTitle: String,
+            equipment: String,
+            setupTitle: String,
+            setup: String,
+            howToPlayTitle: String,
+            howToPlay: String,
+            sectionFourTitle: String,
+            sectionFourText: String
+        ) =
+            RingOfFireGameFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_TITLE, title)
                     putString(ARG_DESCRIPTION, description)

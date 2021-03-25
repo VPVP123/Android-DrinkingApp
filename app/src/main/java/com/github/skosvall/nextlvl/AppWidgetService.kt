@@ -16,12 +16,15 @@ class AppWidgetService : RemoteViewsService() {
     }
 
 
-    internal inner class StackRemoteViewsFactory(private val context: Context, intent: Intent) : RemoteViewsFactory  {
+    internal inner class StackRemoteViewsFactory(private val context: Context, intent: Intent) :
+        RemoteViewsFactory {
         private lateinit var statementList: MutableList<String>
 
         override fun onCreate() {
             val db = FirebaseFirestore.getInstance()
-            val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection("english").document("statements")
+            val getStatements =
+                db.collection("mobileGamesData").document("neverHaveIEver").collection("english")
+                    .document("statements")
 
             statementList = mutableListOf()
 
@@ -33,27 +36,27 @@ class AppWidgetService : RemoteViewsService() {
 
         private fun getData(getStatements: DocumentReference): Task<DocumentSnapshot> {
             return getStatements.get()
-                    .addOnSuccessListener { statement ->
-                        if (statement != null) {
-                            Log.d("exist", "DocumentSnapshot data: ${statement.data}")
-                            val myArray = statement.get("statements") as List<String>?
-                            if (myArray != null) {
-                                for (item in myArray) {
-                                    statementList.add(item)
-                                }
-                                statementList.shuffle()
-                                val updateWidgetIntent = Intent(context, AppWidget::class.java)
-                                updateWidgetIntent.action = AppWidget.ACTION_DATA_UPDATED
-                                context.sendBroadcast(updateWidgetIntent)
+                .addOnSuccessListener { statement ->
+                    if (statement != null) {
+                        Log.d("exist", "DocumentSnapshot data: ${statement.data}")
+                        val myArray = statement.get("statements") as List<String>?
+                        if (myArray != null) {
+                            for (item in myArray) {
+                                statementList.add(item)
                             }
+                            statementList.shuffle()
+                            val updateWidgetIntent = Intent(context, AppWidget::class.java)
+                            updateWidgetIntent.action = AppWidget.ACTION_DATA_UPDATED
+                            context.sendBroadcast(updateWidgetIntent)
                         }
                     }
-                    .addOnFailureListener {
-                        statementList.add(getString(R.string.db_error_message))
-                        val updateWidgetIntent = Intent(context, AppWidget::class.java)
-                        updateWidgetIntent.action = AppWidget.ACTION_DATA_UPDATED
-                        context.sendBroadcast(updateWidgetIntent)
-                    }
+                }
+                .addOnFailureListener {
+                    statementList.add(getString(R.string.db_error_message))
+                    val updateWidgetIntent = Intent(context, AppWidget::class.java)
+                    updateWidgetIntent.action = AppWidget.ACTION_DATA_UPDATED
+                    context.sendBroadcast(updateWidgetIntent)
+                }
         }
 
         override fun onDestroy() {}

@@ -3,30 +3,30 @@ package com.github.skosvall.nextlvl
 import android.os.Parcel
 import android.os.Parcelable
 
-class DareOrDrinkQuestion(var question: String?) : Parcelable{
+class DareOrDrinkQuestion(var question: String?) : Parcelable {
     private var nrOfPlayers: Int = 0
 
     constructor(parcel: Parcel) : this(parcel.readString()) {
         nrOfPlayers = parcel.readInt()
     }
 
-    init{
-        if(question?.filter { it == '1' }!!.count() > 0){
+    init {
+        if (question?.filter { it == '1' }!!.count() > 0) {
             nrOfPlayers++
         }
-        if(question?.filter { it == '2' }!!.count() > 0){
+        if (question?.filter { it == '2' }!!.count() > 0) {
             nrOfPlayers++
         }
     }
 
-    fun getNrOfPlayersRequired(): Int{
+    fun getNrOfPlayersRequired(): Int {
         return nrOfPlayers
     }
 
-    fun getCompleteQuestion(playerNames: List<String>): String?{
+    fun getCompleteQuestion(playerNames: List<String>): String? {
         var questionToReturn = question
-        for(i in 0 until nrOfPlayers){
-            questionToReturn = questionToReturn?.replace((i+1).toString(), playerNames[i])
+        for (i in 0 until nrOfPlayers) {
+            questionToReturn = questionToReturn?.replace((i + 1).toString(), playerNames[i])
         }
         return questionToReturn
     }

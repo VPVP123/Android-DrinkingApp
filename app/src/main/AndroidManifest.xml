@@ -15,11 +15,11 @@
         android:theme="@style/Theme.NextLvL"
         android:largeHeap="true"
         android:hardwareAccelerated="false">
+
         <receiver android:name=".AppWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_info" />
@@ -33,10 +33,6 @@
         <activity android:name=".PlayCardGameActivity" android:screenOrientation="portrait"/>
         <activity android:name=".SetReminderActivity" android:screenOrientation="portrait"/>
         <activity android:name=".AddSubmissionActivity" android:screenOrientation="portrait"/>
-        <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
         <activity android:name=".EditSubmissionActivity" android:screenOrientation="portrait"/>
         <activity android:name=".PlayDareOrDrinkActivity" android:screenOrientation="portrait"/>
         <activity android:name=".PrepareDareOrDrinkActivity" android:screenOrientation="portrait"/>

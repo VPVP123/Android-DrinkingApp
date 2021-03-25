@@ -12,7 +12,7 @@ import com.github.skosvall.nextlvl.R.*
 class ReminderNotificationReciever : BroadcastReceiver() {
     private val channelId = "com.github.skosvall.nextlvl"
 
-    companion object{
+    companion object {
         const val NOTIFICATION_TITLE = "NOTIFICATION_TITLE"
         const val NOTIFICATION_TEXT = "NOTIFICATION_TEXT"
     }
@@ -28,15 +28,16 @@ class ReminderNotificationReciever : BroadcastReceiver() {
         }
     }
 
-    private fun createNotificationChannel(context: Context){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+    private fun createNotificationChannel(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val title = "nextLvL"
             val descriptionText = "Time to party"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(channelId, title, importance).apply {
                 description = descriptionText
             }
-            val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager: NotificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
@@ -46,7 +47,8 @@ class ReminderNotificationReciever : BroadcastReceiver() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0)
+        val pendingIntent: PendingIntent =
+            PendingIntent.getActivity(context, 0, notificationIntent, 0)
 
         val notificationManager = NotificationManagerCompat.from(context)
         val notification = NotificationCompat.Builder(context, channelId)

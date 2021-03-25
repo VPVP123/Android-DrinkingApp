@@ -40,7 +40,13 @@ class MobileGamesActivity : AppCompatActivity() {
         }
     }
 
-    private fun makeTextLink(textView: TextView, str: String, underlined: Boolean, color: Int?, action: (() -> Unit)? = null) {
+    private fun makeTextLink(
+        textView: TextView,
+        str: String,
+        underlined: Boolean,
+        color: Int?,
+        action: (() -> Unit)? = null
+    ) {
         val spannableString = SpannableString(textView.text)
         Log.d("Test: ", spannableString.toString())
         val textColor = color ?: textView.currentTextColor
@@ -48,6 +54,7 @@ class MobileGamesActivity : AppCompatActivity() {
             override fun onClick(textView: View) {
                 action?.invoke()
             }
+
             override fun updateDrawState(drawState: TextPaint) {
                 super.updateDrawState(drawState)
                 drawState.isUnderlineText = underlined
@@ -55,7 +62,12 @@ class MobileGamesActivity : AppCompatActivity() {
             }
         }
         val index = spannableString.indexOf(str)
-        spannableString.setSpan(clickableSpan, index, index + str.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(
+            clickableSpan,
+            index,
+            index + str.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
         textView.text = spannableString
         textView.movementMethod = LinkMovementMethod.getInstance()
         textView.highlightColor = Color.TRANSPARENT

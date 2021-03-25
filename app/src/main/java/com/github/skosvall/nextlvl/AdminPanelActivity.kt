@@ -19,11 +19,11 @@ class AdminPanelActivity : AppCompatActivity() {
         val buttonSubmissions = this.findViewById<Button>(R.id.manage_submissions_button)
         val buttonLogout = this.findViewById<Button>(R.id.logout_button)
 
-        buttonSubmissions.setOnClickListener{
+        buttonSubmissions.setOnClickListener {
             startActivity(Intent(this, ReviewSubmissionsActivity::class.java))
         }
 
-        buttonLogout.setOnClickListener{
+        buttonLogout.setOnClickListener {
             signOut()
         }
     }
@@ -33,7 +33,7 @@ class AdminPanelActivity : AppCompatActivity() {
         signOut()
     }
 
-    private fun signOut(){
+    private fun signOut() {
         FirebaseAuth.getInstance().signOut()
         startActivity(Intent(this, MainActivity::class.java))
     }
@@ -41,7 +41,7 @@ class AdminPanelActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-        if(currentUser == null){
+        if (currentUser == null) {
             signOut()
         }
     }

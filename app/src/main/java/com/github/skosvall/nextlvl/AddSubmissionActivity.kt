@@ -30,7 +30,7 @@ class AddSubmissionActivity : AppCompatActivity() {
 
         gameSpinner.adapter = ArrayAdapter(this, R.layout.spinner_item, options)
 
-        gameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        gameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 exampleTextField.text = getString(R.string.submission_please_select_a_game)
                 selectedGame = null.toString()
@@ -42,53 +42,55 @@ class AddSubmissionActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                if(options[position] == "Dare or drink"){
+                if (options[position] == "Dare or drink") {
                     exampleTextField.text = getString(R.string.dare_or_drink_example)
-                    submissionTextField.hint = getString(R.string.submission_placeholder_dare_or_drink)
+                    submissionTextField.hint =
+                        getString(R.string.submission_placeholder_dare_or_drink)
                     selectedGame = ReviewSubmissionsActivity.DARE_OR_DRINK
-                }else{
+                } else {
                     exampleTextField.text = getString(R.string.never_have_i_ever_example)
-                    submissionTextField.hint = getString(R.string.submission_placeholder_never_have_i_ever)
+                    submissionTextField.hint =
+                        getString(R.string.submission_placeholder_never_have_i_ever)
                     selectedGame = ReviewSubmissionsActivity.NEVER_HAVE_I_EVER
                 }
             }
         }
 
-        fun onSuccess(){
+        fun onSuccess() {
             loadingSpinner.visibility = View.INVISIBLE
             submissionTextField.setText("")
-            Toast.makeText(applicationContext, getString(R.string.suggestion_successfully_submitted), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.suggestion_successfully_submitted),
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
-        buttonSubmit.setOnClickListener{
+        buttonSubmit.setOnClickListener {
             loadingSpinner.visibility = View.VISIBLE
 
-            if(selectedGame != null.toString()){
-                if(selectedGame == ReviewSubmissionsActivity.DARE_OR_DRINK){
+            if (selectedGame != null.toString()) {
+                if (selectedGame == ReviewSubmissionsActivity.DARE_OR_DRINK) {
                     val submission = submissionTextField.editableText.toString()
                     db.collection("mobileGamesData").document("dareOrDrink")
                         .collection(currentLang).document("questions")
                         .update("questionSuggestions", FieldValue.arrayUnion(submission))
-                            .addOnSuccessListener {
-                                onSuccess()
-                            }
-                }else{
+                        .addOnSuccessListener {
+                            onSuccess()
+                        }
+                } else {
                     val submission = submissionTextField.editableText.toString()
                     db.collection("mobileGamesData").document("neverHaveIEver")
                         .collection(currentLang).document("statements")
                         .update("statementSuggestions", FieldValue.arrayUnion(submission))
-                            .addOnSuccessListener {
-                                onSuccess()
-                            }
+                        .addOnSuccessListener {
+                            onSuccess()
+                        }
                 }
             }
         }
-        buttonBack.setOnClickListener{
+        buttonBack.setOnClickListener {
             finish()
         }
-    }
-
-    private fun displayError(){
-        Toast.makeText(applicationContext, getString(R.string.error_has_occured), Toast.LENGTH_LONG).show()
     }
 }
