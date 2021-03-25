@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.google.api.Context
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.properties.Delegates
@@ -20,6 +19,7 @@ class EditSubmissionActivity : AppCompatActivity() {
 
     private lateinit var gameType: String
     private var submissionId by Delegates.notNull<Int>()
+    private lateinit var loadingSpinner: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +65,7 @@ class EditSubmissionActivity : AppCompatActivity() {
                 val newTextEng = editSubmissionTextViewEng.editableText.toString()
                 val newTextSwe = editSubmissionTextViewSwe.editableText.toString()
 
-                if (newTextEng.isEmpty() && newTextSwe.isEmpty()){
+                if (newTextEng.isNotEmpty() && newTextSwe.isNotEmpty()){
                     if (submission != null) {
                         db.collection("mobileGamesData").document("dareOrDrink")
                                 .collection("english").document("questions")
@@ -85,13 +85,14 @@ class EditSubmissionActivity : AppCompatActivity() {
                                 }
                     }
                 }else{
+                    loadingSpinner.visibility = View.INVISIBLE
                     Toast.makeText(applicationContext, getString(R.string.both_fields_needs_content), Toast.LENGTH_LONG).show()
                 }
                 }else{
                 val newTextEng = editSubmissionTextViewEng.editableText.toString()
                 val newTextSwe = editSubmissionTextViewSwe.editableText.toString()
 
-                if (newTextEng.isEmpty() && newTextSwe.isEmpty()){
+                if (newTextEng.isNotEmpty() && newTextSwe.isNotEmpty()){
                     if (submission != null) {
                         db.collection("mobileGamesData").document("neverHaveIEver")
                                 .collection("english").document("statements")
@@ -111,6 +112,7 @@ class EditSubmissionActivity : AppCompatActivity() {
                                 }
                     }
                 }else{
+                    loadingSpinner.visibility = View.INVISIBLE
                     Toast.makeText(applicationContext, getString(R.string.both_fields_needs_content), Toast.LENGTH_LONG).show()
                 }
             }
@@ -122,12 +124,9 @@ class EditSubmissionActivity : AppCompatActivity() {
     }
 
     private fun onSuccess(){
+        loadingSpinner.visibility = View.INVISIBLE
         Toast.makeText(applicationContext, getString(R.string.suggestion_successfully_approved), Toast.LENGTH_SHORT).show()
         this.finish()
-    }
-
-    private fun displayError(){
-        Toast.makeText(applicationContext, getString(R.string.error_has_occured), Toast.LENGTH_LONG).show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
