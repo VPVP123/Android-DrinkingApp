@@ -37,16 +37,14 @@ class EditSubmissionActivity : AppCompatActivity() {
             submissionId = savedInstanceState.getInt(SUBMISSION_ID)
         }
 
-        var submission: Submission?
-
-        if(gameType == ReviewSubmissionsActivity.DARE_OR_DRINK){
-            submission = dareOrDrinkSubmissionRepository.getSubmissionById(submissionId)
+        val submission: Submission? = if(gameType == ReviewSubmissionsActivity.DARE_OR_DRINK){
+            dareOrDrinkSubmissionRepository.getSubmissionById(submissionId)
         }else{
-            submission = neverHaveIEverSubmissionRepository.getSubmissionById(submissionId)
+            neverHaveIEverSubmissionRepository.getSubmissionById(submissionId)
         }
 
-        val editSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)as EditText
-        val editSubmissionTextViewSwe = findViewById<EditText>(R.id.edit_submission_edittext_swedish)as EditText
+        val editSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)
+        val editSubmissionTextViewSwe = findViewById<EditText>(R.id.edit_submission_edittext_swedish)
 
         if(submission != null){
             if(submission.lang == "swedish"){
@@ -63,10 +61,8 @@ class EditSubmissionActivity : AppCompatActivity() {
             loadingSpinner.visibility = View.VISIBLE
 
             if(gameType == ReviewSubmissionsActivity.DARE_OR_DRINK){
-                val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)as EditText
-                val newEditSubmissionTextViewSwe = findViewById<EditText>(R.id.edit_submission_edittext_swedish)as EditText
-                val newTextEng = newEditSubmissionTextViewEng.editableText.toString()
-                val newTextSwe = newEditSubmissionTextViewSwe.editableText.toString()
+                val newTextEng = editSubmissionTextViewEng.editableText.toString()
+                val newTextSwe = editSubmissionTextViewSwe.editableText.toString()
 
                 if (submission != null) {
                     db.collection("mobileGamesData").document("dareOrDrink")
@@ -88,10 +84,8 @@ class EditSubmissionActivity : AppCompatActivity() {
                             }
                 }
             }else{
-                val newEditSubmissionTextViewEng = findViewById<EditText>(R.id.edit_submission_edittext_english)as EditText
-                val newEditSubmissionTextViewSwe = findViewById<EditText>(R.id.edit_submission_edittext_swedish)as EditText
-                val newTextEng = newEditSubmissionTextViewEng.editableText.toString()
-                val newTextSwe = newEditSubmissionTextViewSwe.editableText.toString()
+                val newTextEng = editSubmissionTextViewEng.editableText.toString()
+                val newTextSwe = editSubmissionTextViewSwe.editableText.toString()
 
                 if (submission != null) {
                     db.collection("mobileGamesData").document("neverHaveIEver")

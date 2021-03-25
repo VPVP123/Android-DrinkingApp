@@ -28,7 +28,7 @@ class AddSubmissionActivity : AppCompatActivity() {
         val currentLang = getString(R.string.current_lang)
         var selectedGame: String = null.toString()
 
-        gameSpinner.adapter = ArrayAdapter<String>(this, R.layout.spinner_item, options)
+        gameSpinner.adapter = ArrayAdapter(this, R.layout.spinner_item, options)
 
         gameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -83,13 +83,10 @@ class AddSubmissionActivity : AppCompatActivity() {
                 }
             }
         }
-
         buttonBack.setOnClickListener{
             finish()
         }
     }
-
-
 
     private fun displayError(){
         Toast.makeText(applicationContext, getString(R.string.error_has_occured), Toast.LENGTH_LONG).show()

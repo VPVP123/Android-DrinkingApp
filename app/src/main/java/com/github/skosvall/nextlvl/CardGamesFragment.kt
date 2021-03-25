@@ -35,7 +35,7 @@ class CardGamesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.fragment_card_games, container, false) as View
 
         view.findViewById<TextView>(R.id.card_game_title)?.text = title

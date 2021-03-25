@@ -2,7 +2,6 @@ package com.github.skosvall.nextlvl
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.util.stream.IntStream.range
 
 class DareOrDrinkQuestion(var question: String?) : Parcelable{
     private var nrOfPlayers: Int = 0
