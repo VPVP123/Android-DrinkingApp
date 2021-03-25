@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_margin="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/card_games_nextlvl_logo_imageview"
