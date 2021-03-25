@@ -20,7 +20,6 @@ class AppWidgetService : RemoteViewsService() {
         private lateinit var statementList: MutableList<String>
 
         override fun onCreate() {
-            //connect to data source
             val db = FirebaseFirestore.getInstance()
             val getStatements = db.collection("mobileGamesData").document("neverHaveIEver").collection("english").document("statements")
 
@@ -57,9 +56,7 @@ class AppWidgetService : RemoteViewsService() {
                     }
         }
 
-        override fun onDestroy() {
-            //close data source
-        }
+        override fun onDestroy() {}
 
         override fun getCount(): Int {
             return statementList.size
