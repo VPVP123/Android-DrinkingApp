@@ -20,6 +20,7 @@
     <string name="start_game">Start game</string>
     <string name="next">Next</string>
     <string name="current_lang">english</string>
+    <string name="please_add_players">Please add players before starting the game</string>
 
     <string name="dont_like_nhie_dares">"Don't like our Never have i ever/ Dares?\n Submit your own"</string>
     <string name="submit_your_own">Submit your own</string>
@@ -38,6 +39,8 @@
     <string name="reminder_successfully_set">A reminder has ben set!</string>
     <string name="set_alarm">Set reminder</string>
     <string name="reminder_notification_text">"We miss you! Don't forget to play some nextLvL to make sure you have the best party possible!"</string>
+
+
 
     <string name="dare_or_drink_suggestions">Dare Or Drink-suggestions:</string>
     <string name="never_have_i_ever_suggestions">Never Have I Ever-suggestions:</string>
@@ -73,7 +76,7 @@
         <item>Dare or drink</item>
         <item>Never have i ever</item>
     </string-array>
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="both_fields_needs_content">Please enter text in both fields before submitting</string>
 
 
 

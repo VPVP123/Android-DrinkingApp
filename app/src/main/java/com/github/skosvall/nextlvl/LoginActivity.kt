@@ -74,6 +74,7 @@ class LoginActivity : AppCompatActivity() {
                             startActivity(
                                 Intent(this, AdminPanelActivity::class.java)
                             )
+                            finish()
                         } else {
                             val popUpError1 = androidx.appcompat.app.AlertDialog.Builder(this)
                             popUpError1.setTitle("Login failed")
@@ -103,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(
                 Intent(this, AdminPanelActivity::class.java)
             )
+            finish()
         }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -119,10 +121,12 @@ class LoginActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             val currentUser = auth.currentUser
 
-                            if(currentUser != null && listOfAdminAccounts.contains(currentUser.email!!))
-                            startActivity(
-                                Intent(this, AdminPanelActivity::class.java)
-                            )else{
+                            if(currentUser != null && listOfAdminAccounts.contains(currentUser.email!!)){
+                                startActivity(
+                                    Intent(this, AdminPanelActivity::class.java)
+                                )
+                                finish()
+                            }else{
                                 val popUpError1 = androidx.appcompat.app.AlertDialog.Builder(this)
                                 popUpError1.setTitle("Login failed")
                                 popUpError1.setMessage("The email and/or password you entered is incorrect")

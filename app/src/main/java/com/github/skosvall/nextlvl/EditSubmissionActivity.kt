@@ -2,8 +2,10 @@ package com.github.skosvall.nextlvl
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,12 +19,16 @@ class EditSubmissionActivity : AppCompatActivity() {
 
     private lateinit var gameType: String
     private var submissionId by Delegates.notNull<Int>()
+    private lateinit var loadingSpinner: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_submission)
 
         val db = FirebaseFirestore.getInstance()
+
+        loadingSpinner = findViewById<ProgressBar>(R.id.edit_submission_spinner)
+        loadingSpinner.visibility = View.INVISIBLE
 
         if(savedInstanceState == null){
             gameType = intent.getStringExtra(GAME_TYPE).toString()
@@ -53,59 +59,61 @@ class EditSubmissionActivity : AppCompatActivity() {
         val buttonDismiss = this.findViewById<Button>(R.id.dismiss_button)
 
         buttonSubmit.setOnClickListener{
-            var succeded = false
+            loadingSpinner.visibility = View.VISIBLE
+
             if(gameType == ReviewSubmissionsActivity.DARE_OR_DRINK){
                 val newTextEng = editSubmissionTextViewEng.editableText.toString()
                 val newTextSwe = editSubmissionTextViewSwe.editableText.toString()
 
-                if (submission != null) {
-                    db.collection("mobileGamesData").document("dareOrDrink")
-                        .collection("english").document("questions")
-                        .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
-                    db.collection("mobileGamesData").document("dareOrDrink")
-                        .collection("english").document("questions")
-                        .update("questions", FieldValue.arrayUnion(newTextEng))
-                    db.collection("mobileGamesData").document("dareOrDrink")
-                        .collection("swedish").document("questions")
-                        .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
-                    db.collection("mobileGamesData").document("dareOrDrink")
-                        .collection("swedish").document("questions")
-                        .update("questions", FieldValue.arrayUnion(newTextSwe))
-                            .addOnSuccessListener {
-                                onSuccess()
-                                succeded = true
-                                submissionRepository.deleteSubmissionById(submissionId)
-                            }
-
-                    if(!succeded) {
-                        displayError()
+                if (newTextEng.isNotEmpty() && newTextSwe.isNotEmpty()){
+                    if (submission != null) {
+                        db.collection("mobileGamesData").document("dareOrDrink")
+                                .collection("english").document("questions")
+                                .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
+                        db.collection("mobileGamesData").document("dareOrDrink")
+                                .collection("english").document("questions")
+                                .update("questions", FieldValue.arrayUnion(newTextEng))
+                        db.collection("mobileGamesData").document("dareOrDrink")
+                                .collection("swedish").document("questions")
+                                .update("questionSuggestions", FieldValue.arrayRemove(submission.text))
+                        db.collection("mobileGamesData").document("dareOrDrink")
+                                .collection("swedish").document("questions")
+                                .update("questions", FieldValue.arrayUnion(newTextSwe))
+                                .addOnSuccessListener {
+                                    onSuccess()
+                                    dareOrDrinkSubmissionRepository.deleteSubmissionById(submissionId)
+                                }
                     }
+                }else{
+                    loadingSpinner.visibility = View.INVISIBLE
+                    Toast.makeText(applicationContext, getString(R.string.both_fields_needs_content), Toast.LENGTH_LONG).show()
                 }
-            }else{
+                }else{
                 val newTextEng = editSubmissionTextViewEng.editableText.toString()
                 val newTextSwe = editSubmissionTextViewSwe.editableText.toString()
 
-                if (submission != null) {
-                    db.collection("mobileGamesData").document("neverHaveIEver")
-                        .collection("english").document("statements")
-                        .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
-                    db.collection("mobileGamesData").document("neverHaveIEver")
-                        .collection("english").document("statements")
-                        .update("statements", FieldValue.arrayUnion(newTextEng))
-                    db.collection("mobileGamesData").document("neverHaveIEver")
-                        .collection("swedish").document("statements")
-                        .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
-                    db.collection("mobileGamesData").document("neverHaveIEver")
-                        .collection("swedish").document("statements")
-                        .update("statements", FieldValue.arrayUnion(newTextSwe))
-                            .addOnSuccessListener {
-                                onSuccess()
-                                succeded = true
-                            }
-
-                    if(!succeded) {
-                        displayError()
+                if (newTextEng.isNotEmpty() && newTextSwe.isNotEmpty()){
+                    if (submission != null) {
+                        db.collection("mobileGamesData").document("neverHaveIEver")
+                                .collection("english").document("statements")
+                                .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
+                        db.collection("mobileGamesData").document("neverHaveIEver")
+                                .collection("english").document("statements")
+                                .update("statements", FieldValue.arrayUnion(newTextEng))
+                        db.collection("mobileGamesData").document("neverHaveIEver")
+                                .collection("swedish").document("statements")
+                                .update("statementSuggestions", FieldValue.arrayRemove(submission.text))
+                        db.collection("mobileGamesData").document("neverHaveIEver")
+                                .collection("swedish").document("statements")
+                                .update("statements", FieldValue.arrayUnion(newTextSwe))
+                                .addOnSuccessListener {
+                                    onSuccess()
+                                    neverHaveIEverSubmissionRepository.deleteSubmissionById(submissionId)
+                                }
                     }
+                }else{
+                    loadingSpinner.visibility = View.INVISIBLE
+                    Toast.makeText(applicationContext, getString(R.string.both_fields_needs_content), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -116,12 +124,9 @@ class EditSubmissionActivity : AppCompatActivity() {
     }
 
     private fun onSuccess(){
+        loadingSpinner.visibility = View.INVISIBLE
         Toast.makeText(applicationContext, getString(R.string.suggestion_successfully_approved), Toast.LENGTH_SHORT).show()
         this.finish()
-    }
-
-    private fun displayError(){
-        Toast.makeText(applicationContext, getString(R.string.error_has_occured), Toast.LENGTH_LONG).show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

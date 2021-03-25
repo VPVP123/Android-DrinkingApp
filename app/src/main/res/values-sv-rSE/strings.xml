@@ -23,6 +23,7 @@
     <string name="current_lang">swedish</string>
     <string name="dont_like_nhie_dares">"Gillar du inte våra 'Jag har aldrig' / Dares?\n Ge förslag på nya"</string>
     <string name="submit_your_own">Ge förslag på nya</string>
+    <string name="please_add_players">Vänligen lägg till spelare innan du startar spelet</string>
 
     <string name="what_is_needded">Vad som behövs</string>
     <string name="setup">Setup</string>
@@ -77,6 +78,7 @@
     <string name="error_has_occured">Ett problem har inträffat, var god försök igen</string>
     <string name="back">Bakåt</string>
     <string name="db_error_message">Problem uppstod vi kontakt med databas, var god försök igen!</string>
+    <string name="both_fields_needs_content">Var vänlig skriv in text i båda textfälten innan du godkänner förslaget</string>
 
 
 </resources>
